@@ -3,7 +3,7 @@ const app = express();
 const port = 3000
 const plaguicidasRoutes = require('./routes/Plagicidas')
 const rodenticidaRoutes = require('./routes/Rodenticida')
-const areaGatoRoutes = require('./routes/AreaGato')
+// const areaGatoRoutes = require('./routes/AreaGato')
 const clientes = require('./routes/Clientes')
 const edc = require('./routes/Edc')
 const edcm = require('./routes/Edcm')
@@ -15,7 +15,7 @@ app.use(express.json());
 app.use(express.static("public"));
 app.use(plaguicidasRoutes)
 app.use(rodenticidaRoutes)
-app.use(areaGatoRoutes)
+// app.use(areaGatoRoutes)
 app.use(clientes)
 app.use(edc)
 app.use(edcm)
