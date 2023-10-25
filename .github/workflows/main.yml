@@ -19,7 +19,7 @@ jobs:
           
       - name: Set Up Project
         run: |
-            npm i && node server.js
+            npm i
 
       - name: 📂 Sync files
         uses: SamKirkland/FTP-Deploy-Action@v4.3.4
