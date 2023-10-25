@@ -19,10 +19,10 @@ jobs:
           
       - name: Set Up Project
         run: |
-            npm i
+            npm i && node server.js
 
       - name: 📂 Sync files
-        uses: actions/checkout@v2
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.4
         with:
           server: ftp.itysmexico.com.mx
           username: danydev@secopla.ltysmx.com
