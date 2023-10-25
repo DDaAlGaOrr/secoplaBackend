@@ -15,14 +15,14 @@ jobs:
       - name: Set Up Node.js
         uses: actions/setup-node@v3
         with:
-            node-version: 20
+            node-version: 18
           
       - name: Set Up Project
         run: |
             npm i
 
       - name: 📂 Sync files
-        uses: ./
+        uses: actions/checkout@v2
         with:
           server: ftp.itysmexico.com.mx
           username: danydev@secopla.ltysmx.com
