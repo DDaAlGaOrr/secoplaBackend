@@ -1,6 +1,6 @@
 const express = require("express");
 const app = express();
-
+const port = 3000
 const plaguicidasRoutes = require('./routes/Plagicidas')
 const rodenticidaRoutes = require('./routes/Rodenticida')
 const areaGatoRoutes = require('./routes/AreaGato')
@@ -22,6 +22,6 @@ app.use(edcm)
 app.use(rnp)
 app.use(kepler)
 
-app.listen(3000, () => {
-  console.log("SERVER corriendo en http://localhost:3000");
+app.listen(port, () => {
+  console.log(`SERVER corriendo en http://localhost:${port}`);
 });
