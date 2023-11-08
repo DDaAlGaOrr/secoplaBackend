@@ -1,6 +1,6 @@
 const express = require("express");
 const app = express();
-const port = 3000
+const port = process.env.PORT || 3907
 const plaguicidasRoutes = require('./routes/Plagicidas')
 const rodenticidaRoutes = require('./routes/Rodenticida')
 // const areaGatoRoutes = require('./routes/AreaGato')
@@ -9,6 +9,7 @@ const edc = require('./routes/Edc')
 const edcm = require('./routes/Edcm')
 const rnp = require('./routes/Rnp')
 const kepler = require('./routes/Kepler')
+const sipoc = require('./routes/sipoc')
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
@@ -21,6 +22,7 @@ app.use(edc)
 app.use(edcm)
 app.use(rnp)
 app.use(kepler)
+app.use(sipoc)
 
 app.listen(port, () => {
   console.log(`SERVER corriendo en http://localhost:${port}`);
