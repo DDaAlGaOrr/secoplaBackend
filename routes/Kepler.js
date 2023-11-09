@@ -9,5 +9,5 @@ router.get('/getkdsdirope',Kepler.getKdsDirOpe)
 router.get('/getkdsregionsuc',Kepler.getKdsRegionSuc)
 router.get('/getkdsdirre',Kepler.getKdsDirRe)
 router.get('/getkdud',Kepler.getKdud)
-router.get('/auth',Kepler.auth)
+router.post('/auth',Kepler.auth)
 module.exports = router
