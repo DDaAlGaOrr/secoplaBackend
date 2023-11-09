@@ -16,6 +16,8 @@ KeplerModel.existUser = async(username)=>{
     // }
 }
 
+
+
 KeplerModel.getUsers = async()=>{
     return connection.executeQuery('select * from KDS_USUARIOS_CUENTAS')
 }

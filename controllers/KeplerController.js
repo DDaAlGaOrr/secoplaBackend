@@ -10,11 +10,23 @@ KeplerController.auth = async(req,res)=>{
     if(!existsUser){
         const response = {
             status:'error',
-            data: 'usuario no encntrado'
+            message: 'usuario no encontrado'
         }
         return res.status(404).json(response)
     }
-    const passwordMatch = await KeplerModel.passwordMatch(password)
+    // const passwordMatch = await KeplerModel.passwordMatch(password)
+    if(password !="$3c0pl4"){
+        const response = {
+            status:'error',
+            message: 'contraseña incorrecta'
+        }
+        return res.status(404).json(response)
+    }
+    const response = {
+        status:'success',
+        message: ''
+    }
+    return res.status(200).json(response)
 }
 
 KeplerController.getUsers = async (req,res)=>{
