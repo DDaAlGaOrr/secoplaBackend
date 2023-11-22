@@ -4,7 +4,7 @@ const kepler = new(require('rest-mssql-nodejs'))({
     user:'gastos',
     password:'$3c0pl4',
     server:'192.168.1.5',
-    database:'KEPLER',
+    database:'KEPLER95',
     port:1434,
     options:{
         trustServerCertificate: true 
