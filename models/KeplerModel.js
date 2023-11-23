@@ -3,7 +3,7 @@ const KeplerModel = () => {}
 
 KeplerModel.existUser = async(username)=>{
     const result = await connection.executeQuery(`SELECT c1 FROM KDS_USUARIOS_CUENTAS WHERE c1 = '${username}'`);
-    if(result.data[0].length){
+    if(result && result.data && result.data[0] && result.data[0].length){
         return true
     }else{
         return false
