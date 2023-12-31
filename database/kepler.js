@@ -1,21 +1,21 @@
 // const sql = require('mssql')
 
-const kepler = new(require('rest-mssql-nodejs'))({
-    user:'gastos',
-    password:'$3c0pl4',
-    server:'187.188.159.26',
-    database:'KEPLER95',
-    port:1434,
-    options:{
-        trustServerCertificate: true 
+const kepler = new (require('rest-mssql-nodejs'))({
+    user: 'gastos',
+    password: '$3c0pl4',
+    server: '187.188.159.26',
+    database: 'KEPLER95',
+    port: 1434,
+    options: {
+        trustServerCertificate: true
     }
 })
 
-let user='gastos'
-let password='$3c0pl4'
-let server="187.188.159.26"
-let database='KEPLER'
-let port=1435
+let user = 'gastos'
+let password = '$3c0pl4'
+let server = "187.188.159.26"
+let database = 'KEPLER'
+let port = 1435
 
 
 // var config = {
@@ -30,7 +30,7 @@ let port=1435
 // };
 
 // sql.connect(config, function (err) {
-    
+
 //     if (err) console.log(err);
 // })
 

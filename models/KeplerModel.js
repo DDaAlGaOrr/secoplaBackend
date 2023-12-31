@@ -3,7 +3,8 @@ const KeplerModel = () => {}
 
 KeplerModel.existUser = async(username)=>{
     const result = await connection.executeQuery(`SELECT c1 FROM KDS_USUARIOS_CUENTAS WHERE c1 = '${username}'`);
-    if(result && result.data && result.data[0] && result.data[0].length){
+    console.log(result.data)
+    if(result.data){
         return true
     }else{
         return false
@@ -49,5 +50,25 @@ KeplerModel.getKdsDirRe = async ()=>{
 KeplerModel.getKdud = async ()=>{
     return connection.executeQuery('select top 100 * from kdud')
 }
+
+KeplerModel.searchClient = async (key) => {
+    try {
+        const queryString = `SELECT C2 as user_id, C3 as client_name FROM kdud WHERE C3 LIKE '%${key}%'`;
+        const result = await connection.executeQuery(queryString);
+        return result.data;
+      } catch (error) {
+        throw new Error(error.message);
+      }
+  }
+
+  KeplerModel.getSubsidiaryClient = async (key) => {
+    try {
+      const queryString = `SELECT C1 as user_id, C2 as subsidiary_id, C12 subsidiary FROM kdudent WHERE C1 = '${key}'`;
+      const result = await connection.executeQuery(queryString);
+      return result.data;
+    } catch (error) {
+      throw new Error(error.message);
+    }
+  }
 
 module.exports = KeplerModel

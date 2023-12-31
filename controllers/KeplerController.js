@@ -92,4 +92,24 @@ KeplerController.getKdud = async (req,res)=>{
     return res.status(200).json(response);
 }
 
+KeplerController.searchClient = async (req,res)=>{
+    let key = req.params.client
+    const data = await KeplerModel.searchClient(key)
+    const response = {
+        status:'success',
+        data: data
+    }
+    return res.status(200).json(response);
+}
+
+KeplerController.getSubsidiaryClient = async (req,res)=>{
+    let id_client = req.params.client
+    const data = await KeplerModel.getSubsidiaryClient(id_client)
+    const response = {
+        status:'success',
+        data: data
+    }
+    return res.status(200).json(response);
+}
+
 module.exports = KeplerController

@@ -10,4 +10,9 @@ ClienteController.getClientes = async (req,res)=>{
     return res.status(200).json(response);
 }
 
+ClienteController.getClientesByArea = async (req,res)=>{
+    const idArea = req.params.area
+    console.log(idArea)
+}
+
 module.exports = ClienteController
