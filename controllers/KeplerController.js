@@ -112,4 +112,14 @@ KeplerController.getSubsidiaryClient = async (req,res)=>{
     return res.status(200).json(response);
 }
 
+KeplerController.getClientById = async (req,res)=>{
+    let id_client = req.params.client
+    const data = await KeplerModel.getClientById(id_client)
+    const response = {
+        status:'success',
+        data: data
+    }
+    return res.status(200).json(response);
+}
+
 module.exports = KeplerController

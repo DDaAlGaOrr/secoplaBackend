@@ -1,3 +1,4 @@
+const { query } = require('mssql');
 const connection = require('./../database/kepler')
 const KeplerModel = () => {}
 
@@ -70,5 +71,10 @@ KeplerModel.searchClient = async (key) => {
       throw new Error(error.message);
     }
   }
+
+  KeplerModel.getClientById = async(id)=>{
+    return await connection.executeQuery(`SELECT * FROM Kdudent WHERE c1 = '${id}'`) 
+  }
+  
 
 module.exports = KeplerModel
