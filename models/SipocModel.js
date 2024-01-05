@@ -6,13 +6,6 @@ SipocModel.getlln = async()=>{
     return await connection.executeQuery('select top 100 * from LLN')
 }
 
-SipocModel.getClientServices = async(id_client)=>{
-    return await connection.executeQuery(
-    `select Tipo_Control, Num_area, Num_trampa, Area, Fecha_Servicio from EDC where Id_Cliente='${id_client}' and id_estatus=3 and (Fecha_Servicio BETWEEN '2023-06-01' AND '2023-12-31') UNION
-    select Tipo_Control, Num_area, Num_trampa, Area, Fecha_Servicio from EDCM where Id_Cliente='${id_client}' and id_estatus=3 and (Fecha_Servicio BETWEEN '2023-06-01' AND '2023-12-31') UNION
-    select Tipo_Control, Num_area, Num_trampa, Area, Fecha_Servicio from LLN where Id_Cliente='${id_client}' and id_estatus=3 and (Fecha_Servicio BETWEEN '2023-06-01' AND '2023-12-31') UNION
-    select Tipo_Control, Num_area, NULL AS Num_trampa, Area, Fecha_Servicio from RNP where Id_Cliente='${id_client}' and id_estatus=3 and (Fecha_Servicio BETWEEN '2023-06-01' AND '2023-12-31')`)
-}
 
 SipocModel.getSubsidiaryClient = async(id_client)=>{
     //que vengan los clientes con sus plantas y las plantas con sus tipos de control (edc, edcm, LLN, RNP) y los tipos de control con sus areas (cinturones)   y las Areas con sus trampas trampas
@@ -44,11 +37,6 @@ SipocModel.getSubsidiaryServices = async(id_subsidiaries) => {
             }
           };
           services.push(clientData)
-        // services.edc.push(edc.data[0]);
-        // services.client.push(client)
-        // services.edcm.push(edcm.data[0]);
-        // services.rnp.push(rnp.data[0]);
-        // services.lln.push(lln.data[0]);
     }
     
 
