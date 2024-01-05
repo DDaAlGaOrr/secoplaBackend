@@ -12,7 +12,6 @@ SipocController.getlln = async(req,res)=>{
 
 SipocController.getClientservices = async(req,res)=>{
     let id_client = req.params.client
-    const id_subsidiaries = []
     const subsidiaryClient = await SipocModel.getSubsidiaryClient(id_client)
    
     const subsidiaryServices = await SipocModel.getSubsidiaryServices(subsidiaryClient.data[0])

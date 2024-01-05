@@ -29,7 +29,6 @@ SipocModel.getSubsidiaryServices = async(id_subsidiaries) => {
         let edcm = await connection.executeQuery(`SELECT  Area,Tipo_Control,Num_trampa FROM EDCM WHERE Id_Cliente = ${client.Id_Cliente} and Id_Estatus = 3  AND CONVERT(DATE, Fecha) BETWEEN '2023-06-01' AND '2023-12-31'`);
         let rnp = await connection.executeQuery(`SELECT Area,Tipo_Control,Num_area FROM RNP WHERE Id_Cliente = ${client.Id_Cliente} and Id_Estatus = 3  AND CONVERT(DATE, Fecha) BETWEEN '2023-06-01' AND '2023-12-31'`);
         let lln = await connection.executeQuery(`SELECT Area,Tipo_Control,Num_trampa FROM LLN WHERE Id_Cliente = ${client.Id_Cliente} and Id_Estatus = 3  AND CONVERT(DATE, Fecha) BETWEEN '2023-06-01' AND '2023-12-31'`);
-        console.log(edc)
         const clientData = {
             client: {
                 planta: [client],
