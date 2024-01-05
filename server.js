@@ -11,6 +11,7 @@ const edcm = require('./routes/Edcm')
 const rnp = require('./routes/Rnp')
 const kepler = require('./routes/Kepler')
 const sipoc = require('./routes/sipoc')
+const lln = require('./routes/Lin')
 
 
 app.use(cors());
@@ -26,6 +27,7 @@ app.use(edcm)
 app.use(rnp)
 app.use(kepler)
 app.use(sipoc)
+app.use(lln)
 
 app.listen(port, () => {
   console.log(`SERVER corriendo en http://localhost:${port}`);
