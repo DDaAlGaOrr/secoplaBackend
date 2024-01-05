@@ -25,10 +25,12 @@ SipocModel.getSubsidiaryServices = async(id_subsidiaries) => {
         clients.sucursal.push(subsidiary);
     }
     for (const client of clients.planta) {
-        let edc = await connection.executeQuery(`SELECT Area,Tipo_Control,Num_trampa FROM EDC WHERE Id_Cliente = ${client.Id_Cliente} and Id_Estatus = 3  AND CONVERT(DATE, Fecha) BETWEEN '2023-06-01' AND '2023-12-31'`);
-        let edcm = await connection.executeQuery(`SELECT  Area,Tipo_Control,Num_trampa FROM EDCM WHERE Id_Cliente = ${client.Id_Cliente} and Id_Estatus = 3  AND CONVERT(DATE, Fecha) BETWEEN '2023-06-01' AND '2023-12-31'`);
-        let rnp = await connection.executeQuery(`SELECT Area,Tipo_Control,Num_area FROM RNP WHERE Id_Cliente = ${client.Id_Cliente} and Id_Estatus = 3  AND CONVERT(DATE, Fecha) BETWEEN '2023-06-01' AND '2023-12-31'`);
-        let lln = await connection.executeQuery(`SELECT Area,Tipo_Control,Num_trampa FROM LLN WHERE Id_Cliente = ${client.Id_Cliente} and Id_Estatus = 3  AND CONVERT(DATE, Fecha) BETWEEN '2023-06-01' AND '2023-12-31'`);
+        let edc = await connection.executeQuery(`SELECT DISTINCT Area,Tipo_Control,Num_trampa FROM EDC WHERE Id_Cliente = ${client.Id_Cliente} and Id_Estatus = 3  AND CONVERT(DATE, Fecha) BETWEEN '2023-06-01' AND '2023-12-31'`);
+        let edcm = await connection.executeQuery(`SELECT DISTINCT  Area,Tipo_Control,Num_trampa FROM EDCM WHERE Id_Cliente = ${client.Id_Cliente} and Id_Estatus = 3  AND CONVERT(DATE, Fecha) BETWEEN '2023-06-01' AND '2023-12-31'`);
+        let rnp = await connection.executeQuery(`SELECT DISTINCT Area,Tipo_Control,Num_area FROM RNP WHERE Id_Cliente = ${client.Id_Cliente} and Id_Estatus = 3  AND CONVERT(DATE, Fecha) BETWEEN '2023-06-01' AND '2023-12-31'`);
+        let lln = await connection.executeQuery(`SELECT DISTINCT Area,Tipo_Control,Num_trampa FROM LLN WHERE Id_Cliente = ${client.Id_Cliente} and Id_Estatus = 3  AND CONVERT(DATE, Fecha) BETWEEN '2023-06-01' AND '2023-12-31'`);
+
+        console.log(edc)
         const clientData = {
             client: {
                 planta: [client],
