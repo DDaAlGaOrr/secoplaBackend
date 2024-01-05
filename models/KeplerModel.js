@@ -49,7 +49,7 @@ KeplerModel.getKdsDirRe = async ()=>{
 }
 
 KeplerModel.getKdud = async ()=>{
-    return connection.executeQuery('select top 100 * from kdud')
+    return connection.executeQuery('select c2,c3,c9,c10,c27 from kdud')
 }
 
 KeplerModel.searchClient = async (key) => {
