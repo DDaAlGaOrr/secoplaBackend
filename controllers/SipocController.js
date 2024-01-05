@@ -14,16 +14,8 @@ SipocController.getClientservices = async(req,res)=>{
     let id_client = req.params.client
     const id_subsidiaries = []
     const subsidiaryClient = await SipocModel.getSubsidiaryClient(id_client)
-    subsidiaryClient.data[0].forEach(element => {
-        id_subsidiaries.push(element.id_planta)
-    });
-    const subsidiaryServices = await SipocModel.getSubsidiaryServices(id_subsidiaries)
-    // console.log(id_subsidiary)
-    // const response = {
-    //     status:'success',
-    //     data: subsidiaryClient.data
-    // }
+   
+    const subsidiaryServices = await SipocModel.getSubsidiaryServices(subsidiaryClient.data[0])
     return res.status(200).json(subsidiaryServices);
 }
-
 module.exports = SipocController;
