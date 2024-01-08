@@ -25,24 +25,26 @@ SipocModel.getSubsidiaryServices = async(id_subsidiaries) => {
         clients.sucursal.push(subsidiary);
     }
     for (const client of clients.planta) {
-        let edc = await connection.executeQuery(`SELECT DISTINCT Area,Tipo_Control,Num_trampa FROM EDC WHERE Id_Cliente = ${client.Id_Cliente} and Id_Estatus = 3  AND CONVERT(DATE, Fecha) BETWEEN '2023-06-01' AND '2023-12-31'`);
-        let edcm = await connection.executeQuery(`SELECT DISTINCT  Area,Tipo_Control,Num_trampa FROM EDCM WHERE Id_Cliente = ${client.Id_Cliente} and Id_Estatus = 3  AND CONVERT(DATE, Fecha) BETWEEN '2023-06-01' AND '2023-12-31'`);
-        let rnp = await connection.executeQuery(`SELECT DISTINCT Area,Tipo_Control,Num_area FROM RNP WHERE Id_Cliente = ${client.Id_Cliente} and Id_Estatus = 3  AND CONVERT(DATE, Fecha) BETWEEN '2023-06-01' AND '2023-12-31'`);
-        let lln = await connection.executeQuery(`SELECT DISTINCT Area,Tipo_Control,Num_trampa FROM LLN WHERE Id_Cliente = ${client.Id_Cliente} and Id_Estatus = 3  AND CONVERT(DATE, Fecha) BETWEEN '2023-06-01' AND '2023-12-31'`);
-
-        const clientData = {
-            client: {
-                planta: [client],
-                sucursal: [clients.sucursal[clients.planta.indexOf(client)]]
-            },
-            servicios: {
-                edc: edc.data[0]?edc.data[0]:[],
-                edcm: edcm.data[0],
-                rnp: rnp.data[0],
-                lln: lln.data[0]
-            }
-        };
-        services.push(clientData);
+        if(client && client.Id_Cliente) {
+            let edc = await connection.executeQuery(`SELECT DISTINCT Area,Tipo_Control,Num_trampa FROM EDC WHERE Id_Cliente = ${client.Id_Cliente} and Id_Estatus = 3  AND CONVERT(DATE, Fecha) BETWEEN '2023-06-01' AND '2023-12-31'`);
+            let edcm = await connection.executeQuery(`SELECT DISTINCT  Area,Tipo_Control,Num_trampa FROM EDCM WHERE Id_Cliente = ${client.Id_Cliente} and Id_Estatus = 3  AND CONVERT(DATE, Fecha) BETWEEN '2023-06-01' AND '2023-12-31'`);
+            let rnp = await connection.executeQuery(`SELECT DISTINCT Area,Tipo_Control,Num_area FROM RNP WHERE Id_Cliente = ${client.Id_Cliente} and Id_Estatus = 3  AND CONVERT(DATE, Fecha) BETWEEN '2023-06-01' AND '2023-12-31'`);
+            let lln = await connection.executeQuery(`SELECT DISTINCT Area,Tipo_Control,Num_trampa FROM LLN WHERE Id_Cliente = ${client.Id_Cliente} and Id_Estatus = 3  AND CONVERT(DATE, Fecha) BETWEEN '2023-06-01' AND '2023-12-31'`);
+    
+            const clientData = {
+                client: {
+                    planta: [client],
+                    sucursal: [clients.sucursal[clients.planta.indexOf(client)]]
+                },
+                servicios: {
+                    edc: edc.data[0]?edc.data[0]:[],
+                    edcm: edcm.data[0],
+                    rnp: rnp.data[0],
+                    lln: lln.data[0]
+                }
+            };
+            services.push(clientData);
+        }
     }
     return services;
 }
