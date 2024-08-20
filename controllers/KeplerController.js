@@ -134,7 +134,7 @@ KeplerController.getkdsGastosVehicular = async (req, res) => {
 }
 
 KeplerController.getKdsCardexVehiculos = async (req, res) => {
-    const result = await KeplerModel.getKdsCardexVehiculos()
+    const result = await KeplerModel.getKdsCardexVehiculos(req.body)
     if (result.success) {
         return res.status(200).json(result);
     }
@@ -145,7 +145,22 @@ KeplerController.getKdsCardexVehiculos = async (req, res) => {
 }
 
 KeplerController.saveChecklist = async (req, res) => {
-    const result = await KeplerModel.saveChecklist() 
+    const result = await KeplerModel.saveChecklist()
+}
+
+KeplerController.getFolio = async (req, res) => {
+    const result = await KeplerModel.getFolio()
+    if (result.success) {
+        const lastFolio = result.data[0][0].c1
+        const splitFolio = lastFolio.split('-')
+        const number = parseInt(splitFolio[1]) + 1
+        const paddedNumber = number.toString().padStart(8, '0');
+        const newFolio = `C-${paddedNumber}`
+        return res.status(200).json(newFolio);
+    }
+    else {
+        return res.status(404).json(result);
+    }
 }
 
 module.exports = KeplerController

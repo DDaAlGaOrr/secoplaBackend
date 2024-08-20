@@ -17,4 +17,5 @@ router.get('/getClientById/:client', Kepler.getClientById)
 
 router.post('/auth', Kepler.auth)
 router.post('/saveChecklist', Kepler.saveChecklist)
+router.get('/getFolio', Kepler.getFolio)
 module.exports = router
