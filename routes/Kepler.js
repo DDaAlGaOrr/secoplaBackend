@@ -20,6 +20,6 @@ router.get('/getClientById/:client', Kepler.getClientById)
 router.get('/getFolio', Kepler.getFolio)
 
 router.post('/auth', Kepler.auth)
-router.post('/saveChecklist', Kepler.saveChecklist)
+router.post('/saveChecklist', upload.none(), Kepler.saveChecklist)
 router.post('/updateGastosVehicular', upload.none(), Kepler.updateGastosVehicular)
 module.exports = router
