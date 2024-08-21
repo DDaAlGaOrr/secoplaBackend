@@ -18,4 +18,5 @@ router.get('/getFolio', Kepler.getFolio)
 
 router.post('/auth', Kepler.auth)
 router.post('/saveChecklist', Kepler.saveChecklist)
+router.post('/updateGastosVehicular', Kepler.updateGastosVehicular)
 module.exports = router

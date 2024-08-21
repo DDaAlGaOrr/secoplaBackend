@@ -163,4 +163,13 @@ KeplerController.getFolio = async (req, res) => {
     }
 }
 
+KeplerController.updateGastosVehicular = async (req, res) => {
+    const result = await KeplerModel.updateGastosVehicular(req.body)
+    if (result.success) {
+        return res.status(200).json(result);
+    } else {
+        return res.status(400).json(result);
+    }
+}
+
 module.exports = KeplerController

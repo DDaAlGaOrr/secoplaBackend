@@ -200,4 +200,8 @@ KeplerModel.getFolio = async (data) => {
     return await connection.executeQuery("SELECT TOP 1 c1 FROM KDS_CHECKLIST ORDER BY c1 DESC");
 }
 
+KeplerModel.updateGastosVehicular = async (data) => {
+    return await connection.executeQuery(`UPDATE kds_gastos_vehicular SET c27 = '${data.status}' WHERE c1 = '${data.id}';`)
+}
+
 module.exports = KeplerModel
