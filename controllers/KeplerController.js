@@ -146,6 +146,11 @@ KeplerController.getKdsCardexVehiculos = async (req, res) => {
 
 KeplerController.saveChecklist = async (req, res) => {
     const result = await KeplerModel.saveChecklist()
+    if (result.success) {
+        return res.status(200).json(true);
+    } else {
+        return res.status(400).json(false);
+    }
 }
 
 KeplerController.getFolio = async (req, res) => {
