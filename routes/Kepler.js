@@ -1,6 +1,9 @@
 const express = require('express')
 const router = express.Router()
+const multer = require('multer');
 const Kepler = require('./../controllers/KeplerController')
+
+const upload = multer();
 
 router.get('/getusers', Kepler.getUsers)
 router.get('/getkdsGastosVehicular', Kepler.getkdsGastosVehicular)
@@ -18,5 +21,5 @@ router.get('/getFolio', Kepler.getFolio)
 
 router.post('/auth', Kepler.auth)
 router.post('/saveChecklist', Kepler.saveChecklist)
-router.post('/updateGastosVehicular', Kepler.updateGastosVehicular)
+router.post('/updateGastosVehicular', upload.none(), Kepler.updateGastosVehicular)
 module.exports = router
