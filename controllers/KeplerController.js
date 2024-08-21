@@ -149,7 +149,7 @@ KeplerController.saveChecklist = async (req, res) => {
     if (result.success) {
         return res.status(200).json(true);
     } else {
-        return res.status(400).json(false);
+        return res.status(400).json(result);
     }
 }
 
