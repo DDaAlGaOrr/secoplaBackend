@@ -103,7 +103,7 @@ KeplerModel.saveChecklist = async (data) => {
         ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?
     )
 `;
-
+    console.log(data)
     const params = [
         data.folio,
         data.num_economico,
