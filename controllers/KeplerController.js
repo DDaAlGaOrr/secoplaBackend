@@ -125,7 +125,7 @@ KeplerController.getClientById = async (req, res) => {
 KeplerController.getkdsGastosVehicular = async (req, res) => {
     const result = await KeplerModel.getkdsGastosVehicular()
     if (result.success) {
-        return res.status(200).json(result);
+        return res.status(200).json(result.data);
     }
     else {
         return res.status(404).json(result);

@@ -14,8 +14,8 @@ router.get('/getKdsCardexVehiculos', Kepler.getKdsCardexVehiculos)
 router.get('/searchClient/:client', Kepler.searchClient)
 router.get('/getSubsidiaryClient/:client', Kepler.getSubsidiaryClient)
 router.get('/getClientById/:client', Kepler.getClientById)
+router.get('/getFolio', Kepler.getFolio)
 
 router.post('/auth', Kepler.auth)
 router.post('/saveChecklist', Kepler.saveChecklist)
-router.get('/getFolio', Kepler.getFolio)
 module.exports = router
