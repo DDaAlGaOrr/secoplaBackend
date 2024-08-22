@@ -179,9 +179,7 @@ KeplerModel.saveChecklist = async (data) => {
         'X'
     ];
     try {
-        params.forEach((param, index) => {
-            console.log(`Index ${index}:`, param, typeof param);
-        });
+        
         if (params.includes(undefined) || params.includes(null)) {
             console.error('Array contiene valores undefined o null');
         }
