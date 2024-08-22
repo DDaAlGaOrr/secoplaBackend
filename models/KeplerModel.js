@@ -1,5 +1,6 @@
 const { query } = require('mssql');
 const connection = require('./../database/kepler')
+const sequelize = require('./../database/conection')
 const KeplerModel = () => { }
 
 KeplerModel.existUser = async (username) => {
@@ -85,119 +86,133 @@ KeplerModel.getKdsCardexVehiculos = async () => {
 }
 
 KeplerModel.saveChecklist = async (data) => {
-    const query = `
-    INSERT INTO KDS_CHECKLIST (
-        c1, c2, c3, c4, c5, c6, c7, c8, c9, c10, c11, c12, c13, c14, c15,
-        c16, c17, c18, c19, c20, c21, c22, c23, c24, c25, c26, c27, c28, 
-        c29, c30, c31, c32, c33, c34, c35, c36, c37, c38, c39, c40, c41, 
-        c42, c43, c44, c45, c46, c47, c48, c49, c50, c51, c52, c53, c54, 
-        c55, c56, c57, c58, c59, c60, c61, c62, c63, c64, c65, c66, c67,
-        c68, c69, c70, c71, c72, c73, c74, c75, c76, c78, c79, c80, c81, 
-        c82, c83, c84, c85, c86, c87
-    ) VALUES (
-        ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,
-        ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 
-        ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 
-        ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 
-        ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 
-        ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?
-    )
-`;
-    console.log(data)
-    const params = [
-        data.folio,
-        data.num_economico,
-        data.placas,
-        'fecha',
-        data.km,
-        data.responsable,
-        data.telefono,
-        data.zona,
-        data.region,
-        data.region,
-        data.bolsa_herramienta,
-        data.poliza_seguro,
-        data.gato_manivel,
-        data.tarjeta_gasolina,
-        data.engomado,
-        data.reflejantes,
-        data.tag,
-        data.poliza_garantia,
-        data.llanta_refaccion,
-        data.manual_conductor,
-        data.poliza_asistencia,
-        data.aceite_motor,
-        data.presion_llantas,
-        data.anticongelante,
-        data.liquido_frenos,
-        data.aceite_hidra,
-        data.limpia_parabrisas,
-        'limpia parabrisas',
-        data.interiores_buenos,
-        data.nivel_combustible,
-        data.faro_izquierdo,
-        data.calavera_izquierda,
-        data.faro_derecho,
-        data.calavera_derecha,
-        data.cofre,
-        data.cajuela,
-        data.parrilla,
-        data.chapa_cajuela,
-        data.facia_delantera,
-        data.facia_trasera,
-        data.parabrisas,
-        data.medallon,
-        data.salpicadera_izq,
-        data.salpicadera_der,
-        data.llanta_delantera_izq,
-        data.llanta_delantera_der,
-        data.espejo_lateral_izq,
-        data.espejo_lateral_der,
-        data.puerta_delantera_izq,
-        data.puerta_delantera_der,
-        data.chapa_puer_delant_izq,
-        data.chapa_puer_delant_der,
-        data.vidrio_puer_delantera_izq,
-        data.vidrio_puer_delantera_der,
-        data.puerta_trasera_izq,
-        data.puerta_trasera_der,
-        data.vidrio_puer_trasera_izq,
-        data.vidrio_puer_trasera_der,
-        data.chapa_puer_trasera_izq,
-        data.chapa_puer_trasera_der,
-        data.llanta_trasera_izq,
-        data.llanta_trasera_der,
-        data.indicadores,
-        data.luces_funcionales,
-        data.incluye_botiquin,
-        data.danios_parabrisas,
-        data.inmovilizador,
-        data.direccionales_funcionales,
-        data.aire_acon_funcional,
-        data.gobernador_instalado,
-        data.cinturones_seguridad,
-        data.gps_telcel,
-        data.bolsas_aire,
-        data.alarma_funcional,
-        data.proteccion_cargo,
-        data.tapones_rines,
-        data.rin_izq_delantero,
-        data.rin_der_delantero,
-        data.rin_izq_trasero,
-        data.rin_der_trasero,
-        'Comentarios',
-        data.comp_verifica,
-        data.botiquin,
-        data.placa_del,
-        data.placa_tras,
-        'Estatus'
-    ];
 
-    return await connection.executeQuery(query, params)
+    let params = [
+        data.folio.trim(),
+        data.num_economico.trim(),
+        data.placas.trim(),
+        data.current_date,
+        data.km.trim(),
+        data.responsable.trim(),
+        data.telefono.trim(),
+        data.zona.trim(),
+        data.region.trim(),
+        data.tar_circulacion.trim(),
+        data.bolsa_herramienta.trim(),
+        data.poliza_seguro.trim(),
+        data.gato_manivel.trim(),
+        data.tarjeta_gasolina.trim(),
+        data.engomado.trim(),
+        data.reflejantes.trim(),
+        data.tag.trim(),
+        data.poliza_garantia.trim(),
+        data.llanta_refaccion.trim(),
+        data.manual_conductor.trim(),
+        data.poliza_asistencia.trim(),
+        data.aceite_motor.trim(),
+        data.presion_llantas.trim(),
+        data.anticongelante.trim(),
+        data.liquido_frenos.trim(),
+        data.aceite_hidra.trim(),
+        data.limpia_parabrisas.trim(),
+        'limpia parabrisas',
+        data.interiores_buenos.trim(),
+        data.nivel_combustible.trim(),
+        data.faro_izquierdo.trim(),
+        data.calavera_izquierda.trim(),
+        data.faro_derecho.trim(),
+        data.calavera_derecha.trim(),
+        data.cofre.trim(),
+        data.cajuela.trim(),
+        data.parrilla.trim(),
+        data.chapa_cajuela.trim(),
+        data.facia_delantera.trim(),
+        data.facia_trasera.trim(),
+        data.parabrisas.trim(),
+        data.medallon.trim(),
+        data.salpicadera_izq.trim(),
+        data.salpicadera_der.trim(),
+        data.llanta_delantera_izq.trim(),
+        data.llanta_delantera_der.trim(),
+        data.espejo_lateral_izq.trim(),
+        data.espejo_lateral_der.trim(),
+        data.puerta_delantera_izq.trim(),
+        data.puerta_delantera_der.trim(),
+        data.chapa_puer_delant_izq.trim(),
+        data.chapa_puer_delant_der.trim(),
+        data.vidrio_puer_delantera_izq.trim(),
+        data.vidrio_puer_delantera_der.trim(),
+        data.puerta_trasera_izq.trim(),
+        data.puerta_trasera_der.trim(),
+        data.vidrio_puer_trasera_izq.trim(),
+        data.vidrio_puer_trasera_der.trim(),
+        data.chapa_puer_trasera_izq.trim(),
+        data.chapa_puer_trasera_der.trim(),
+        data.llanta_trasera_izq.trim(),
+        data.llanta_trasera_der.trim(),
+        data.indicadores.trim(),
+        data.luces_funcionales.trim(),
+        data.incluye_botiquin.trim(),
+        data.danios_parabrisas.trim(),
+        data.inmovilizador.trim(),
+        data.direccionales_funcionales.trim(),
+        data.aire_acon_funcional.trim(),
+        data.gobernador_instalado.trim(),
+        data.cinturones_seguridad.trim(),
+        data.gps_telcel.trim(),
+        data.bolsas_aire.trim(),
+        data.alarma_funcional.trim(),
+        data.proteccion_cargo.trim(),
+        data.tapones_rines.trim(),
+        'X',
+        data.rin_izq_delantero.trim(),
+        data.rin_der_delantero.trim(),
+        data.rin_izq_trasero.trim(),
+        data.rin_der_trasero.trim(),
+        'Comentarios',
+        data.comp_verifica.trim(),
+        data.botiquin.trim(),
+        data.placa_del.trim(),
+        data.placa_tras.trim(),
+        'Estatus',
+        'X',
+        'X',
+        'X'
+    ];
+    try {
+        params.forEach((param, index) => {
+            console.log(`Index ${index}:`, param, typeof param);
+        });
+        if (params.includes(undefined) || params.includes(null)) {
+            console.error('Array contiene valores undefined o null');
+        }
+        params = params.map(val => val !== undefined && val !== null ? val : '');
+
+        const query = `INSERT INTO KDS_CHECKLIST (c1, c2, c3, c4, c5, c6, c7, c8, c9, c10, c11, c12, c13, c14, c15,
+            c16, c17, c18, c19, c20, c21, c22, c23, c24, c25, c26, c27, c28, 
+            c29, c30, c31, c32, c33, c34, c35, c36, c37, c38, c39, c40, c41, 
+            c42, c43, c44, c45, c46, c47, c48, c49, c50, c51, c52, c53, c54, 
+            c55, c56, c57, c58, c59, c60, c61, c62, c63, c64, c65, c66, c67,
+            c68, c69, c70, c71, c72, c73, c74, c75, c76, c77, c78, c79, c80, 
+            c81, c82, c83, c84, c85, c86, c87, c88, c89, c90
+        ) VALUES (${params.map(() => '?').join(', ')})
+        `;
+        await sequelize.query(query, {
+            replacements: params,
+        });
+        return { status: true }
+    } catch (error) {
+        console.error('Error al insertar datos:', error);
+        return { status: false, message: error }
+    }
 }
 
 KeplerModel.getFolio = async (data) => {
     return await connection.executeQuery("SELECT TOP 1 c1 FROM KDS_CHECKLIST ORDER BY c1 DESC");
+}
+
+KeplerModel.KDS_CHECKLIST = async (data) => {
+    return await connection.executeQuery("EXEC sp_help 'KDS_CHECKLIST'");
 }
 
 KeplerModel.updateGastosVehicular = async (data) => {

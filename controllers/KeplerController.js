@@ -146,10 +146,10 @@ KeplerController.getKdsCardexVehiculos = async (req, res) => {
 
 KeplerController.saveChecklist = async (req, res) => {
     const result = await KeplerModel.saveChecklist(req.body)
-    if (result.success) {
+    if (result.status) {
         return res.status(200).json(true);
     } else {
-        return res.status(400).json(result);
+        return res.status(400).json(result.message);
     }
 }
 
@@ -170,6 +170,15 @@ KeplerController.getFolio = async (req, res) => {
 
 KeplerController.updateGastosVehicular = async (req, res) => {
     const result = await KeplerModel.updateGastosVehicular(req.body)
+    if (result.success) {
+        return res.status(200).json(result);
+    } else {
+        return res.status(400).json(result);
+    }
+}
+
+KeplerController.KDS_CHECKLIST = async (req, res) => {
+    const result = await KeplerModel.KDS_CHECKLIST()
     if (result.success) {
         return res.status(200).json(result);
     } else {
