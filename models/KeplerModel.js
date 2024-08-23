@@ -114,7 +114,7 @@ KeplerModel.saveChecklist = async (data) => {
         data.liquido_frenos.trim(),
         data.aceite_hidra.trim(),
         data.limpia_parabrisas.trim(),
-        'limpia parabrisas',
+        data.limpia_para_funcional.trim(),
         data.interiores_buenos.trim(),
         data.nivel_combustible.trim(),
         data.faro_izquierdo.trim(),
@@ -163,23 +163,23 @@ KeplerModel.saveChecklist = async (data) => {
         data.alarma_funcional.trim(),
         data.proteccion_cargo.trim(),
         data.tapones_rines.trim(),
-        'X',
+        '0',
         data.rin_izq_delantero.trim(),
         data.rin_der_delantero.trim(),
         data.rin_izq_trasero.trim(),
         data.rin_der_trasero.trim(),
-        'Comentarios',
+        data.observaciones.trim(),
         data.comp_verifica.trim(),
         data.botiquin.trim(),
         data.placa_del.trim(),
         data.placa_tras.trim(),
-        'Estatus',
-        'X',
+        'P',
+        data.user_name.trim(),
         'X',
         'X'
     ];
     try {
-        
+
         if (params.includes(undefined) || params.includes(null)) {
             console.error('Array contiene valores undefined o null');
         }
