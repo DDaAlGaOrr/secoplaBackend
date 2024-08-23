@@ -86,7 +86,6 @@ KeplerModel.getKdsCardexVehiculos = async () => {
 }
 
 KeplerModel.saveChecklist = async (data) => {
-    console.log(data)
     let params = [
         data.folio.trim(),
         data.num_economico.trim(),
