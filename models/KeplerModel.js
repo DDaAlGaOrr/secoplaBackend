@@ -175,8 +175,16 @@ KeplerModel.saveChecklist = async (data) => {
         data.placa_tras.trim(),
         'P',
         data.user_name.trim(),
-        'X',
-        'X'
+        data.pic_1.trim(),
+        data.pic_2.trim(),
+        data.pic_3.trim(),
+        data.pic_4.trim(),
+        data.pic_5.trim(),
+        data.pic_6.trim(),
+        data.pic_7.trim(),
+        data.pic_8.trim(),
+        data.pic_9.trim(),
+        data.pic_10.trim(),
     ];
     try {
 
@@ -191,7 +199,8 @@ KeplerModel.saveChecklist = async (data) => {
             c42, c43, c44, c45, c46, c47, c48, c49, c50, c51, c52, c53, c54, 
             c55, c56, c57, c58, c59, c60, c61, c62, c63, c64, c65, c66, c67,
             c68, c69, c70, c71, c72, c73, c74, c75, c76, c77, c78, c79, c80, 
-            c81, c82, c83, c84, c85, c86, c87, c88, c89, c90
+            c81, c82, c83, c84, c85, c86, c87, c88, c89, c90, c91, c92, c93,
+            c94, c95, c96, c97, c98
         ) VALUES (${params.map(() => '?').join(', ')})
         `;
         await sequelize.query(query, {
@@ -209,7 +218,7 @@ KeplerModel.getFolio = async (data) => {
 }
 
 KeplerModel.KDS_CHECKLIST = async (data) => {
-    return await connection.executeQuery("EXEC sp_help 'KDS_CHECKLIST'");
+    return await connection.executeQuery("select * from KDS_CHECKLIST");
 }
 
 KeplerModel.updateGastosVehicular = async (data) => {
