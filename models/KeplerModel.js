@@ -226,4 +226,8 @@ KeplerModel.updateGastosVehicular = async (data) => {
     return await connection.executeQuery(`UPDATE kds_gastos_vehicular SET c27 = '${data.status}' WHERE c1 = '${data.id}';`)
 }
 
+KeplerModel.updateckdsCardexVehiculos = async (data) => {
+    return await connection.executeQuery(`UPDATE kds_cardex_vehiculos SET c33 = '${data.km}' WHERE c1 = '${data.id}';`)
+}
+
 module.exports = KeplerModel

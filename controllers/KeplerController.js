@@ -186,4 +186,13 @@ KeplerController.KDS_CHECKLIST = async (req, res) => {
     }
 }
 
+KeplerController.updateckdsCardexVehiculos = async (req, res) => {
+    const result = await KeplerModel.updateckdsCardexVehiculos(res.body)
+    if (result.success) {
+        return res.status(200).json(result);
+    } else {
+        return res.status(400).json(result);
+    }
+}
+
 module.exports = KeplerController
