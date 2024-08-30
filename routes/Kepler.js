@@ -18,6 +18,7 @@ router.get('/searchClient/:client', Kepler.searchClient)
 router.get('/getSubsidiaryClient/:client', Kepler.getSubsidiaryClient)
 router.get('/getClientById/:client', Kepler.getClientById)
 router.get('/getFolio', Kepler.getFolio)
+router.get('/getValidationFolio', Kepler.getValidationFolio)
 router.get('/KDS_CHECKLIST', Kepler.KDS_CHECKLIST)
 
 router.post('/auth', Kepler.auth)

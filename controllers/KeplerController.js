@@ -213,4 +213,19 @@ KeplerController.updateValidation = async (req, res) => {
     }
 }
 
+KeplerController.getValidationFolio = async (req, res) => {
+    const result = await KeplerModel.getValidationFolio()
+    if (result.success) {
+        const lastFolio = result.data[0][0].c1
+        const splitFolio = lastFolio.split('-')
+        const number = parseInt(splitFolio[1]) + 1
+        const paddedNumber = number.toString().padStart(8, '0');
+        const newFolio = `S-${paddedNumber}`
+        return res.status(200).json(newFolio);
+    }
+    else {
+        return res.status(404).json(result);
+    }
+}
+
 module.exports = KeplerController
