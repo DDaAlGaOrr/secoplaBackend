@@ -230,4 +230,51 @@ KeplerModel.updateckdsCardexVehiculos = async (data) => {
     return await connection.executeQuery(`UPDATE kds_cardex_vehiculos SET c33 = '${data.km}' WHERE c1 = '${data.id}';`)
 }
 
+KeplerModel.saveValidation = async (data) => {
+    let params = [
+        data.folio_entrada.trim(),
+        data.unidad_vehicular.trim(),
+        data.concepto_accion.trim(),
+        data.fecha_alta_entrada.trim(),
+        data.quien_registra.trim(),
+        data.nombre.trim(),
+        data.km_entrada.trim(),
+        data.modelo.trim(),
+        data.placas.trim(),
+        data.serie.trim(),
+        data.responsable.trim(),
+        data.estatus_autorizacion.trim(),
+        data.foto_1_entrada.trim(),
+        data.foto_2_entrada.trim(),
+        data.foto_3_entrada.trim(),
+        data.fecha_hora_validacion.trim(),
+        data.fecha_alta_salida.trim(),
+        data.km_salida.trim(),
+        data.foto_1_salida.trim(),
+        data.foto_2_salida.trim(),
+        data.foto_3_salida.trim(),
+        data.fecha_validacion_salida.trim(),
+        data.comentario_rechazo_entrada.trim(),
+        data.comentario_rechazo_salida.trim(),
+    ]
+    try {
+        if (params.includes(undefined) || params.includes(null)) {
+            console.error('Array contiene valores undefined o null');
+        }
+        params = params.map(val => val !== undefined && val !== null ? val : '');
+
+        const query = `INSERT INTO kds_seguimiento_servicios (c1, c2, c3, c4, c5, c6, c7, c8, c9, c10, c11, c12, c13, c14, c15,
+            c16, c17, c18, c19, c20, c21, c22, c23, c24, c25
+        ) VALUES (${params.map(() => '?').join(', ')})
+        `;
+        await sequelize.query(query, {
+            replacements: params,
+        });
+        return { status: true }
+    } catch (error) {
+        console.error('Error al insertar datos:', error);
+        return { status: false, message: error }
+    }
+}
+
 module.exports = KeplerModel
