@@ -231,6 +231,7 @@ KeplerModel.updateckdsCardexVehiculos = async (data) => {
 }
 
 KeplerModel.saveValidation = async (data) => {
+    console.log(data)
     let params = [
         data.folio_entrada.trim(),
         data.unidad_vehicular.trim(),
