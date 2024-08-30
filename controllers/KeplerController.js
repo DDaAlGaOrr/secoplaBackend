@@ -216,6 +216,7 @@ KeplerController.updateValidation = async (req, res) => {
 KeplerController.getValidationFolio = async (req, res) => {
     const result = await KeplerModel.getValidationFolio()
     if (result.success) {
+        console.log(result.data)
         const lastFolio = result.data[0][0].c1
         const splitFolio = lastFolio.split('-')
         const number = parseInt(splitFolio[1]) + 1
