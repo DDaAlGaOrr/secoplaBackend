@@ -187,7 +187,7 @@ KeplerController.KDS_CHECKLIST = async (req, res) => {
 }
 
 KeplerController.updateckdsCardexVehiculos = async (req, res) => {
-    const result = await KeplerModel.updateckdsCardexVehiculos(res.body)
+    const result = await KeplerModel.updateckdsCardexVehiculos(req.body)
     if (result.success) {
         return res.status(200).json(result);
     } else {
@@ -196,7 +196,7 @@ KeplerController.updateckdsCardexVehiculos = async (req, res) => {
 }
 
 KeplerController.saveValidation = async (req, res) => {
-    const result = await KeplerModel.saveValidation(res.body)
+    const result = await KeplerModel.saveValidation(req.body)
     if (result.success) {
         return res.status(200).json(result);
     } else {
@@ -205,7 +205,7 @@ KeplerController.saveValidation = async (req, res) => {
 }
 
 KeplerController.updateValidation = async (req, res) => {
-    const result = await KeplerModel.updateValidation(res.body)
+    const result = await KeplerModel.updateValidation(req.body)
     if (result.success) {
         return res.status(200).json(result);
     } else {
