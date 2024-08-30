@@ -301,11 +301,12 @@ KeplerModel.updateValidation = async (data) => {
 }
 
 KeplerModel.getValidationFolio = async () => {
-    return await connection.executeQuery("SELECT TOP 1 c1 FROM kds_seguimiento_servicios ORDER BY c1 ASC");
+    return await connection.executeQuery("SELECT TOP 1 c1 FROM kds_seguimiento_servicios ORDER BY c1 DESC");
 }
 
 KeplerModel.getValidations = async () => {
     return await connection.executeQuery("SELECT * from kds_seguimiento_servicios");
+    // return await connection.executeQuery("UPDATE kds_seguimiento_servicios SET c1 = 'S-00000001' where c1 = 'S-000001'");
 
 }
 
