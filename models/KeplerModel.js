@@ -250,6 +250,7 @@ KeplerModel.saveValidation = async (data) => {
         data.foto_3_entrada.trim(),
         data.fecha_hora_validacion.trim(),
         data.fecha_alta_salida.trim(),
+        '',
         data.km_salida.trim(),
         data.foto_1_salida.trim(),
         data.foto_2_salida.trim(),
