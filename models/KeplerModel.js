@@ -300,6 +300,10 @@ KeplerModel.updateValidation = async (data) => {
 
 KeplerModel.getValidationFolio = async () => {
     return await connection.executeQuery("SELECT TOP 1 c1 FROM kds_seguimiento_servicios ORDER BY c1 DESC");
+}
+
+KeplerModel.getValidations = async () => {
+    return await connection.executeQuery("SELECT * from kds_seguimiento_servicios");
 
 }
 

@@ -228,4 +228,14 @@ KeplerController.getValidationFolio = async (req, res) => {
     }
 }
 
+KeplerController.getValidations = async (req, res) => {
+    const result = await KeplerModel.getValidations()
+    if (result.success) {
+        return res.status(200).json(result.data);
+    }
+    else {
+        return res.status(404).json(result);
+    }
+}
+
 module.exports = KeplerController
