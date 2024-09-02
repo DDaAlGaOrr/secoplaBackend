@@ -280,8 +280,9 @@ KeplerModel.saveValidation = async (data) => {
 }
 
 KeplerModel.updateValidation = async (data) => {
-    const updateQuery = `UPDATE kds_seguimiento_servicios SET ${Object.keys(data).map((key, index) => `${key} = ?`).join(', ')} WHERE c1 = ?;
-`;
+    const folio = data.folio_entrada
+    delete data.folio_entrada
+    const updateQuery = `UPDATE kds_seguimiento_servicios SET ${Object.keys(data).map((key, index) => `${key} = ?`).join(', ')} WHERE c1 = ?;`;
     try {
         const params = Object.keys(data).map(key => data[key].trim());
         console.log('Data')
@@ -290,11 +291,10 @@ KeplerModel.updateValidation = async (data) => {
         console.log(params)
         console.log('updateQuery')
         console.log(updateQuery)
-        params.push(data.folio_entrada)
+        params.push(folio)
         await sequelize.query(updateQuery, {
             replacements: params,
         });
-
         return { status: true };
     } catch (error) {
         console.error('Error al insertar datos:', error);
