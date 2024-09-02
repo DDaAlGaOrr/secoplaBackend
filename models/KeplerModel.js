@@ -280,13 +280,13 @@ KeplerModel.saveValidation = async (data) => {
 }
 
 KeplerModel.updateValidation = async (data) => {
-    const updateQuery = `
-    UPDATE kds_seguimiento_servicios
-    SET ${Object.keys(data).map((key, index) => `${key} = ?`).join(', ')}
-    WHERE c1 = ?;
+    const updateQuery = `UPDATE kds_seguimiento_servicios SET ${Object.keys(data).map((key, index) => `${key} = ?`).join(', ')} WHERE c1 = ?;
 `;
     try {
         const params = Object.keys(data).map(key => data[key].trim());
+        console.log(data)
+        console.log(params)
+        console.log(updateQuery)
         params.push(data.folio_entrada)
         await sequelize.query(updateQuery, {
             replacements: params,
