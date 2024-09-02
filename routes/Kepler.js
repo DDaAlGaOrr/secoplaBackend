@@ -28,4 +28,5 @@ router.post('/updateGastosVehicular', upload.none(), Kepler.updateGastosVehicula
 router.post('/updateKm', upload.none(), Kepler.updateckdsCardexVehiculos)
 router.post('/saveValidation', upload.none(), Kepler.saveValidation)
 router.post('/updateValidation', upload.none(), Kepler.updateValidation)
+router.post('/updateCardexStatus', upload.none(), Kepler.updateCardexStatus)
 module.exports = router

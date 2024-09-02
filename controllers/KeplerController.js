@@ -239,4 +239,15 @@ KeplerController.getValidations = async (req, res) => {
     }
 }
 
+
+KeplerController.updateCardexStatus = async (req, res) => {
+    const result = await KeplerModel.updateCardexStatus(req.body)
+    if (result.success) {
+        return res.status(200).json(result.data);
+    }
+    else {
+        return res.status(404).json(result);
+    }
+}
+
 module.exports = KeplerController
