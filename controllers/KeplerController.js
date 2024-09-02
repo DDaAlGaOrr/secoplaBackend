@@ -206,6 +206,8 @@ KeplerController.saveValidation = async (req, res) => {
 
 KeplerController.updateValidation = async (req, res) => {
     const result = await KeplerModel.updateValidation(req.body)
+    console.log('result')
+    console.log(result)
     if (result.status) {
         return res.status(200).json(result);
     } else {
