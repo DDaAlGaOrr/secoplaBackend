@@ -284,8 +284,11 @@ KeplerModel.updateValidation = async (data) => {
 `;
     try {
         const params = Object.keys(data).map(key => data[key].trim());
+        console.log('Data')
         console.log(data)
+        console.log('Params')
         console.log(params)
+        console.log('updateQuery')
         console.log(updateQuery)
         params.push(data.folio_entrada)
         await sequelize.query(updateQuery, {
