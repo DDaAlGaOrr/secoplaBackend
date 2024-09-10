@@ -177,6 +177,15 @@ KeplerController.updateGastosVehicular = async (req, res) => {
     }
 }
 
+KeplerController.updateStatusGasto = async (req, res) => {
+    const result = await KeplerModel.updateStatusGasto(req.body)
+    if (result.success) {
+        return res.status(200).json(result);
+    } else {
+        return res.status(400).json(result);
+    }
+}
+
 KeplerController.KDS_CHECKLIST = async (req, res) => {
     const result = await KeplerModel.KDS_CHECKLIST()
     if (result.success) {
