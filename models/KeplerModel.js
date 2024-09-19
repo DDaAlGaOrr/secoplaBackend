@@ -338,13 +338,8 @@ KeplerModel.updateCardexStatus = async (data) => {
 };
 
 KeplerModel.saveKdsKilometrajeGps = async (data) => {
-  let params = [
-    data.folio.trim(),
-    data.unidad.trim(),
-    data.fecha.trim(),
-    data.kilometraje.trim(),
-  ];
-  const query = `INSERT INTO kds_kilometrajegps (c1,c2,c3,c4) VALUES (${params
+  let params = [data.unidad.trim(), data.fecha.trim(), data.kilometraje.trim()];
+  const query = `INSERT INTO kds_kilometrajegps (c2,c3,c4) VALUES (${params
     .map(() => "?")
     .join(", ")})`;
   try {
