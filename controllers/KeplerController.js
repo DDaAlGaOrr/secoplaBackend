@@ -261,4 +261,14 @@ KeplerController.updateCardexStatus = async (req, res) => {
     }
 }
 
+KeplerController.saveKdsKilometrajeGps = async (req, res) => {
+    const result = await KeplerModel.saveKdsKilometrajeGps(req.body)
+    if (result.success) {
+        return res.status(200).json(result.data);
+    }
+    else {
+        return res.status(404).json(result);
+    }
+}
+
 module.exports = KeplerController
