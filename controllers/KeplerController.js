@@ -221,7 +221,6 @@ KeplerController.updateValidation = async (req, res) => {
 KeplerController.getValidationFolio = async (req, res) => {
   const result = await KeplerModel.getValidationFolio();
   if (result.success) {
-    console.log(result.data);
     const lastFolio = result.data[0][0].c1;
     const splitFolio = lastFolio.split("-");
     const number = parseInt(splitFolio[1]) + 1;
@@ -262,6 +261,15 @@ KeplerController.saveKdsKilometrajeGps = async (req, res) => {
 
 KeplerController.updateEstatusCardex = async (req, res) => {
   const result = await KeplerModel.updateEstatusCardex(req.body);
+  if (result.success) {
+    return res.status(200).json(true);
+  } else {
+    return res.status(404).json(false);
+  }
+};
+
+KeplerController.kdsEventos = async (req, res) => {
+  const result = await KeplerModel.kdsEventos(req.body);
   if (result.success) {
     return res.status(200).json(true);
   } else {

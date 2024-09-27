@@ -359,4 +359,35 @@ KeplerModel.updateEstatusCardex = async (data) => {
   );
 };
 
+KeplerModel.kdsEventos = async (data) => {
+  const id = await connection.executeQuery(
+    "SELECT TOP 1 c1 FROM kds_seguimiento_servicios ORDER BY c1 DESC"
+  );
+  const lastid = parseInt(id.data[0][0].c1);
+
+  let params = [
+    lastid++,
+    data.unidad_vehicular.trim(),
+    data.concepto_accion.trim(),
+    data.fecha_alta_entrada.trim(),
+    data.quien_registra.trim(),
+    data.nombre.trim(),
+    data.km_evento.trim(),
+    data.modelo.trim(),
+    data.placas.trim(),
+    data.serie.trim(),
+  ];
+  const query = `INSERT INTO kds_eventos(c1,c2,c3,c4,c5,c6,c7,c8,c9,c10) VALUES (${params
+    .map(() => "?")
+    .join(", ")})`;
+  try {
+    await sequelize.query(query, {
+      replacements: params,
+    });
+    return { status: true };
+  } catch (error) {
+    console.error("Error al insertar datos:", error);
+    return { status: false, message: error };
+  }
+};
 module.exports = KeplerModel;
