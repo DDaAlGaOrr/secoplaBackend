@@ -280,7 +280,7 @@ KeplerController.kdsEventos = async (req, res) => {
 KeplerController.getKdsEventos = async (req, res) => {
   const result = await KeplerModel.getKdsEventos();
   if (result.success) {
-    return res.status(200).json(result);
+    return res.status(200).json(result.data);
   } else {
     return res.status(404).json(false);
   }
