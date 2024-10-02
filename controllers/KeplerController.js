@@ -270,6 +270,15 @@ KeplerController.updateEstatusCardex = async (req, res) => {
 
 KeplerController.kdsEventos = async (req, res) => {
   const result = await KeplerModel.kdsEventos(req.body);
+  if (result.status) {
+    return res.status(200).json(true);
+  } else {
+    return res.status(404).json(false);
+  }
+};
+
+KeplerController.getKdsEventos = async (req, res) => {
+  const result = await KeplerModel.getKdsEventos();
   if (result.success) {
     return res.status(200).json(true);
   } else {

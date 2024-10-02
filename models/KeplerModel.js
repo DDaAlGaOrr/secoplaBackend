@@ -376,8 +376,16 @@ KeplerModel.kdsEventos = async (data) => {
     data.modelo.trim(),
     data.placas.trim(),
     data.serie.trim(),
+    data.responsable.trim(),
+    data.estatus_autorizacion.trim(),
+    data.foto_1_entrada.trim(),
+    data.foto_2_entrada.trim(),
+    data.foto_3_entrada.trim(),
+    data.fecha_hora_validacion.trim(),
+    data.responsable.trim(),
+    data.estatus_kepler_cardex.trim(),
   ];
-  const query = `INSERT INTO kds_eventos(c1,c2,c3,c4,c5,c6,c7,c8,c9,c10) VALUES (${params
+  const query = `INSERT INTO kds_eventos(c1,c2,c3,c4,c5,c6,c7,c8,c9,c10,c11,c12,c13,c14,c15,c16,c17,c18) VALUES (${params
     .map(() => "?")
     .join(", ")})`;
   try {
@@ -390,4 +398,9 @@ KeplerModel.kdsEventos = async (data) => {
     return { status: false, message: error };
   }
 };
+
+KeplerModel.getKdsEventos = async () => {
+  return await connection.executeQuery("SELECT * from kds_eventos");
+};
 module.exports = KeplerModel;
+

@@ -21,6 +21,7 @@ router.get('/getFolio', Kepler.getFolio)
 router.get('/getValidationFolio', Kepler.getValidationFolio)
 router.get('/KDS_CHECKLIST', Kepler.KDS_CHECKLIST)
 router.get('/getValidations', Kepler.getValidations)
+router.get('/getKdsEventos', Kepler.getKdsEventos)
 
 router.post('/auth', Kepler.auth)
 router.post('/saveChecklist', upload.none(), Kepler.saveChecklist)
