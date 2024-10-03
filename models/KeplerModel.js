@@ -364,7 +364,7 @@ KeplerModel.kdsEventos = async (data) => {
   let id = await connection.executeQuery(
     "SELECT TOP 1 c1 FROM kds_seguimiento_servicios ORDER BY c1 DESC"
   );
-  let lastFolio = parseInt(id.data[0][0].c1);
+  let lastFolio = id.data[0][0].c1;
   const splitFolio = lastFolio.split("-");
   const number = parseInt(splitFolio[1]) + 1;
   const paddedNumber = number.toString().padStart(8, "0");
