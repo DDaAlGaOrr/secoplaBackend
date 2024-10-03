@@ -360,7 +360,7 @@ KeplerModel.updateEstatusCardex = async (data) => {
 };
 
 KeplerModel.kdsEventos = async (data) => {
-  const id = await connection.executeQuery(
+  let id = await connection.executeQuery(
     "SELECT TOP 1 c1 FROM kds_seguimiento_servicios ORDER BY c1 DESC"
   );
   const lastid = parseInt(id.data[0][0].c1);
