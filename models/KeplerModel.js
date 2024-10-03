@@ -371,7 +371,7 @@ KeplerModel.kdsEventos = async (data) => {
   const newFolio = `S-${paddedNumber}`;
   console.log(newFolio)
   let params = [
-    lastid++,
+    newFolio,
     data.unidad_vehicular.trim(),
     data.concepto_accion.trim(),
     data.fecha_alta_entrada.trim(),
