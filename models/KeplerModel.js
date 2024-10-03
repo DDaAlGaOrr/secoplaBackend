@@ -364,6 +364,8 @@ KeplerModel.kdsEventos = async (data) => {
     "SELECT TOP 1 c1 FROM kds_seguimiento_servicios ORDER BY c1 DESC"
   );
   let lastid = parseInt(id.data[0][0].c1);
+  console.log(id)
+  console.log(lastid)
   let params = [
     lastid++,
     data.unidad_vehicular.trim(),
