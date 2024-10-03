@@ -1,6 +1,7 @@
 const { query } = require("mssql");
 const connection = require("./../database/kepler");
 const sequelize = require("./../database/conection");
+const { json } = require("sequelize");
 const KeplerModel = () => {};
 
 KeplerModel.existUser = async (username) => {
@@ -364,7 +365,8 @@ KeplerModel.kdsEventos = async (data) => {
     "SELECT TOP 1 c1 FROM kds_seguimiento_servicios ORDER BY c1 DESC"
   );
   let lastid = parseInt(id.data[0][0].c1);
-  console.log(id)
+  console.log(JSON.stringify(id))
+  console.log(id.data)
   console.log(lastid)
   let params = [
     lastid++,
