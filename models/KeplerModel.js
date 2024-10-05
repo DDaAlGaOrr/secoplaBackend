@@ -364,14 +364,12 @@ KeplerModel.kdsEventos = async (data) => {
   let id = await connection.executeQuery(
     "SELECT TOP 1 c1 FROM kds_eventos ORDER BY c1 DESC"
   );
-  console.log(id);
   let lastFolio = id.data[0][0].c1;
-  console.log(lastFolio);
   const splitFolio = lastFolio.split("-");
-  let number = parseInt(splitFolio[1]++);
+  let number = parseInt(splitFolio[1]);
+  number++;
   const paddedNumber = number.toString().padStart(8, "0");
   const newFolio = `E-${paddedNumber}`;
-  console.log(newFolio);
   let params = [
     newFolio,
     data.unidad_vehicular.trim(),

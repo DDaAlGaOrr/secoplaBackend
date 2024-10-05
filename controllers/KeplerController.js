@@ -269,9 +269,7 @@ KeplerController.updateEstatusCardex = async (req, res) => {
 };
 
 KeplerController.kdsEventos = async (req, res) => {
-  console.log("test");
   const result = await KeplerModel.kdsEventos(req.body);
-  console.log(req.body);
   if (result.status) {
     return res.status(200).json(true);
   } else {
