@@ -89,9 +89,18 @@ KeplerModel.getKdsCardexVehiculos = async () => {
 };
 
 KeplerModel.saveChecklist = async (data) => {
-  console.log(data);
+  let id = await connection.executeQuery(
+    "SELECT TOP 1 c1 FROM KDS_CHECKLIST ORDER BY c1 DESC"
+  );
+  let lastFolio = id.data[0][0].c1;
+  const splitFolio = lastFolio.split("-");
+  let number = parseInt(splitFolio[1]);
+  number++;
+  const paddedNumber = number.toString().padStart(8, "0");
+  const newFolio = `S-${paddedNumber}`;
+  // console.log(data);
   let params = [
-    data.folio.trim(),
+    newFolio,
     data.num_economico.trim(),
     data.placas.trim(),
     data.current_date,
