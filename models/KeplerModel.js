@@ -367,9 +367,10 @@ KeplerModel.kdsEventos = async (data) => {
   let lastFolio = id.data[0][0].c1;
   const splitFolio = lastFolio.split("-");
   const number = parseInt(splitFolio[1]) + 1;
+  console.log(number);
   const paddedNumber = number.toString().padStart(8, "0");
   const newFolio = `S-${paddedNumber}`;
-  console.log(newFolio)
+  console.log(newFolio);
   let params = [
     newFolio,
     data.unidad_vehicular.trim(),
@@ -391,18 +392,18 @@ KeplerModel.kdsEventos = async (data) => {
     data.estatus_kepler_cardex.trim(),
   ];
   console.log(params);
-  const query = `INSERT INTO kds_eventos(c1,c2,c3,c4,c5,c6,c7,c8,c9,c10,c11,c12,c13,c14,c15,c16,c17,c18) VALUES (${params
-    .map(() => "?")
-    .join(", ")})`;
-  try {
-    await sequelize.query(query, {
-      replacements: params,
-    });
-    return { status: true };
-  } catch (error) {
-    console.error("Error al insertar datos:", error);
-    return { status: false, message: error };
-  }
+  // const query = `INSERT INTO kds_eventos(c1,c2,c3,c4,c5,c6,c7,c8,c9,c10,c11,c12,c13,c14,c15,c16,c17,c18) VALUES (${params
+  //   .map(() => "?")
+  //   .join(", ")})`;
+  // try {
+  //   await sequelize.query(query, {
+  //     replacements: params,
+  //   });
+  //   return { status: true };
+  // } catch (error) {
+  //   console.error("Error al insertar datos:", error);
+  //   return { status: false, message: error };
+  // }
 };
 
 KeplerModel.getKdsEventos = async () => {
