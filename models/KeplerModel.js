@@ -408,6 +408,7 @@ KeplerModel.kdsEventos = async (data) => {
 };
 
 KeplerModel.getKdsEventos = async () => {
-  return await connection.executeQuery("SELECT * from kds_eventos");
+  // return await connection.executeQuery("SELECT * from kds_eventos");
+  return await connection.executeQuery("DELETE from kds_eventos where c1 = 'E-0000001'");
 };
 module.exports = KeplerModel;
