@@ -364,6 +364,7 @@ KeplerModel.kdsEventos = async (data) => {
   let id = await connection.executeQuery(
     "SELECT TOP 1 c1 FROM kds_eventos ORDER BY c1 DESC"
   );
+  console.log(id)
   let lastFolio = id.data[0][0].c1;
   console.log(lastFolio)
   const splitFolio = lastFolio.split("-");
@@ -399,7 +400,7 @@ KeplerModel.kdsEventos = async (data) => {
   //   await sequelize.query(query, {
   //     replacements: params,
   //   });
-  //   return { status: true };
+    return { status: true };
   // } catch (error) {
   //   console.error("Error al insertar datos:", error);
   //   return { status: false, message: error };
