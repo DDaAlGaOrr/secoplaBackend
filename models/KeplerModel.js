@@ -365,6 +365,7 @@ KeplerModel.kdsEventos = async (data) => {
     "SELECT TOP 1 c1 FROM kds_seguimiento_servicios ORDER BY c1 DESC"
   );
   let lastFolio = id.data[0][0].c1;
+  console.log(lastFolio)
   const splitFolio = lastFolio.split("-");
   const number = parseInt(splitFolio[1]) + 1;
   console.log(number);
