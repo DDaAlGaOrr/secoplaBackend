@@ -367,8 +367,8 @@ KeplerModel.kdsEventos = async (data) => {
   let lastFolio = id.data[0][0].c1;
   console.log(lastFolio)
   const splitFolio = lastFolio.split("-");
-  const number = parseInt(splitFolio[1])++;
-  console.log(number);
+  const number = parseInt(splitFolio[1]);
+  console.log(number++);
   const paddedNumber = number.toString().padStart(8, "0");
   const newFolio = `S-${paddedNumber}`;
   console.log(newFolio);
