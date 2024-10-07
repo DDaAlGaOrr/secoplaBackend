@@ -286,4 +286,13 @@ KeplerController.getKdsEventos = async (req, res) => {
   }
 };
 
+KeplerController.updateKdsEventos = async (req, res) => {
+  const result = await KeplerModel.updateKdsEventos(req.body);
+  if (result.status) {
+    return res.status(200).json(true);
+  } else {
+    return res.status(404).json(false);
+  }
+};
+
 module.exports = KeplerController;

@@ -34,4 +34,5 @@ router.post('/updateStatusGasto', upload.none(), Kepler.updateStatusGasto)
 router.post('/saveKdsKilometrajeGps', upload.none(), Kepler.saveKdsKilometrajeGps)
 router.post('/updateEstatusCardex', upload.none(), Kepler.updateEstatusCardex)
 router.post('/saveKdsEventos', upload.none(), Kepler.kdsEventos)
+router.post('/updateKdsEventos', upload.none(), Kepler.updateKdsEventos)
 module.exports = router
