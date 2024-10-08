@@ -97,7 +97,7 @@ KeplerModel.saveChecklist = async (data) => {
   let number = parseInt(splitFolio[1]);
   number++;
   const paddedNumber = number.toString().padStart(8, "0");
-  const newFolio = `S-${paddedNumber}`;
+  const newFolio = `C-${paddedNumber}`;
   // console.log(data);
   let params = [
     newFolio,
