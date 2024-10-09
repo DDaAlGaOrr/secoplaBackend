@@ -98,7 +98,8 @@ KeplerModel.saveChecklist = async (data) => {
   number++;
   const paddedNumber = number.toString().padStart(8, "0");
   const newFolio = `C-${paddedNumber}`;
-  // console.log(data);
+  console.log("data");
+  console.log(data);
   let params = [
     newFolio,
     data.num_economico.trim(),
@@ -199,7 +200,9 @@ KeplerModel.saveChecklist = async (data) => {
     data.pic_9.trim(),
     data.pic_10.trim(),
   ];
-  console.log(params)
+  console.log("params");
+
+  console.log(params);
   // try {
   //   if (params.includes(undefined) || params.includes(null)) {
   //     console.error("Array contiene valores undefined o null");
@@ -209,11 +212,11 @@ KeplerModel.saveChecklist = async (data) => {
   //   );
 
   //   const query = `INSERT INTO KDS_CHECKLIST (c1, c2, c3, c4, c5, c6, c7, c8, c9, c10, c11, c12, c13, c14, c15,
-  //           c16, c17, c18, c19, c20, c21, c22, c23, c24, c25, c26, c27, c28, 
-  //           c29, c30, c31, c32, c33, c34, c35, c36, c37, c38, c39, c40, c41, 
-  //           c42, c43, c44, c45, c46, c47, c48, c49, c50, c51, c52, c53, c54, 
+  //           c16, c17, c18, c19, c20, c21, c22, c23, c24, c25, c26, c27, c28,
+  //           c29, c30, c31, c32, c33, c34, c35, c36, c37, c38, c39, c40, c41,
+  //           c42, c43, c44, c45, c46, c47, c48, c49, c50, c51, c52, c53, c54,
   //           c55, c56, c57, c58, c59, c60, c61, c62, c63, c64, c65, c66, c67,
-  //           c68, c69, c70, c71, c72, c73, c74, c75, c76, c77, c78, c79, c80, 
+  //           c68, c69, c70, c71, c72, c73, c74, c75, c76, c77, c78, c79, c80,
   //           c81, c82, c83, c84, c85, c86, c87, c88, c89, c90, c91, c92, c93,
   //           c94, c95, c96, c97, c98
   //       ) VALUES (${params.map(() => "?").join(", ")})
@@ -425,7 +428,7 @@ KeplerModel.updateKdsEventos = async (data) => {
   const updateQuery = `UPDATE kds_eventos SET ${Object.keys(data)
     .map((key, index) => `${key} = ?`)
     .join(", ")} WHERE c1 = ?;`;
-    
+
   try {
     const params = Object.keys(data).map((key) => data[key].trim());
     params.push(folio);
