@@ -421,10 +421,11 @@ KeplerModel.getKdsEventos = async () => {
 
 KeplerModel.updateKdsEventos = async (data) => {
   const folio = data.folio;
-  delete data.folio_entrada;
+  delete data.folio;
   const updateQuery = `UPDATE kds_eventos SET ${Object.keys(data)
     .map((key, index) => `${key} = ?`)
     .join(", ")} WHERE c1 = ?;`;
+    
   try {
     const params = Object.keys(data).map((key) => data[key].trim());
     params.push(folio);
