@@ -23,6 +23,7 @@ router.get('/KDS_CHECKLIST', Kepler.KDS_CHECKLIST)
 router.get('/getValidations', Kepler.getValidations)
 router.get('/getKdsEventos', Kepler.getKdsEventos)
 router.get('/getkdsCobranzaSeg', Kepler.getkdsCobranzaSeg)
+router.get('/getKdsNivelesCobranza', Kepler.getKdsNivelesCobranza)
 
 router.post('/auth', Kepler.auth)
 router.post('/saveChecklist', upload.none(), Kepler.saveChecklist)
