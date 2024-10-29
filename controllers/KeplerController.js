@@ -295,4 +295,13 @@ KeplerController.updateKdsEventos = async (req, res) => {
   }
 };
 
+KeplerController.getkdsCobranzaSeg = async (req, res) => {
+  const result = await KeplerModel.getkdsCobranzaSeg(req.body);
+  if (result.success) {
+    return res.status(200).json(result.data);
+  } else {
+    return res.status(404).json(result.error);
+  }
+};
+
 module.exports = KeplerController;

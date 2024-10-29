@@ -442,4 +442,8 @@ KeplerModel.updateKdsEventos = async (data) => {
   }
 };
 
+KeplerModel.getkdsCobranzaSeg = async () => {
+  return await connection.executeQuery("SELECT * from kds_CobranzaSeg");
+};
+
 module.exports = KeplerModel;
