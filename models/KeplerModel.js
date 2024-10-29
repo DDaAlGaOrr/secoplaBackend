@@ -446,4 +446,24 @@ KeplerModel.getkdsCobranzaSeg = async () => {
   return await connection.executeQuery("SELECT * from kds_CobranzaSeg");
 };
 
+KeplerModel.updatekdsCobranzaSeg = async (data) => {
+  const folio = data.folio;
+  delete data.folio;
+  const updateQuery = `UPDATE kds_CobranzaSeg SET ${Object.keys(data)
+    .map((key, index) => `${key} = ?`)
+    .join(", ")} WHERE c1 = ?;`;
+
+  try {
+    const params = Object.keys(data).map((key) => data[key].trim());
+    params.push(folio);
+    await sequelize.query(updateQuery, {
+      replacements: params,
+    });
+    return { status: true };
+  } catch (error) {
+    console.error("Error al insertar datos:", error);
+    return { status: false, message: error };
+  }
+};
+
 module.exports = KeplerModel;
