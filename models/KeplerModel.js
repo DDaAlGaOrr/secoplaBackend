@@ -451,7 +451,7 @@ KeplerModel.updatekdsCobranzaSeg = async (data) => {
   delete data.folio;
   const updateQuery = `UPDATE kds_CobranzaSeg SET ${Object.keys(data)
     .map((key, index) => `${key} = ?`)
-    .join(", ")} WHERE c1 = ?;`;
+    .join(", ")} WHERE c6 = ?;`;
 
   try {
     const params = Object.keys(data).map((key) => data[key].trim());
