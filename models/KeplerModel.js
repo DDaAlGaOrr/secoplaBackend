@@ -510,8 +510,18 @@ KeplerModel.saveKdsGastosK = async (data) => {
     data.nombre_solicitante.trim(),
     data.apellido_solicitante.trim(),
     data.fecha_gasto.trim(),
+    data.aprobacion_segundo_nivel.trim(),
+    data.aprobacion_primer_nivel.trim(),
+    data.aprobador_2.trim(),
+    data.nombre_aprobador_1.trim(),
+    data.apellido_aprobador_1.trim(),
+    data.estatus_gasto.trim(),
+    data.expense_type_description.trim(),
+    data.name_prov.trim(),
+    data.extra_1.trim(),
+    data.extra_2.trim(),
   ];
-  const query = `INSERT INTO kds_GastosK(c1,c2,c3,c4,c5,c6,c7,c8,c9,10) VALUES (${params
+  const query = `INSERT INTO kds_GastosK(c1,c2,c3,c4,c5,c6,c7,c8,c9,c10,c11,c12,c13,c14,c15,c16,c17,c18,c19,c20) VALUES (${params
     .map(() => "?")
     .join(", ")})`;
   try {
@@ -525,4 +535,9 @@ KeplerModel.saveKdsGastosK = async (data) => {
   }
 };
 
+KeplerModel.updateKdsGastosK = async (data) => {
+  return await connection.executeQuery(
+    `UPDATE kds_cardex_vehiculos SET c16 = '${data.estatus_gasto}' WHERE c1 = '${data.id}';`
+  );
+};
 module.exports = KeplerModel;
