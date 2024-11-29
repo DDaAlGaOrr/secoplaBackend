@@ -537,7 +537,7 @@ KeplerModel.saveKdsGastosK = async (data) => {
 
 KeplerModel.updateKdsGastosK = async (data) => {
   return await connection.executeQuery(
-    `UPDATE kds_cardex_vehiculos SET c16 = '${data.estatus_gasto}' WHERE c1 = '${data.id}';`
+    `UPDATE kds_cardex_vehiculos SET c16 = '${data.estatus_gasto}' c5 = '${data.motivo_rechazo}' WHERE c1 = '${data.id}';`
   );
 };
 module.exports = KeplerModel;
