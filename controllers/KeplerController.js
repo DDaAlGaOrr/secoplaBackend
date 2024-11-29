@@ -332,4 +332,14 @@ KeplerController.savekdsCobranzaLog = async (req, res) => {
     }
 };
 
+
+KeplerController.saveKdsGastosK = async (req, res) => {
+    const result = await KeplerModel.saveKdsGastosK(req.body);
+    if (result.status) {
+        return res.status(200).json(true);
+    } else {
+        return res.status(404).json(false);
+    }
+};
+
 module.exports = KeplerController;
