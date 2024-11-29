@@ -344,7 +344,7 @@ KeplerController.saveKdsGastosK = async (req, res) => {
 
 KeplerController.updateKdsGastosK = async (req, res) => {
     const result = await KeplerModel.updateKdsGastosK(req.body);
-    if (result.status) {
+    if (result.success) {
         return res.status(200).json(true);
     } else {
         return res.status(404).json(false);
