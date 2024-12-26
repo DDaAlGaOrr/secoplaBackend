@@ -540,4 +540,82 @@ KeplerModel.updateKdsGastosK = async (data) => {
     `UPDATE kds_cardex_vehiculos SET c16 = '${data.estatus_gasto}' c5 = '${data.motivo_rechazo}' WHERE c1 = '${data.id}';`
   );
 };
+
+KeplerModel.insertKdsBajasRh = async (data) => {
+  let params = [
+    data.nombrePersonal.trim(),
+    data.departamentos.trim(),
+    data.puestoTrabajo.trim(),
+    data.email.trim(),
+    data.fechaDespido.trim(),
+    data.estado.trim(),
+  ];
+  const query = `INSERT INTO kds_bajasRH(c1,c2,c3,c4,c5,c6) VALUES (${params
+    .map(() => "?")
+    .join(",")})`;
+  try {
+    await sequelize.query(query, {
+      replacements: params,
+    });
+    return { status: true };
+  } catch (error) {
+    console.error("Error al insertar datos:", error);
+    return { status: false, message: error };
+  }
+};
+
+KeplerModel.insertKdsPersonalRh = async (data) => {
+  let params = [
+    data.codigo.trim(),
+    data.nombre.trim(),
+    data.apellido.trim(),
+    data.genero.trim(),
+    data.cumpleanios.trim(),
+    data.curp.trim(),
+    data.rfc.trim(),
+    data.nss.trim(),
+    data.email.trim(),
+    data.telefono.trim(),
+  ];
+  const query = `INSERT INTO kds_PersonalRH(c1,c2,c3,c4,c5,c6,c7,c8,c9,c10) VALUES (${params
+    .map(() => "?")
+    .join(",")})`;
+  try {
+    await sequelize.query(query, {
+      replacements: params,
+    });
+    return { status: true };
+  } catch (error) {
+    console.error("Error al insertar datos:", error);
+    return { status: false, message: error };
+  }
+};
+
+KeplerModel.insertKdsPuestosRh = async (data) => {
+  let params = [
+    data.codigo.trim(),
+    data.nombre.trim(),
+    data.tipoPuesto.trim(),
+    data.zona.trim(),
+    data.rol.trim(),
+    data.departamentos.trim(),
+    data.tipoContrato.trim(),
+    data.salarioMensual.trim(),
+    data.salarioFiscal.trim(),
+    data.clientes.trim(),
+  ];
+  const query = `INSERT INTO kds_puestosRH(c1,c2,c3,c4,c5,c6,c7,c8,c9,c10) VALUES (${params
+    .map(() => "?")
+    .join(",")})`;
+  try {
+    await sequelize.query(query, {
+      replacements: params,
+    });
+    return { status: true };
+  } catch (error) {
+    console.error("Error al insertar datos:", error);
+    return { status: false, message: error };
+  }
+};
+
 module.exports = KeplerModel;

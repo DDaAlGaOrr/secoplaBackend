@@ -41,5 +41,8 @@ router.post('/updatekdsCobranzaSeg', upload.none(), Kepler.updatekdsCobranzaSeg)
 router.post('/savekdsCobranzaLog', upload.none(), Kepler.savekdsCobranzaLog)
 router.post('/saveKdsGastosK', upload.none(), Kepler.saveKdsGastosK)
 router.post('/updateKdsGastosK', upload.none(), Kepler.updateKdsGastosK)
+router.post('/insertKdsBajasRh', upload.none(), Kepler.insertKdsBajasRh)
+router.post('/insertKdsPersonalRh', upload.none(), Kepler.insertKdsPersonalRh)
+router.post('/insertKdsPuestosRh', upload.none(), Kepler.insertKdsPuestosRh)
 module.exports = router
 
