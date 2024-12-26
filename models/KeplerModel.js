@@ -576,8 +576,13 @@ KeplerModel.insertKdsPersonalRh = async (data) => {
     data.nss.trim(),
     data.email.trim(),
     data.telefono.trim(),
+    data.lugarTrabajo.trim(),
+    data.estado.trim(),
+    data.puesto.trim(),
+    data.contrasenia.trim(),
+    data.domicilio.trim(),
   ];
-  const query = `INSERT INTO kds_PersonalRH(c1,c2,c3,c4,c5,c6,c7,c8,c9,c10) VALUES (${params
+  const query = `INSERT INTO kds_PersonalRH(c1,c2,c3,c4,c5,c6,c7,c8,c9,c10,c11,c12,c13,c14,c15) VALUES (${params
     .map(() => "?")
     .join(",")})`;
   try {
@@ -603,8 +608,13 @@ KeplerModel.insertKdsPuestosRh = async (data) => {
     data.salarioMensual.trim(),
     data.salarioFiscal.trim(),
     data.clientes.trim(),
+    data.ubicacion.trim(),
+    data.equipoMateriales.trim(),
+    data.periodoPago.trim(),
+    data.cantidadPagarPeriodo.trim(),
+    data.bonos.trim(),
   ];
-  const query = `INSERT INTO kds_puestosRH(c1,c2,c3,c4,c5,c6,c7,c8,c9,c10) VALUES (${params
+  const query = `INSERT INTO kds_puestosRH(c1,c2,c3,c4,c5,c6,c7,c8,c9,c10,c11,c12,c13,c14,c15) VALUES (${params
     .map(() => "?")
     .join(",")})`;
   try {
