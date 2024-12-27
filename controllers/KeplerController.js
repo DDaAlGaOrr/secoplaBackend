@@ -385,4 +385,13 @@ KeplerController.updateKdsPuestosRh = async (req, res) => {
   }
 };
 
+KeplerController.updateKdsPersonalRh = async (req, res) => {
+  const result = await KeplerModel.updateKdsPersonalRh(req.body);
+  if (result.status) {
+    return res.status(200).json(true);
+  } else {
+    return res.status(404).json(result);
+  }
+};
+
 module.exports = KeplerController;
