@@ -376,4 +376,13 @@ KeplerController.insertKdsPuestosRh = async (req, res) => {
   }
 };
 
+KeplerController.updateKdsPuestosRh = async (req, res) => {
+  const result = await KeplerModel.updateKdsPuestosRh(req.body);
+  if (result.status) {
+    return res.status(200).json(true);
+  } else {
+    return res.status(404).json(result);
+  }
+};
+
 module.exports = KeplerController;

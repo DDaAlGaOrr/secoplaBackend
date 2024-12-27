@@ -466,7 +466,7 @@ KeplerModel.updatekdsCobranzaSeg = async (data) => {
 };
 
 KeplerModel.getKdsNivelesCobranza = async () => {
-  return await connection.executeQuery("SELECT * from kds_NivelesCobranza");
+  return await connection.executeQuery("SELECT * from  ");
 };
 
 KeplerModel.savekdsCobranzaLog = async (data) => {
@@ -619,6 +619,46 @@ KeplerModel.insertKdsPuestosRh = async (data) => {
     .join(",")})`;
   try {
     await sequelize.query(query, {
+      replacements: params,
+    });
+    return { status: true };
+  } catch (error) {
+    console.error("Error al insertar datos:", error);
+    return { status: false, message: error };
+  }
+};
+
+KeplerModel.updateKdsPuestosRh = async (data) => {
+  const codigo = data.codigo;
+  delete data.codigo;
+  const updateQuery = `UPDATE kds_puestosRH SET ${Object.keys(data)
+    .map((key, index) => `${key} = ?`)
+    .join(", ")} WHERE c1 = ?;`;
+
+  try {
+    const params = Object.keys(data).map((key) => data[key].trim());
+    params.push(codigo);
+    await sequelize.query(updateQuery, {
+      replacements: params,
+    });
+    return { status: true };
+  } catch (error) {
+    console.error("Error al insertar datos:", error);
+    return { status: false, message: error };
+  }
+};
+
+KeplerModel.updateKdsPersonalRh = async (data) => {
+  const codigo = data.codigo;
+  delete data.codigo;
+  const updateQuery = `UPDATE kds_PersonalRH SET ${Object.keys(data)
+    .map((key, index) => `${key} = ?`)
+    .join(", ")} WHERE c1 = ?;`;
+
+  try {
+    const params = Object.keys(data).map((key) => data[key].trim());
+    params.push(codigo);
+    await sequelize.query(updateQuery, {
       replacements: params,
     });
     return { status: true };
