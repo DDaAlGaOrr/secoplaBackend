@@ -466,7 +466,7 @@ KeplerModel.updatekdsCobranzaSeg = async (data) => {
 };
 
 KeplerModel.getKdsNivelesCobranza = async () => {
-  return await connection.executeQuery("SELECT * from  ");
+  return await connection.executeQuery("SELECT * from kds_NivelesCobranza");
 };
 
 KeplerModel.savekdsCobranzaLog = async (data) => {
