@@ -591,6 +591,7 @@ KeplerModel.insertKdsPersonalRh = async (data) => {
     data.lugarEmision.trim(),
     data.residente.trim(),
     data.numeroCuentaBancaria.trim(),
+    data.nombreCuentaBancaria.trim(),
     data.banco.trim(),
     data.codigoFiscalPersonal.trim(),
     data.nombreContacto.trim(),
@@ -641,7 +642,7 @@ KeplerModel.insertKdsPuestosRh = async (data) => {
     data.descripcionPuesto.trim(),
     data.staff.trim(),
   ];
-  
+
   const query = `INSERT INTO kds_puestosRH(c1,c2,c3,c4,c5,c6,c7,c8,c9,c10,c11,c12,c13,c14,c15,c16,c17,c18,c19,c20,c21,c22,c23,c24,c25,c26) VALUES (${params
     .map(() => "?")
     .join(",")})`;
@@ -657,7 +658,7 @@ KeplerModel.insertKdsPuestosRh = async (data) => {
 };
 
 KeplerModel.updateKdsPuestosRh = async (data) => {
-  console.log(data)
+  console.log(data);
   const codigo = data.codigo;
   delete data.codigo;
   const updateQuery = `UPDATE kds_puestosRH SET ${Object.keys(data)
@@ -698,5 +699,3 @@ KeplerModel.updateKdsPersonalRh = async (data) => {
 };
 
 module.exports = KeplerModel;
-
-
