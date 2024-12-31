@@ -657,6 +657,7 @@ KeplerModel.insertKdsPuestosRh = async (data) => {
 };
 
 KeplerModel.updateKdsPuestosRh = async (data) => {
+  console.log(data)
   const codigo = data.codigo;
   delete data.codigo;
   const updateQuery = `UPDATE kds_puestosRH SET ${Object.keys(data)
