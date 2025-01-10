@@ -31,7 +31,7 @@ KeplerModel.getUsers = async () => {
 };
 
 KeplerModel.getKdms = async () => {
-  return connection.executeQuery("select * from KDMS");
+  return connection.executeQuery("select * from kds_PersonalRH");
 };
 
 KeplerModel.getKdsRegion = async () => {
@@ -696,6 +696,12 @@ KeplerModel.updateKdsPersonalRh = async (data) => {
     console.error("Error al insertar datos:", error);
     return { status: false, message: error };
   }
+};
+
+KeplerModel.getKdsPresupuestoC = async (id) => {
+  return await connection.executeQuery(
+    `SELECT * FROM kds_presupuestoC WHERE c2 = '${id}'`
+  );
 };
 
 module.exports = KeplerModel;

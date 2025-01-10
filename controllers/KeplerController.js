@@ -394,4 +394,13 @@ KeplerController.updateKdsPersonalRh = async (req, res) => {
   }
 };
 
+KeplerController.getKdsPresupuestoC = async (req, res) => {
+  const result = await KeplerModel.getKdsPresupuestoC(req.params.nominaS);
+  if (result.success) {
+    return res.status(200).json(result);
+  } else {
+    return res.status(404).json(result);
+  }
+};
+
 module.exports = KeplerController;
