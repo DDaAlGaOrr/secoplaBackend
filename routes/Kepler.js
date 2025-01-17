@@ -25,6 +25,7 @@ router.get("/getKdsEventos", Kepler.getKdsEventos);
 router.get("/getkdsCobranzaSeg", Kepler.getkdsCobranzaSeg);
 router.get("/getKdsNivelesCobranza", Kepler.getKdsNivelesCobranza);
 router.get("/getKdsPresupuestoC/:nominaS", Kepler.getKdsPresupuestoC);
+router.get("/getKdsKdiiC/:clave", Kepler.getKdsKdiiC);
 
 router.post("/auth", Kepler.auth);
 router.post("/saveChecklist", upload.none(), Kepler.saveChecklist);

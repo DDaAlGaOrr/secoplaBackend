@@ -704,4 +704,10 @@ KeplerModel.getKdsPresupuestoC = async (id) => {
   );
 };
 
+KeplerModel.getKdsKdiiC = async (id) => {
+  return await connection.executeQuery(
+    `SELECT * FROM kds_kdiiC WHERE c1 = '${id}'`
+  );
+};
+
 module.exports = KeplerModel;
