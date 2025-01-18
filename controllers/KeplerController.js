@@ -131,7 +131,7 @@ KeplerController.getkdsGastosVehicular = async (req, res) => {
 };
 
 KeplerController.getKdsCardexVehiculos = async (req, res) => {
-  const result = await KeplerModel.getKdsCardexVehiculos(req.body);
+  const result = await KeplerModel.getKdsCardexVehiculos();
   if (result.success) {
     return res.status(200).json(result);
   } else {

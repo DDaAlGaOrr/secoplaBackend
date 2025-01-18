@@ -367,7 +367,7 @@ KeplerModel.saveKdsKilometrajeGps = async (data) => {
 };
 
 KeplerModel.updateEstatusCardex = async (data) => {
-  console.log(data)
+  console.log('updateEstatusCardex')
   return await connection.executeQuery(
     `UPDATE kds_cardex_vehiculos SET c3 = '${data.estatus_cardex}', c34 = '${data.km}' WHERE c1 = '${data.id}';`
   );
