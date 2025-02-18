@@ -367,8 +367,8 @@ KeplerModel.saveKdsKilometrajeGps = async (data) => {
 };
 
 KeplerModel.updateEstatusCardex = async (data) => {
-  console.log('updateEstatusCardex')
-  console.log(data)
+  console.log("updateEstatusCardex");
+  console.log(data);
   return await connection.executeQuery(
     `UPDATE kds_cardex_vehiculos SET c3 = '${data.estatus_cardex}', c34 = '${data.km}' WHERE c1 = '${data.id}';`
   );
@@ -710,6 +710,34 @@ KeplerModel.getKdsKdiiC = async (id) => {
   return await connection.executeQuery(
     `SELECT * FROM kds_kdiiC WHERE c1 = '${id}'`
   );
+};
+
+KeplerModel.insertKdsControllUnidades = async (data) => {
+  let id = await connection.executeQuery(
+    "SELECT TOP 1 c1 FROM kds_controlUnidades ORDER BY c1 DESC"
+  );
+  let lastFolio = id.data[0][0].c1;
+  let number = parseInt(lastFolio);
+  number++;
+  let params = [
+    number,
+    data.unidad.trim(),
+    data.fecha.trim(),
+    data.kilometraje.trim(),
+    data.estatus.trim(),
+  ];
+  const query = `INSERT INTO kds_controlUnidades(c1,c2,c3,c4,c5) VALUES (${params
+    .map(() => "?")
+    .join(",")})`;
+  try {
+    await sequelize.query(query, {
+      replacements: params,
+    });
+    return { status: true };
+  } catch (error) {
+    console.error("Error al insertar datos:", error);
+    return { status: false, message: error };
+  }
 };
 
 module.exports = KeplerModel;
