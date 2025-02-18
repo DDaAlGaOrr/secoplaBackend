@@ -712,12 +712,21 @@ KeplerModel.getKdsKdiiC = async (id) => {
   );
 };
 
+KeplerModel.getKdsControllUnidades = async (id) => {
+  // return await connection.executeQuery(
+  //   `SELECT TOP 1 c1 FROM kds_controlUnidades ORDER BY c1 DESC`
+  // );
+  return await connection.executeQuery(
+    `SELECT TOP 1 CAST(c1 AS INT) AS c1 FROM kds_controlUnidades ORDER BY c1 DESC`
+  );
+};
+
 KeplerModel.insertKdsControllUnidades = async (data) => {
   let id = await connection.executeQuery(
-    "SELECT TOP 1 c1 FROM kds_controlUnidades ORDER BY c1 DESC"
+    "SELECT TOP 1 CAST(c1 AS INT) AS c1 FROM kds_controlUnidades ORDER BY c1 DESC"
   );
   let lastFolio = id.data[0][0].c1;
-  let number = parseInt(lastFolio);
+  let number = parseInt(lastFolio) + 1;
   number++;
   let params = [
     number,

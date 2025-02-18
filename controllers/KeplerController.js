@@ -412,6 +412,15 @@ KeplerController.getKdsKdiiC = async (req, res) => {
   }
 };
 
+KeplerController.getKdsControllUnidades = async (req, res) => {
+  const result = await KeplerModel.getKdsControllUnidades(req.params.clave);
+  if (result.success) {
+    return res.status(200).json(result);
+  } else {
+    return res.status(404).json(result);
+  }
+};
+
 KeplerController.insertKdsControllUnidades = async (req, res) => {
   const result = await KeplerModel.insertKdsControllUnidades(req.body);
   if (result.status) {
