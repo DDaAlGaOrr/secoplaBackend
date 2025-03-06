@@ -1,8 +1,8 @@
 const Sequelize = require("sequelize");
 
 // Configura la conexión con los datos proporcionados
-const sequelize = new Sequelize("KEPLER_K95R", "tableau", "t4b13@u963", {
-  host: "70.35.199.43",
+const sequelize = new Sequelize("KEPLER_K95R", "sa", "$3c0pl4@1963", {
+  host: "82.223.68.37",
   dialect: "mssql",
   port: 1433,
   dialectOptions: {
