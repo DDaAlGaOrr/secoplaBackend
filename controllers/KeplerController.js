@@ -430,4 +430,31 @@ KeplerController.insertKdsControllUnidades = async (req, res) => {
   }
 };
 
+KeplerController.insertKdsSolicitudUnidades = async (req, res) => {
+  const result = await KeplerModel.insertKdsSolicitudUnidades(req.body);
+  if (result.status) {
+    return res.status(200).json(result);
+  } else {
+    return res.status(404).json(result);
+  }
+};
+
+KeplerController.updateKdsSolicitudUnidades = async (req, res) => {
+  const result = await KeplerModel.updateKdsSolicitudUnidades(req.body);
+  if (result.status) {
+    return res.status(200).json(result);
+  } else {
+    return res.status(404).json(result);
+  }
+};
+
+KeplerController.getKdsSolicitudUnidades = async (req, res) => {
+  const result = await KeplerModel.getKdsSolicitudUnidades();
+  if (result.success) {
+    return res.status(200).json(result);
+  } else {
+    return res.status(404).json(result);
+  }
+};
+
 module.exports = KeplerController;

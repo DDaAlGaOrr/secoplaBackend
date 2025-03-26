@@ -749,4 +749,74 @@ KeplerModel.insertKdsControllUnidades = async (data) => {
   }
 };
 
+KeplerModel.insertKdsSolicitudUnidades = async (data) => {
+  let id = await connection.executeQuery(
+    "SELECT TOP 1 CAST(c1 AS INT) AS c1 FROM kds_SolicitudUnidades ORDER BY c1 DESC"
+  );
+  let lastFolio = id.data[0][0].c1;
+  let number = parseInt(lastFolio) + 1;
+  number++;
+  let params = [
+    number,
+    data.tipoSolicitud.trim(),
+    data.fechaSolicitudCreacion.trim(),
+    data.unidad.trim(),
+    data.zona.trim(),
+    data.region.trim(),
+    data.usuarioResponsable.trim(),
+    data.tipoUnidad.trim(),
+    data.estatus.trim(),
+    data.cotizacion.trim(),
+    data.entregaDocumentos.trim(),
+    data.anticipos.trim(),
+    data.fechaCompromiso.trim(),
+    data.fechaEntregado.trim(),
+    data.emplacamiento.trim(),
+    data.seguro.trim(),
+    data.rotulado.trim(),
+    data.verificacion.trim(),
+    data.gps.trim(),
+    data.fechaEntregaOperaciones.trim(),
+  ];
+  const query = `INSERT INTO kds_SolicitudUnidades(c1,c2,c3,c4,c5,c6,c7,c8,c9,c10,c11,c12,c13,c14,c15,c16,c17,c18,c19,c20) VALUES (${params
+    .map(() => "?")
+    .join(",")})`;
+  try {
+    await sequelize.query(query, {
+      replacements: params,
+    });
+    return { status: true };
+  } catch (error) {
+    console.error("Error al insertar datos:", error);
+    return { status: false, message: error };
+  }
+};
+
+KeplerModel.updateKdsSolicitudUnidades = async (data) => {
+  const codigo = data.id;
+  delete data.id;
+  const updateQuery = `UPDATE kds_SolicitudUnidades SET ${Object.keys(data)
+    .map((key, index) => `${key} = ?`)
+    .join(", ")} WHERE c1 = ?;`;
+
+  try {
+    const params = Object.keys(data).map((key) => data[key].trim());
+    params.push(codigo);
+    await sequelize.query(updateQuery, {
+      replacements: params,
+    });
+    return { status: true };
+  } catch (error) {
+    console.error("Error al insertar datos:", error);
+    return { status: false, message: error };
+  }
+};
+
+KeplerModel.getKdsSolicitudUnidades = async () => {
+  return await connection.executeQuery(
+    `SELECT * FROM kds_SolicitudUnidades`
+  );
+  
+};
+
 module.exports = KeplerModel;

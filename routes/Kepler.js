@@ -27,6 +27,7 @@ router.get("/getKdsNivelesCobranza", Kepler.getKdsNivelesCobranza);
 router.get("/getKdsPresupuestoC/:nominaS", Kepler.getKdsPresupuestoC);
 router.get("/getKdsKdiiC/:clave", Kepler.getKdsKdiiC);
 router.get("/getKdsControllUnidades/", Kepler.getKdsControllUnidades);
+router.get("/getKdsSolicitudUnidades/", Kepler.getKdsSolicitudUnidades);
 
 router.post("/auth", Kepler.auth);
 router.post("/saveChecklist", upload.none(), Kepler.saveChecklist);
@@ -61,6 +62,8 @@ router.post("/insertKdsPersonalRh", upload.none(), Kepler.insertKdsPersonalRh);
 router.post("/insertKdsPuestosRh", upload.none(), Kepler.insertKdsPuestosRh);
 router.post("/updateKdsPuestosRh", upload.none(), Kepler.updateKdsPuestosRh);
 router.post("/updateKdsPersonalRh", upload.none(), Kepler.updateKdsPersonalRh);
+router.post("/insertKdsSolicitudUnidades", upload.none(), Kepler.insertKdsSolicitudUnidades);
+router.post("/updateKdsSolicitudUnidades", upload.none(), Kepler.updateKdsSolicitudUnidades);
 router.post(
   "/insertKdsControllUnidades",
   upload.none(),
