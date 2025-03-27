@@ -754,7 +754,7 @@ KeplerModel.insertKdsSolicitudUnidades = async (data) => {
     "SELECT TOP 1 CAST(c1 AS INT) AS c1 FROM kds_SolicitudUnidades ORDER BY c1 DESC"
   );
   let lastFolio = id.data[0][0].c1;
-  let number = parseInt(lastFolio) + 1;
+  let number = parseInt(lastFolio);
   number++;
   let params = [
     number,
