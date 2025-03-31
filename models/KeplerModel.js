@@ -723,10 +723,10 @@ KeplerModel.getKdsControllUnidades = async (id) => {
 
 KeplerModel.insertKdsControllUnidades = async (data) => {
   let id = await connection.executeQuery(
-    "SELECT TOP 1 CAST(c1 AS INT) AS c1 FROM kds_controlUnidades ORDER BY c1 DESC"
+    "SELECT ISNULL(MAX(CAST(c1 AS INT)), 0) + 1 AS nextId FROM kds_controlUnidades WITH (UPDLOCK, HOLDLOCK);"
   );
-  let lastFolio = id.data[0][0].c1;
-  let number = parseInt(lastFolio) + 1;
+  let lastFolio = id.data[0][0].nextId;
+  let number = parseInt(lastFolio);
   number++;
   let params = [
     number,
@@ -813,10 +813,7 @@ KeplerModel.updateKdsSolicitudUnidades = async (data) => {
 };
 
 KeplerModel.getKdsSolicitudUnidades = async () => {
-  return await connection.executeQuery(
-    `SELECT * FROM kds_SolicitudUnidades`
-  );
-  
+  return await connection.executeQuery(`SELECT * FROM kds_SolicitudUnidades`);
 };
 
 module.exports = KeplerModel;
