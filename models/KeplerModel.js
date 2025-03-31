@@ -351,18 +351,29 @@ KeplerModel.updateCardexStatus = async (data) => {
 };
 
 KeplerModel.saveKdsKilometrajeGps = async (data) => {
-  let params = [data.unidad.trim(), data.fecha.trim(), data.kilometraje.trim()];
-  const query = `INSERT INTO kds_kilometrajegps (c2,c3,c4) VALUES (${params
-    .map(() => "?")
-    .join(", ")})`;
-  try {
-    await sequelize.query(query, {
-      replacements: params,
-    });
-    return { status: true };
-  } catch (error) {
-    console.error("Error al insertar datos:", error);
-    return { status: false, message: error };
+  data = Object.assign({}, data);
+  console.log(data);
+  let existingRecord = await connection.executeQuery(
+    `SELECT 1 FROM kds_kilometrajegps WHERE c2 = '${data.unidad}' AND c3 = '${data.fecha}' ;`
+  );
+  if (existingRecord.data[0].length == 0) {
+    let params = [
+      data.unidad.trim(),
+      data.fecha.trim(),
+      data.kilometraje.trim(),
+    ];
+    const query = `INSERT INTO kds_kilometrajegps (c2,c3,c4) VALUES (${params
+      .map(() => "?")
+      .join(", ")})`;
+    try {
+      await sequelize.query(query, {
+        replacements: params,
+      });
+      return { status: true };
+    } catch (error) {
+      console.error("Error al insertar datos:", error);
+      return { status: false, message: error };
+    }
   }
 };
 
@@ -722,30 +733,38 @@ KeplerModel.getKdsControllUnidades = async (id) => {
 };
 
 KeplerModel.insertKdsControllUnidades = async (data) => {
-  let id = await connection.executeQuery(
-    "SELECT ISNULL(MAX(CAST(c1 AS INT)), 0) + 1 AS nextId FROM kds_controlUnidades WITH (UPDLOCK, HOLDLOCK);"
+  data = Object.assign({}, data);
+  console.log(data);
+  let existingRecord = await connection.executeQuery(
+    `SELECT 1 FROM kds_controlUnidades WHERE c2 = '${data.unidad}' AND c3 = '${data.fecha}' ;`
   );
-  let lastFolio = id.data[0][0].nextId;
-  let number = parseInt(lastFolio);
-  number++;
-  let params = [
-    number,
-    data.unidad.trim(),
-    data.fecha.trim(),
-    data.kilometraje.trim(),
-    data.estatus.trim(),
-  ];
-  const query = `INSERT INTO kds_controlUnidades(c1,c2,c3,c4,c5) VALUES (${params
-    .map(() => "?")
-    .join(",")})`;
-  try {
-    await sequelize.query(query, {
-      replacements: params,
-    });
-    return { status: true };
-  } catch (error) {
-    console.error("Error al insertar datos:", error);
-    return { status: false, message: error };
+
+  if (existingRecord.data[0].length == 0) {
+    let id = await connection.executeQuery(
+      "SELECT ISNULL(MAX(CAST(c1 AS INT)), 0) + 1 AS nextId FROM kds_controlUnidades WITH (UPDLOCK, HOLDLOCK);"
+    );
+    let lastFolio = id.data[0][0].nextId;
+    let number = parseInt(lastFolio);
+    number++;
+    let params = [
+      number,
+      data.unidad.trim(),
+      data.fecha.trim(),
+      data.kilometraje.trim(),
+      data.estatus.trim(),
+    ];
+    const query = `INSERT INTO kds_controlUnidades(c1,c2,c3,c4,c5) VALUES (${params
+      .map(() => "?")
+      .join(",")})`;
+    try {
+      await sequelize.query(query, {
+        replacements: params,
+      });
+      return { status: true };
+    } catch (error) {
+      console.error("Error al insertar datos:", error);
+      return { status: false, message: error };
+    }
   }
 };
 
