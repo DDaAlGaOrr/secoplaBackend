@@ -356,6 +356,7 @@ KeplerModel.saveKdsKilometrajeGps = async (data) => {
   let existingRecord = await connection.executeQuery(
     `SELECT 1 FROM kds_kilometrajegps WHERE c2 = '${data.unidad}' AND c3 = '${data.fecha}' ;`
   );
+
   if (existingRecord.data[0].length == 0) {
     let params = [
       data.unidad.trim(),
@@ -374,6 +375,8 @@ KeplerModel.saveKdsKilometrajeGps = async (data) => {
       console.error("Error al insertar datos:", error);
       return { status: false, message: error };
     }
+  } else {
+    return { status: true };
   }
 };
 
@@ -765,6 +768,8 @@ KeplerModel.insertKdsControllUnidades = async (data) => {
       console.error("Error al insertar datos:", error);
       return { status: false, message: error };
     }
+  } else {
+    return { status: true };
   }
 };
 
