@@ -62,11 +62,30 @@ router.post("/insertKdsPersonalRh", upload.none(), Kepler.insertKdsPersonalRh);
 router.post("/insertKdsPuestosRh", upload.none(), Kepler.insertKdsPuestosRh);
 router.post("/updateKdsPuestosRh", upload.none(), Kepler.updateKdsPuestosRh);
 router.post("/updateKdsPersonalRh", upload.none(), Kepler.updateKdsPersonalRh);
-router.post("/insertKdsSolicitudUnidades", upload.none(), Kepler.insertKdsSolicitudUnidades);
-router.post("/updateKdsSolicitudUnidades", upload.none(), Kepler.updateKdsSolicitudUnidades);
 router.post(
-  "/insertKdsControllUnidades",
+  "/insertKdsSolicitudUnidades",
   upload.none(),
-  Kepler.insertKdsControllUnidades
+  Kepler.insertKdsSolicitudUnidades
 );
+router.post(
+  "/updateKdsSolicitudUnidades",
+  upload.none(),
+  Kepler.updateKdsSolicitudUnidades
+);
+router.post(
+  "/insertKdsSolictudGastos",
+  upload.none(),
+  Kepler.insertKdsSolictudGastos
+);
+router.post(
+  "/insertKdsTransferGastos",
+  upload.none(),
+  Kepler.insertKdsTransferGastos
+);
+router.post(
+  "/insertKdsXmlGastosAprobado",
+  upload.none(),
+  Kepler.insertKdsXmlGastosAprobado
+);
+
 module.exports = router;

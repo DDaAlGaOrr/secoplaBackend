@@ -1,7 +1,5 @@
-const { query } = require("mssql");
 const connection = require("./../database/kepler");
 const sequelize = require("./../database/conection");
-const { json } = require("sequelize");
 const KeplerModel = () => {};
 
 KeplerModel.existUser = async (username) => {
@@ -835,6 +833,101 @@ KeplerModel.updateKdsSolicitudUnidades = async (data) => {
 
 KeplerModel.getKdsSolicitudUnidades = async () => {
   return await connection.executeQuery(`SELECT * FROM kds_SolicitudUnidades`);
+};
+
+KeplerModel.insertKdsSolictudGastos = async (data) => {
+  let params = [
+    data.c1.trim(),
+    data.c2.trim(),
+    data.c3.trim(),
+    data.c4.trim(),
+    data.c5.trim(),
+    data.c6.trim(),
+    data.c7.trim(),
+    data.c8.trim(),
+    data.c9.trim(),
+    data.c10.trim(),
+    data.c11.trim(),
+    data.c12.trim(),
+    data.c13.trim(),
+    data.c14.trim(),
+    data.c15.trim(),
+  ];
+  const query = `INSERT INTO kds_solictud_gastos(c1,c2,c3,c4,c5,c6,c7,c8,c9,10,c11,c12,c13,c14,c15) VALUES (${params
+    .map(() => "?")
+    .join(",")})`;
+  try {
+    await sequelize.query(query, {
+      replacements: params,
+    });
+    return { status: true };
+  } catch (error) {
+    console.error("Error al insertar datos:", error);
+    return { status: false, message: error };
+  }
+};
+KeplerModel.insertKdsTransferGastos = async (data) => {
+  let params = [
+    data.c1.trim(),
+    data.c2.trim(),
+    data.c3.trim(),
+    data.c4.trim(),
+    data.c5.trim(),
+    data.c6.trim(),
+    data.c7.trim(),
+    data.c8.trim(),
+    data.c9.trim(),
+    data.c10.trim(),
+    data.c11.trim(),
+    data.c12.trim(),
+    data.c13.trim(),
+    data.c14.trim(),
+    data.c15.trim(),
+  ];
+  const query = `INSERT INTO kds_transfer_gastos(c1,c2,c3,c4,c5,c6,c7,c8,c9,10,c11,c12,c13,c14,c15) VALUES (${params
+    .map(() => "?")
+    .join(",")})`;
+  try {
+    await sequelize.query(query, {
+      replacements: params,
+    });
+    return { status: true };
+  } catch (error) {
+    console.error("Error al insertar datos:", error);
+    return { status: false, message: error };
+  }
+};
+
+KeplerModel.insertKdsXmlGastosAprobado = async (data) => {
+  let params = [
+    data.c1.trim(),
+    data.c2.trim(),
+    data.c3.trim(),
+    data.c4.trim(),
+    data.c5.trim(),
+    data.c6.trim(),
+    data.c7.trim(),
+    data.c8.trim(),
+    data.c9.trim(),
+    data.c10.trim(),
+    data.c11.trim(),
+    data.c12.trim(),
+    data.c13.trim(),
+    data.c14.trim(),
+    data.c15.trim(),
+  ];
+  const query = `INSERT INTO kds_xml_gastos_aprobado(c1,c2,c3,c4,c5,c6,c7,c8,c9,10,c11,c12,c13,c14,c15) VALUES (${params
+    .map(() => "?")
+    .join(",")})`;
+  try {
+    await sequelize.query(query, {
+      replacements: params,
+    });
+    return { status: true };
+  } catch (error) {
+    console.error("Error al insertar datos:", error);
+    return { status: false, message: error };
+  }
 };
 
 module.exports = KeplerModel;
