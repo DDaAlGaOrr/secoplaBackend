@@ -87,5 +87,31 @@ router.post(
   upload.none(),
   Kepler.insertKdsXmlGastosAprobado
 );
+router.post(
+  "/insertKdsItemsGastos",
+  upload.none(),
+  Kepler.insertKdsItemsGastos
+);
+
+router.post(
+  "/updateKdsSolictudGastos",
+  upload.none(),
+  Kepler.updateKdsSolictudGastos
+);
+router.post(
+  "/updateKdsTransferGastos",
+  upload.none(),
+  Kepler.updateKdsTransferGastos
+);
+router.post(
+  "/updateKdsXmlGastosAprobado",
+  upload.none(),
+  Kepler.updateKdsXmlGastosAprobado
+);
+router.post(
+  "/updateKdsItemsGastos",
+  upload.none(),
+  Kepler.updateKdsItemsGastos
+);
 
 module.exports = router;

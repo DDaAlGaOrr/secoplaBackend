@@ -458,7 +458,7 @@ KeplerController.getKdsSolicitudUnidades = async (req, res) => {
 };
 KeplerController.insertKdsSolictudGastos = async (req, res) => {
   const result = await KeplerModel.insertKdsSolictudGastos(req.body);
-  if (result.success) {
+  if (result.status) {
     return res.status(200).json(result);
   } else {
     return res.status(404).json(result);
@@ -466,7 +466,7 @@ KeplerController.insertKdsSolictudGastos = async (req, res) => {
 };
 KeplerController.insertKdsTransferGastos = async (req, res) => {
   const result = await KeplerModel.insertKdsTransferGastos(req.body);
-  if (result.success) {
+  if (result.status) {
     return res.status(200).json(result);
   } else {
     return res.status(404).json(result);
@@ -474,7 +474,48 @@ KeplerController.insertKdsTransferGastos = async (req, res) => {
 };
 KeplerController.insertKdsXmlGastosAprobado = async (req, res) => {
   const result = await KeplerModel.insertKdsXmlGastosAprobado(req.body);
-  if (result.success) {
+  if (result.status) {
+    return res.status(200).json(result);
+  } else {
+    return res.status(404).json(result);
+  }
+};
+KeplerController.insertKdsItemsGastos = async (req, res) => {
+  const result = await KeplerModel.insertKdsItemsGastos(req.body);
+  if (result.status) {
+    return res.status(200).json(result);
+  } else {
+    return res.status(404).json(result);
+  }
+};
+
+KeplerController.updateKdsSolictudGastos = async (req, res) => {
+  const result = await KeplerModel.updateKdsSolictudGastos(req.body);
+  if (result.status) {
+    return res.status(200).json(result);
+  } else {
+    return res.status(404).json(result);
+  }
+};
+KeplerController.updateKdsTransferGastos = async (req, res) => {
+  const result = await KeplerModel.updateKdsTransferGastos(req.body);
+  if (result.status) {
+    return res.status(200).json(result);
+  } else {
+    return res.status(404).json(result);
+  }
+};
+KeplerController.updateKdsXmlGastosAprobado = async (req, res) => {
+  const result = await KeplerModel.updateKdsXmlGastosAprobado(req.body);
+  if (result.status) {
+    return res.status(200).json(result);
+  } else {
+    return res.status(404).json(result);
+  }
+};
+KeplerController.updateKdsItemsGastos = async (req, res) => {
+  const result = await KeplerModel.updateKdsItemsGastos(req.body);
+  if (result.status) {
     return res.status(200).json(result);
   } else {
     return res.status(404).json(result);

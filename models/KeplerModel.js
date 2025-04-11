@@ -853,7 +853,7 @@ KeplerModel.insertKdsSolictudGastos = async (data) => {
     data.c14.trim(),
     data.c15.trim(),
   ];
-  const query = `INSERT INTO kds_solictud_gastos(c1,c2,c3,c4,c5,c6,c7,c8,c9,10,c11,c12,c13,c14,c15) VALUES (${params
+  const query = `INSERT INTO kds_solictud_gastos(c1,c2,c3,c4,c5,c6,c7,c8,c9,c10,c11,c12,c13,c14,c15) VALUES (${params
     .map(() => "?")
     .join(",")})`;
   try {
@@ -884,7 +884,7 @@ KeplerModel.insertKdsTransferGastos = async (data) => {
     data.c14.trim(),
     data.c15.trim(),
   ];
-  const query = `INSERT INTO kds_transfer_gastos(c1,c2,c3,c4,c5,c6,c7,c8,c9,10,c11,c12,c13,c14,c15) VALUES (${params
+  const query = `INSERT INTO kds_transfer_gastos(c1,c2,c3,c4,c5,c6,c7,c8,c9,c10,c11,c12,c13,c14,c15) VALUES (${params
     .map(() => "?")
     .join(",")})`;
   try {
@@ -916,11 +916,121 @@ KeplerModel.insertKdsXmlGastosAprobado = async (data) => {
     data.c14.trim(),
     data.c15.trim(),
   ];
-  const query = `INSERT INTO kds_xml_gastos_aprobado(c1,c2,c3,c4,c5,c6,c7,c8,c9,10,c11,c12,c13,c14,c15) VALUES (${params
+  const query = `INSERT INTO kds_xml_gastos_aprobado(c1,c2,c3,c4,c5,c6,c7,c8,c9,c10,c11,c12,c13,c14,c15) VALUES (${params
     .map(() => "?")
     .join(",")})`;
   try {
     await sequelize.query(query, {
+      replacements: params,
+    });
+    return { status: true };
+  } catch (error) {
+    console.error("Error al insertar datos:", error);
+    return { status: false, message: error };
+  }
+};
+
+KeplerModel.insertKdsItemsGastos = async (data) => {
+  let params = [
+    data.c1.trim(),
+    data.c2.trim(),
+    data.c3.trim(),
+    data.c4.trim(),
+    data.c5.trim(),
+    data.c6.trim(),
+    data.c7.trim(),
+    data.c8.trim(),
+    data.c9.trim(),
+    data.c10.trim(),
+    data.c11.trim(),
+    data.c12.trim(),
+    data.c13.trim(),
+    data.c14.trim(),
+    data.c15.trim(),
+  ];
+  const query = `INSERT INTO kds_items_gastos(c1,c2,c3,c4,c5,c6,c7,c8,c9,c10,c11,c12,c13,c14,c15) VALUES (${params
+    .map(() => "?")
+    .join(",")})`;
+  try {
+    await sequelize.query(query, {
+      replacements: params,
+    });
+    return { status: true };
+  } catch (error) {
+    console.error("Error al insertar datos:", error);
+    return { status: false, message: error };
+  }
+};
+
+KeplerModel.updateKdsSolictudGastos = async (data) => {
+  const codigo = data.c1;
+  delete data.c1;
+  const updateQuery = `UPDATE kds_solictud_gastos SET ${Object.keys(data)
+    .map((key, index) => `${key} = ?`)
+    .join(", ")} WHERE c1 = ?;`;
+
+  try {
+    const params = Object.keys(data).map((key) => data[key].trim());
+    params.push(codigo);
+    await sequelize.query(updateQuery, {
+      replacements: params,
+    });
+    return { status: true };
+  } catch (error) {
+    console.error("Error al insertar datos:", error);
+    return { status: false, message: error };
+  }
+};
+
+KeplerModel.updateKdsTransferGastos = async (data) => {
+  const codigo = data.c1;
+  delete data.c1;
+  const updateQuery = `UPDATE kds_transfer_gastos SET ${Object.keys(data)
+    .map((key, index) => `${key} = ?`)
+    .join(", ")} WHERE c1 = ?;`;
+
+  try {
+    const params = Object.keys(data).map((key) => data[key].trim());
+    params.push(codigo);
+    await sequelize.query(updateQuery, {
+      replacements: params,
+    });
+    return { status: true };
+  } catch (error) {
+    console.error("Error al insertar datos:", error);
+    return { status: false, message: error };
+  }
+};
+KeplerModel.updateKdsXmlGastosAprobado = async (data) => {
+  const codigo = data.c1;
+  delete data.c1;
+  const updateQuery = `UPDATE kds_xml_gastos_aprobado SET ${Object.keys(data)
+    .map((key, index) => `${key} = ?`)
+    .join(", ")} WHERE c1 = ?;`;
+
+  try {
+    const params = Object.keys(data).map((key) => data[key].trim());
+    params.push(codigo);
+    await sequelize.query(updateQuery, {
+      replacements: params,
+    });
+    return { status: true };
+  } catch (error) {
+    console.error("Error al insertar datos:", error);
+    return { status: false, message: error };
+  }
+};
+KeplerModel.updateKdsItemsGastos = async (data) => {
+  const codigo = data.c1;
+  delete data.c1;
+  const updateQuery = `UPDATE kds_items_gastos SET ${Object.keys(data)
+    .map((key, index) => `${key} = ?`)
+    .join(", ")} WHERE c1 = ?;`;
+
+  try {
+    const params = Object.keys(data).map((key) => data[key].trim());
+    params.push(codigo);
+    await sequelize.query(updateQuery, {
       replacements: params,
     });
     return { status: true };
