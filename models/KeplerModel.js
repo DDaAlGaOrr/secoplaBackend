@@ -1027,15 +1027,18 @@ KeplerModel.updateKdsXmlGastosAprobado = async (data) => {
   }
 };
 KeplerModel.updateKdsItemsGastos = async (data) => {
-  const codigo = data.c1;
-  delete data.c1;
+  const c9 = data.c9;
+  const c13 = data.c13;
+  delete data.c9;
+  delete data.c13;
   const updateQuery = `UPDATE kds_items_gastos SET ${Object.keys(data)
     .map((key, index) => `${key} = ?`)
-    .join(", ")} WHERE c1 = ?;`;
+    .join(", ")} WHERE c9 = ? and c13 = ?;`;
 
   try {
     const params = Object.keys(data).map((key) => data[key].trim());
-    params.push(codigo);
+    params.push(c9);
+    params.push(c13);
     await sequelize.query(updateQuery, {
       replacements: params,
     });
