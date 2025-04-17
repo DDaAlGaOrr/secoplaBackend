@@ -932,11 +932,11 @@ KeplerModel.insertKdsXmlGastosAprobado = async (data) => {
 
 KeplerModel.insertKdsItemsGastos = async (data) => {
   let id = await connection.executeQuery(
-    "SELECT TOP 1 CAST(c1 AS INT) AS c1 FROM kds_items_gastos ORDER BY c1 DESC"
+    "SELECT ISNULL(MAX(CAST(c1 AS INT)), 0) + 1 AS nextId FROM kds_items_gastos WITH (UPDLOCK, HOLDLOCK)"
   );
-  let lastFolio = id.data[0][0].c1;
+  console.log(id);
+  let lastFolio = id.data[0][0].nextId;
   let number = parseInt(lastFolio);
-  number++;
   let params = [
     number,
     data.c2.trim(),
