@@ -931,8 +931,14 @@ KeplerModel.insertKdsXmlGastosAprobado = async (data) => {
 };
 
 KeplerModel.insertKdsItemsGastos = async (data) => {
+  let id = await connection.executeQuery(
+    "SELECT TOP 1 CAST(c1 AS INT) AS c1 FROM kds_items_gastos ORDER BY c1 DESC"
+  );
+  let lastFolio = id.data[0][0].c1;
+  let number = parseInt(lastFolio);
+  number++;
   let params = [
-    data.c1.trim(),
+    number,
     data.c2.trim(),
     data.c3.trim(),
     data.c4.trim(),
