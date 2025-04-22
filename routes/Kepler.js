@@ -28,6 +28,7 @@ router.get("/getKdsPresupuestoC/:nominaS", Kepler.getKdsPresupuestoC);
 router.get("/getKdsKdiiC/:clave", Kepler.getKdsKdiiC);
 router.get("/getKdsControllUnidades/", Kepler.getKdsControllUnidades);
 router.get("/getKdsSolicitudUnidades/", Kepler.getKdsSolicitudUnidades);
+router.get("/getKdii/", Kepler.getKdii);
 
 router.post("/auth", Kepler.auth);
 router.post("/saveChecklist", upload.none(), Kepler.saveChecklist);

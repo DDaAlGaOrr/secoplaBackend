@@ -1049,4 +1049,8 @@ KeplerModel.updateKdsItemsGastos = async (data) => {
   }
 };
 
+KeplerModel.getKdii = async () => {
+  return await connection.executeQuery(`select * from kdii`);
+};
+
 module.exports = KeplerModel;
