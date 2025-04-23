@@ -63,7 +63,11 @@ router.post("/insertKdsPersonalRh", upload.none(), Kepler.insertKdsPersonalRh);
 router.post("/insertKdsPuestosRh", upload.none(), Kepler.insertKdsPuestosRh);
 router.post("/updateKdsPuestosRh", upload.none(), Kepler.updateKdsPuestosRh);
 router.post("/updateKdsPersonalRh", upload.none(), Kepler.updateKdsPersonalRh);
-router.post("/insertKdsControllUnidades", upload.none(), Kepler.insertKdsControllUnidades);
+router.post(
+  "/insertKdsControllUnidades",
+  upload.none(),
+  Kepler.insertKdsControllUnidades
+);
 router.post(
   "/insertKdsSolicitudUnidades",
   upload.none(),
@@ -83,6 +87,11 @@ router.post(
   "/insertKdsTransferGastos",
   upload.none(),
   Kepler.insertKdsTransferGastos
+);
+router.post(
+  "/insertKdsSolicitudMaterial",
+  upload.none(),
+  Kepler.insertKdsSolicitudMaterial
 );
 router.post(
   "/insertKdsXmlGastosAprobado",
