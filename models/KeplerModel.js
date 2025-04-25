@@ -1094,4 +1094,10 @@ KeplerModel.insertKdsSolicitudMaterial = async (data) => {
   }
 };
 
+KeplerModel.getKdiiTotal = async () => {
+  return await connection.executeQuery(
+    `SELECT *, (C4 + C8 - C9) AS EXISTENCIA_TOTAL FROM KDIL`
+  );
+};
+
 module.exports = KeplerModel;
