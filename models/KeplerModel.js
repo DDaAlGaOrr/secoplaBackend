@@ -917,8 +917,10 @@ KeplerModel.insertKdsXmlGastosAprobado = async (data) => {
     data.c13.trim(),
     data.c14.trim(),
     data.c15.trim(),
+    data.c16.trim(),
+    data.c17.trim(),
   ];
-  const query = `INSERT INTO kds_xml_gastos_aprobado(c1,c2,c3,c4,c5,c6,c7,c8,c9,c10,c11,c12,c13,c14,c15) VALUES (${params
+  const query = `INSERT INTO kds_xml_gastos_aprobado(c1,c2,c3,c4,c5,c6,c7,c8,c9,c10,c11,c12,c13,c14,c15,c16,c17) VALUES (${params
     .map(() => "?")
     .join(",")})`;
   try {
