@@ -545,5 +545,21 @@ KeplerController.getKdiiTotal = async (req, res) => {
     return res.status(404).json(result);
   }
 };
+KeplerController.insertKdsSolictudGastosDescuento = async (req, res) => {
+  const result = await KeplerModel.insertKdsSolictudGastosDescuento(req.body);
+  if (result.status) {
+    return res.status(200).json(result);
+  } else {
+    return res.status(404).json(result);
+  }
+};
+KeplerController.insertKdsXmlGastosAprobadoDescuen = async (req, res) => {
+  const result = await KeplerModel.insertKdsXmlGastosAprobadoDescuen(req.body);
+  if (result.status) {
+    return res.status(200).json(result);
+  } else {
+    return res.status(404).json(result);
+  }
+};
 
 module.exports = KeplerController;

@@ -1102,4 +1102,82 @@ KeplerModel.getKdiiTotal = async () => {
   );
 };
 
+KeplerModel.insertKdsSolictudGastosDescuento = async (data) => {
+  let id = await connection.executeQuery(
+    "SELECT ISNULL(MAX(CAST(c1 AS INT)), 0) + 1 AS nextId FROM kds_solictud_gastos_descuento WITH (UPDLOCK, HOLDLOCK)"
+  );
+  let lastFolio = id.data[0][0].nextId;
+  let c1Column = parseInt(lastFolio);
+  let params = [
+    c1Column,
+    data.c2.trim(),
+    data.c3.trim(),
+    data.c4.trim(),
+    data.c5.trim(),
+    data.c6.trim(),
+    data.c7.trim(),
+    data.c8.trim(),
+    data.c9.trim(),
+    data.c10.trim(),
+    data.c11.trim(),
+    data.c12.trim(),
+    data.c13.trim(),
+    data.c14.trim(),
+    data.c15.trim(),
+    data.c16.trim(),
+    data.c17.trim(),
+  ];
+  const query = `INSERT INTO kds_solictud_gastos_descuento(c1,c2,c3,c4,c5,c6,c7,c8,c9,c10,c11,c12,c13,c14,c15,c16,c17) VALUES (${params
+    .map(() => "?")
+    .join(",")})`;
+  try {
+    await sequelize.query(query, {
+      replacements: params,
+    });
+    return { status: true };
+  } catch (error) {
+    console.error("Error al insertar datos:", error);
+    return { status: false, message: error };
+  }
+};
+
+KeplerModel.insertKdsXmlGastosAprobadoDescuen = async (data) => {
+  let id = await connection.executeQuery(
+    "SELECT ISNULL(MAX(CAST(c1 AS INT)), 0) + 1 AS nextId FROM kds_xml_gastos_aprobadoDescuen WITH (UPDLOCK, HOLDLOCK)"
+  );
+  let lastFolio = id.data[0][0].nextId;
+  let c1Column = parseInt(lastFolio);
+  let params = [
+    c1Column,
+    data.c2.trim(),
+    data.c3.trim(),
+    data.c4.trim(),
+    data.c5.trim(),
+    data.c6.trim(),
+    data.c7.trim(),
+    data.c8.trim(),
+    data.c9.trim(),
+    data.c10.trim(),
+    data.c11.trim(),
+    data.c12.trim(),
+    data.c13.trim(),
+    data.c14.trim(),
+    data.c15.trim(),
+    data.c16.trim(),
+    data.c17.trim(),
+  ];
+  const query = `INSERT INTO kds_xml_gastos_aprobadoDescuen(c1,c2,c3,c4,c5,c6,c7,c8,c9,c10,c11,c12,c13,c14,c15,c16,c17) VALUES (${params
+    .map(() => "?")
+    .join(",")})`;
+  try {
+    await sequelize.query(query, {
+      replacements: params,
+    });
+    return { status: true };
+  } catch (error) {
+    console.error("Error al insertar datos:", error);
+    return { status: false, message: error };
+  }
+};
+
 module.exports = KeplerModel;

@@ -104,6 +104,16 @@ router.post(
   upload.none(),
   Kepler.insertKdsItemsGastos
 );
+router.post(
+  "/insertKdsSolictudGastosDescuento",
+  upload.none(),
+  Kepler.insertKdsSolictudGastosDescuento
+);
+router.post(
+  "/insertKdsXmlGastosAprobadoDescuen",
+  upload.none(),
+  Kepler.insertKdsXmlGastosAprobadoDescuen
+);
 
 router.post(
   "/updateKdsSolictudGastos",
