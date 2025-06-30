@@ -714,10 +714,15 @@ KeplerModel.getKdsPresupuestoC = async (id) => {
   );
 };
 
-KeplerModel.getKdsKdiiC = async (id) => {
-  return await connection.executeQuery(
-    `SELECT * FROM kds_kdiiC WHERE c1 = '${id}'`
-  );
+KeplerModel.getKdsKdiiC = async (id = null) => {
+  console.log(id);
+  if (id) {
+    return await connection.executeQuery(
+      `SELECT * FROM kds_kdiiC WHERE c1 = '${id}'`
+    );
+  } else {
+    return await connection.executeQuery(`SELECT * FROM kds_kdiiC`);
+  }
 };
 
 KeplerModel.getKdsControllUnidades = async (id) => {
@@ -1180,4 +1185,10 @@ KeplerModel.insertKdsXmlGastosAprobadoDescuen = async (data) => {
   }
 };
 
+// KeplerModel.getKdsKdiiC = async (id) => {
+//   return await connection.executeQuery(`SELECT * FROM kds_kdiiC`);
+// };
+KeplerModel.getKdil = async (id) => {
+  return await connection.executeQuery(`SELECT * FROM kdil`);
+};
 module.exports = KeplerModel;

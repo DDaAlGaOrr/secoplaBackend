@@ -404,7 +404,8 @@ KeplerController.getKdsPresupuestoC = async (req, res) => {
 };
 
 KeplerController.getKdsKdiiC = async (req, res) => {
-  const result = await KeplerModel.getKdsKdiiC(req.params.clave);
+  const clave = req.params.clave
+  const result = await KeplerModel.getKdsKdiiC(clave);
   if (result.success) {
     return res.status(200).json(result);
   } else {
@@ -555,6 +556,15 @@ KeplerController.insertKdsSolictudGastosDescuento = async (req, res) => {
 };
 KeplerController.insertKdsXmlGastosAprobadoDescuen = async (req, res) => {
   const result = await KeplerModel.insertKdsXmlGastosAprobadoDescuen(req.body);
+  if (result.status) {
+    return res.status(200).json(result);
+  } else {
+    return res.status(404).json(result);
+  }
+};
+
+KeplerController.getKdil = async (req, res) => {
+  const result = await KeplerModel.getKdil(req.body);
   if (result.status) {
     return res.status(200).json(result);
   } else {
