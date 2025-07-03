@@ -404,7 +404,7 @@ KeplerController.getKdsPresupuestoC = async (req, res) => {
 };
 
 KeplerController.getKdsKdiiC = async (req, res) => {
-  const clave = req.params.clave
+  const clave = req.params.clave;
   const result = await KeplerModel.getKdsKdiiC(clave);
   if (result.success) {
     return res.status(200).json(result);

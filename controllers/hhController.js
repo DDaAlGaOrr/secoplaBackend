@@ -3,8 +3,8 @@ const HhController = () => {};
 
 HhController.getCatPlaguicida = async (req, res) => {
   const result = await HhModel.getCatPlaguicida();
-  if (result.success) {
-    return res.status(200).json(result.data);
+  if (result) {
+    return res.status(200).json(result);
   } else {
     return res.status(404).json(result.error);
   }
@@ -13,7 +13,7 @@ HhController.getCatPlaguicida = async (req, res) => {
 HhController.getCatRodenticida = async (req, res) => {
   const result = await HhModel.getCatRodenticida();
   if (result.success) {
-    return res.status(200).json(result.data);
+    return res.status(200).json(result);
   } else {
     return res.status(404).json(result.error);
   }
