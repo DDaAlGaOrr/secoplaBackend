@@ -978,11 +978,11 @@ KeplerModel.insertKdsItemsGastos = async (data) => {
 };
 
 KeplerModel.updateKdsSolictudGastos = async (data) => {
-  const codigo = data.c1;
-  delete data.c1;
+  const codigo = data.c2;
+  delete data.c2;
   const updateQuery = `UPDATE kds_solictud_gastos SET ${Object.keys(data)
     .map((key, index) => `${key} = ?`)
-    .join(", ")} WHERE c1 = ?;`;
+    .join(", ")} WHERE c2 = ?;`;
 
   try {
     const params = Object.keys(data).map((key) => data[key].trim());
@@ -1036,17 +1036,17 @@ KeplerModel.updateKdsXmlGastosAprobado = async (data) => {
   }
 };
 KeplerModel.updateKdsItemsGastos = async (data) => {
-  const c9 = data.c9;
+  const c6 = data.c6;
   const c13 = data.c13;
-  delete data.c9;
+  delete data.c6;
   delete data.c13;
   const updateQuery = `UPDATE kds_items_gastos SET ${Object.keys(data)
     .map((key, index) => `${key} = ?`)
-    .join(", ")} WHERE c9 = ? and c13 = ?;`;
+    .join(", ")} WHERE c6 = ? and c13 = ?;`;
 
   try {
     const params = Object.keys(data).map((key) => data[key].trim());
-    params.push(c9);
+    params.push(c6);
     params.push(c13);
     await sequelize.query(updateQuery, {
       replacements: params,
