@@ -1062,6 +1062,7 @@ KeplerModel.getKdii = async () => {
   return await connection.executeQuery(`select * from kdii`);
 };
 
+
 KeplerModel.insertKdsSolicitudMaterial = async (data) => {
   // let id = await connection.executeQuery(
   //   "SELECT ISNULL(MAX(CAST(c1 AS INT)), 0) + 1 AS nextId FROM kds_Solicitud_Material WITH (UPDLOCK, HOLDLOCK)"
