@@ -10,7 +10,7 @@ HhModel.getCatRodenticida = async () => {
 };
 
 HhModel.getCodeFolio = async (folio) => {
-  return await connection.executeQuery(
+  return await connection.runQuery(
     `SELECT TOP 1 * 
      FROM TELEGRAM_CODIGOS 
      WHERE FechaCreacion > '2025-10-30' AND Folio = '${folio}'
