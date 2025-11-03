@@ -121,6 +121,16 @@ KeplerController.getClientById = async (req, res) => {
   return res.status(200).json(response);
 };
 
+KeplerController.getCodeFolio = async (req, res) => {
+  let folio = req.params.folio;
+  const data = await KeplerModel.getCodeFolio(folio);
+  const response = {
+    status: "success",
+    data: data,
+  };
+  return res.status(200).json(response);
+};
+
 KeplerController.getkdsGastosVehicular = async (req, res) => {
   const result = await KeplerModel.getkdsGastosVehicular();
   if (result.success) {

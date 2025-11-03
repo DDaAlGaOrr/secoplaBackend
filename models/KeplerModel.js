@@ -81,7 +81,7 @@ KeplerModel.getClientById = async (id) => {
 KeplerModel.getCodeFolio = async (folio) => {
   return await connection.executeQuery(
     `SELECT * FROM TELEGRAM_CODIGOS WHERE FechaCreacion > '2025-10-30' AND Folio = '${folio}' order by IdAutorizacion desc LIMIT 1`
-  );
+  ); 
 };
 
 KeplerModel.getkdsGastosVehicular = async () => {
