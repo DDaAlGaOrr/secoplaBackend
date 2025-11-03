@@ -17,7 +17,6 @@ router.get("/getKdsCardexVehiculos", Kepler.getKdsCardexVehiculos);
 router.get("/searchClient/:client", Kepler.searchClient);
 router.get("/getSubsidiaryClient/:client", Kepler.getSubsidiaryClient);
 router.get("/getClientById/:client", Kepler.getClientById);
-router.get("/getCodeFolio/:folio", Kepler.getCodeFolio);
 router.get("/getFolio", Kepler.getFolio);
 router.get("/getValidationFolio", Kepler.getValidationFolio);
 router.get("/KDS_CHECKLIST", Kepler.KDS_CHECKLIST);

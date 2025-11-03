@@ -4,5 +4,6 @@ const hhController = require("./../controllers/hhController");
 
 router.get("/getCatPlaguicida", hhController.getCatPlaguicida);
 router.get("/getCatRodenticida", hhController.getCatRodenticida);
+router.get("/getCodeFolio/:folio", hhController.getCodeFolio);
 
 module.exports = router;

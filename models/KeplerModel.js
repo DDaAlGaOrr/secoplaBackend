@@ -78,14 +78,6 @@ KeplerModel.getClientById = async (id) => {
   );
 };
 
-KeplerModel.getCodeFolio = async (folio) => {
-  return await connection.executeQuery(
-    `SELECT TOP 1 * 
-     FROM SECOPLA.TELEGRAM_CODIGOS 
-     WHERE FechaCreacion > '2025-10-30' AND Folio = '${folio}'
-     ORDER BY IdAutorizacion DESC`
-  ); 
-};
 
 
 KeplerModel.getkdsGastosVehicular = async () => {

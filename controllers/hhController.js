@@ -19,4 +19,15 @@ HhController.getCatRodenticida = async (req, res) => {
   }
 };
 
+HhController.getCodeFolio = async (req, res) => {
+  let folio = req.params.folio;
+  const data = await HhModel.getCodeFolio(folio);
+  const response = {
+    status: "success",
+    data: data,
+  };
+  return res.status(200).json(response);
+};
+
+
 module.exports = HhController;
