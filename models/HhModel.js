@@ -122,11 +122,12 @@ HhModel.getServiciosPorZona = async (zona, fechaInicio, fechaFin) => {
       AND s.FECHAINSERTADO BETWEEN @fechaInicio AND @fechaFin;
   `;
 
-  return await connection.runQuery(selectQuery, {
+  return await connection.runQuery(selectQuery, [
     idZona,
     fechaInicio,
     fechaFin
-  });
+  ]);
+  
 };
 
 HhModel.eliminarFoliosCliente = async (cliente, fechaInicio, fechaFin, folio) => {
