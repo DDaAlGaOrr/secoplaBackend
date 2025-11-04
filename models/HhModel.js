@@ -123,10 +123,11 @@ HhModel.getServiciosPorZona = async (zona, fechaInicio, fechaFin) => {
   `;
 
   return await connection.runQuery(selectQuery, [
-    idZona,
-    fechaInicio,
-    fechaFin
+    { name: 'idZona', type: sql.Int, value: idZona },
+    { name: 'fechaInicio', type: sql.DateTime, value: fechaInicio },
+    { name: 'fechaFin', type: sql.DateTime, value: fechaFin }
   ]);
+  
   
 };
 
