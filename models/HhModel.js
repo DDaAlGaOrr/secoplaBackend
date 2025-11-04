@@ -56,7 +56,7 @@ HhModel.getlistaClientes = async () => {
 
 
 HhModel.getProblemasEnvio = async (cliente) => {
-  return await connection.runQuery(`SELECT TOP 1 * FROM LOG_ENVIOREPORTE WHERE NUMCLIENTE = '${cliente}' ORDER BY FECHAINSERTADO;`);
+  return await connection.runQuery(`SELECT * FROM LOG_ENVIOREPORTE WHERE NUMCLIENTE = '${cliente}' ORDER BY FECHAINSERTADO;`);
 };
 
 
