@@ -18,4 +18,211 @@ HhModel.getCodeFolio = async (folio) => {
   ); 
 };
 
+HhModel.getlistaUsuarios = async () => {
+  return await connection.runQuery(`
+    SELECT 
+      U.Usuario,
+      U.Nombre,
+      U.Apellido,
+      U.Correo,
+      U.Departamento,
+      Z.zona
+    FROM Usuarios U
+    INNER JOIN Cat_Zona Z ON U.Id_zona = Z.Id_zona
+  `);
+};
+
+HhModel.getlistaZonas = async () => {
+  return await connection.runQuery("select * from Cat_Zona");
+};
+
+
+HhModel.getlistaClientes = async () => {
+  return await connection.runQuery(`
+    SELECT 
+      C.Num_Cliente,
+      C.Nombre,
+      C.Razon,
+      C.Industria,
+      C.Correo,
+      C.FECHA_CREACION,
+      C.FECHAACTUALIZA,
+      C.Habilita_NFC,
+      Z.zona
+    FROM Cat_Clientes C
+    INNER JOIN Cat_Zona Z ON C.id_zona = Z.Id_zona
+  `);
+};
+
+
+HhModel.getProblemasEnvio = async (cliente) => {
+  return await connection.runQuery(`SELECT TOP 1 * FROM LOG_ENVIOREPORTE WHERE NUMCLIENTE = '${cliente}' ORDER BY FECHAINSERTADO;`);
+};
+
+
+HhModel.autorizarServiciosPorZona = async (zona, fechaInicio, fechaFin) => {
+  // 1. Buscar el Id_zona basado en el nombre de la zona
+  const zonaQuery = `
+    SELECT TOP 1 Id_zona 
+    FROM Cat_Zona
+    WHERE zona = @zona;
+  `;
+
+  const zonaResult = await connection.runQuery(zonaQuery, { zona });
+
+  if (!zonaResult || zonaResult.length === 0) {
+    throw new Error(`Zona no encontrada: ${zona}`);
+  }
+
+  const idZona = zonaResult[0].Id_zona;
+
+  // 2. Ejecutar el UPDATE usando el Id_zona encontrado
+  const updateQuery = `
+    UPDATE s
+    SET s.AUTORIZADO = 1
+    FROM SERVICIO_FUERADERANGO s
+    JOIN Cat_Clientes c ON c.Id_Cliente = s.IDCLIENTE
+    WHERE c.id_zona = @idZona
+      AND s.AUTORIZADO = 4
+      AND s.FECHAINSERTADO BETWEEN @fechaInicio AND @fechaFin;
+  `;
+
+  return await connection.runQuery(updateQuery, {
+    idZona,
+    fechaInicio,
+    fechaFin
+  });
+};
+
+
+HhModel.getServiciosPorZona = async (zona, fechaInicio, fechaFin) => {
+  // 1. Buscar el Id_zona por nombre
+  const zonaQuery = `
+    SELECT TOP 1 Id_zona 
+    FROM Cat_Zona
+    WHERE zona = @zona;
+  `;
+
+  const zonaResult = await connection.runQuery(zonaQuery, { zona });
+
+  if (!zonaResult || zonaResult.length === 0) {
+    throw new Error(`Zona no encontrada: ${zona}`);
+  }
+
+  const idZona = zonaResult[0].Id_zona;
+
+  // 2. Consulta SELECT
+  const selectQuery = `
+    SELECT s.*, c.id_zona 
+    FROM SERVICIO_FUERADERANGO s
+    JOIN Cat_Clientes c ON c.Id_Cliente = s.IDCLIENTE
+    WHERE c.id_zona = @idZona
+      AND s.AUTORIZADO = 4
+      AND s.FECHAINSERTADO BETWEEN @fechaInicio AND @fechaFin;
+  `;
+
+  return await connection.runQuery(selectQuery, {
+    idZona,
+    fechaInicio,
+    fechaFin
+  });
+};
+
+HhModel.eliminarFoliosCliente = async (cliente, fechaInicio, fechaFin, folio) => {
+  // Buscar ID del cliente
+  const clienteQuery = `
+    SELECT TOP 1 Id_Cliente 
+    FROM Cat_Clientes
+    WHERE Num_Cliente = @cliente;
+  `;
+  const clienteResult = await connection.runQuery(clienteQuery, { cliente });
+
+  if (!clienteResult || clienteResult.length === 0) {
+    throw new Error(`Cliente no encontrado: ${cliente}`);
+  }
+
+  const idCliente = clienteResult[0].Id_Cliente;
+
+  // Base para los deletes
+  const tablas = ["EDCM", "LLN", "RNP"];
+
+  // Construcción dinámica del WHERE
+  let conditions = `WHERE Id_Cliente = @idCliente`;
+
+  if (fechaInicio !== "sin fecha" && fechaFin !== "sin fecha") {
+    conditions += ` AND Fecha BETWEEN @fechaInicio AND @fechaFin`;
+  }
+
+  if (folio !== "sin folio") {
+    conditions += ` AND Folio = @folio`;
+  }
+
+  // Ejecutar deletes para cada tabla
+  for (const tabla of tablas) {
+    const deleteQuery = `
+      DELETE FROM ${tabla}
+      ${conditions};
+    `;
+    await connection.runQuery(deleteQuery, {
+      idCliente,
+      fechaInicio,
+      fechaFin,
+      folio
+    });
+  }
+
+  return { success: true, message: "Folios eliminados correctamente" };
+};
+
+
+HhModel.consultarFoliosCliente = async (cliente, fechaInicio, fechaFin, folio) => {
+  const clienteQuery = `
+    SELECT TOP 1 Id_Cliente 
+    FROM Cat_Clientes
+    WHERE Num_Cliente = @cliente;
+  `;
+  const clienteResult = await connection.runQuery(clienteQuery, { cliente });
+
+  if (!clienteResult || clienteResult.length === 0) {
+    throw new Error(`Cliente no encontrado: ${cliente}`);
+  }
+
+  const idCliente = clienteResult[0].Id_Cliente;
+
+  const tablas = ["EDCM", "LLN", "RNP"];
+
+  let conditions = `WHERE Id_Cliente = @idCliente`;
+
+  if (fechaInicio !== "sin fecha" && fechaFin !== "sin fecha") {
+    conditions += ` AND Fecha BETWEEN @fechaInicio AND @fechaFin`;
+  }
+
+  if (folio !== "sin folio") {
+    conditions += ` AND Folio = @folio`;
+  }
+
+  let resultados = {};
+
+  for (const tabla of tablas) {
+    const selectQuery = `
+      SELECT * FROM ${tabla}
+      ${conditions};
+    `;
+
+    const rows = await connection.runQuery(selectQuery, {
+      idCliente,
+      fechaInicio,
+      fechaFin,
+      folio
+    });
+
+    resultados[tabla] = rows;
+  }
+
+  return resultados;
+};
+
+
+
+
 module.exports = HhModel;
