@@ -103,7 +103,8 @@ HhModel.getServiciosPorZona = async (zona, fechaInicio, fechaFin) => {
     WHERE zona = @zona;
   `;
 
-  const zonaResult = await connection.runQuery(zonaQuery, { zona });
+  // const zonaResult = await connection.runQuery(zonaQuery, { zona });
+  const zonaResult = await connection.runQuery(zonaQuery, [ zona ]);
 
   if (!zonaResult || zonaResult.length === 0) {
     throw new Error(`Zona no encontrada: ${zona}`);
