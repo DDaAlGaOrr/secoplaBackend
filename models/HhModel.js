@@ -75,8 +75,43 @@ HhModel.getProblemasEnvio = async (cliente) => {
 };
 
 
+// HhModel.autorizarServiciosPorZona = async (zona, fechaInicio, fechaFin) => {
+//   // 1. Buscar el Id_zona basado en el nombre de la zona
+//   const zonaQuery = `
+//     SELECT TOP 1 Id_zona 
+//     FROM Cat_Zona
+//     WHERE zona = @zona;
+//   `;
+
+//   const zonaResult = await connection.runQuery(zonaQuery, { zona });
+
+//   if (!zonaResult || zonaResult.length === 0) {
+//     throw new Error(`Zona no encontrada: ${zona}`);
+//   }
+
+//   const idZona = zonaResult[0].Id_zona;
+
+//   // 2. Ejecutar el UPDATE usando el Id_zona encontrado
+//   const updateQuery = `
+//     UPDATE s
+//     SET s.AUTORIZADO = 1
+//     FROM SERVICIO_FUERADERANGO s
+//     JOIN Cat_Clientes c ON c.Id_Cliente = s.IDCLIENTE
+//     WHERE c.id_zona = @idZona
+//       AND s.AUTORIZADO = 4
+//       AND s.FECHAINSERTADO BETWEEN @fechaInicio AND @fechaFin;
+//   `;
+
+//   return await connection.runQuery(updateQuery, {
+//     idZona,
+//     fechaInicio,
+//     fechaFin
+//   });
+// };
+
+
 HhModel.autorizarServiciosPorZona = async (zona, fechaInicio, fechaFin) => {
-  // 1. Buscar el Id_zona basado en el nombre de la zona
+  // 1. Buscar zona
   const zonaQuery = `
     SELECT TOP 1 Id_zona 
     FROM Cat_Zona
@@ -91,7 +126,7 @@ HhModel.autorizarServiciosPorZona = async (zona, fechaInicio, fechaFin) => {
 
   const idZona = zonaResult[0].Id_zona;
 
-  // 2. Ejecutar el UPDATE usando el Id_zona encontrado
+  // 2. UPDATE + SELECT @@ROWCOUNT
   const updateQuery = `
     UPDATE s
     SET s.AUTORIZADO = 1
@@ -100,6 +135,8 @@ HhModel.autorizarServiciosPorZona = async (zona, fechaInicio, fechaFin) => {
     WHERE c.id_zona = @idZona
       AND s.AUTORIZADO = 4
       AND s.FECHAINSERTADO BETWEEN @fechaInicio AND @fechaFin;
+
+    SELECT @@ROWCOUNT AS filasActualizadas;
   `;
 
   return await connection.runQuery(updateQuery, {
@@ -108,6 +145,9 @@ HhModel.autorizarServiciosPorZona = async (zona, fechaInicio, fechaFin) => {
     fechaFin
   });
 };
+
+
+
 
 
 HhModel.getServiciosPorZona = async (zona, fechaInicio, fechaFin) => {
@@ -143,6 +183,53 @@ HhModel.getServiciosPorZona = async (zona, fechaInicio, fechaFin) => {
   });
 };
 
+// HhModel.eliminarFoliosCliente = async (cliente, fechaInicio, fechaFin, folio) => {
+//   // Buscar ID del cliente
+//   const clienteQuery = `
+//     SELECT TOP 1 Id_Cliente 
+//     FROM Cat_Clientes
+//     WHERE Num_Cliente = @cliente;
+//   `;
+//   const clienteResult = await connection.runQuery(clienteQuery, { cliente });
+
+//   if (!clienteResult || clienteResult.length === 0) {
+//     throw new Error(`Cliente no encontrado: ${cliente}`);
+//   }
+
+//   const idCliente = clienteResult[0].Id_Cliente;
+
+//   // Base para los deletes
+//   const tablas = ["EDCM", "LLN", "RNP"];
+
+//   // Construcción dinámica del WHERE
+//   let conditions = `WHERE Id_Cliente = @idCliente`;
+
+//   if (fechaInicio != "sinfecha" && fechaFin != "sinfecha") {
+//     conditions += ` AND Fecha BETWEEN @fechaInicio AND @fechaFin`;
+//   }
+
+//   if (folio != "sinfolio") {
+//     conditions += ` AND Folio = @folio`;
+//   }
+
+//   // Ejecutar deletes para cada tabla
+//   for (const tabla of tablas) {
+//     const deleteQuery = `
+//       DELETE FROM ${tabla}
+//       ${conditions};
+//     `;
+//     await connection.runQuery(deleteQuery, {
+//       idCliente,
+//       fechaInicio,
+//       fechaFin,
+//       folio
+//     });
+//   }
+
+//   return { success: true, message: "Folios eliminados correctamente" };
+// };
+
+
 HhModel.eliminarFoliosCliente = async (cliente, fechaInicio, fechaFin, folio) => {
   // Buscar ID del cliente
   const clienteQuery = `
@@ -158,10 +245,8 @@ HhModel.eliminarFoliosCliente = async (cliente, fechaInicio, fechaFin, folio) =>
 
   const idCliente = clienteResult[0].Id_Cliente;
 
-  // Base para los deletes
   const tablas = ["EDCM", "LLN", "RNP"];
 
-  // Construcción dinámica del WHERE
   let conditions = `WHERE Id_Cliente = @idCliente`;
 
   if (fechaInicio != "sinfecha" && fechaFin != "sinfecha") {
@@ -172,22 +257,39 @@ HhModel.eliminarFoliosCliente = async (cliente, fechaInicio, fechaFin, folio) =>
     conditions += ` AND Folio = @folio`;
   }
 
+  // Acumulador de filas eliminadas
+  let filasEliminadas = 0;
+
   // Ejecutar deletes para cada tabla
   for (const tabla of tablas) {
     const deleteQuery = `
       DELETE FROM ${tabla}
       ${conditions};
+
+      SELECT @@ROWCOUNT AS filas;
     `;
-    await connection.runQuery(deleteQuery, {
+
+    const result = await connection.runQuery(deleteQuery, {
       idCliente,
       fechaInicio,
       fechaFin,
       folio
     });
+
+    if (result && result.length > 0) {
+      filasEliminadas += result[0].filas;
+    }
   }
 
-  return { success: true, message: "Folios eliminados correctamente" };
+  return { 
+    success: true, 
+    message: "Folios eliminados correctamente",
+    filasEliminadas 
+  };
 };
+
+
+
 
 
 HhModel.consultarFoliosCliente = async (cliente, fechaInicio, fechaFin, folio) => {
