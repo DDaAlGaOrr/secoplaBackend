@@ -17,15 +17,39 @@ const config = {
   },
 };
 
+// async function runQuery(query, params = []) {
+//   try {
+//     const pool = await sql.connect(config);
+//     const request = pool.request();
+
+//     // Agregar parámetros si existen
+//     params.forEach((param) => {
+//       request.input(param.name, param.type, param.value);
+//     });
+
+//     const result = await request.query(query);
+//     return result.recordset;
+//   } catch (error) {
+//     console.error("❌ Error en la base de datos:", error);
+//     throw error;
+//   }
+// }
+
 async function runQuery(query, params = []) {
   try {
     const pool = await sql.connect(config);
     const request = pool.request();
 
-    // Agregar parámetros si existen
-    params.forEach((param) => {
-      request.input(param.name, param.type, param.value);
-    });
+    // ✅ Soportar objeto o array
+    if (Array.isArray(params)) {
+      params.forEach(param => {
+        request.input(param.name, param.type, param.value);
+      });
+    } else if (typeof params === 'object') {
+      Object.keys(params).forEach(key => {
+        request.input(key, params[key]);
+      });
+    }
 
     const result = await request.query(query);
     return result.recordset;
@@ -34,6 +58,7 @@ async function runQuery(query, params = []) {
     throw error;
   }
 }
+
 
 module.exports = {
   runQuery,

@@ -103,8 +103,7 @@ HhModel.getServiciosPorZona = async (zona, fechaInicio, fechaFin) => {
     WHERE zona = @zona;
   `;
 
-  // const zonaResult = await connection.runQuery(zonaQuery, { zona });
-  const zonaResult = await connection.runQuery(zonaQuery, [ zona ]);
+  const zonaResult = await connection.runQuery(zonaQuery, { zona });
 
   if (!zonaResult || zonaResult.length === 0) {
     throw new Error(`Zona no encontrada: ${zona}`);
@@ -122,13 +121,11 @@ HhModel.getServiciosPorZona = async (zona, fechaInicio, fechaFin) => {
       AND s.FECHAINSERTADO BETWEEN @fechaInicio AND @fechaFin;
   `;
 
-  return await connection.runQuery(selectQuery, [
-    { name: 'idZona', type: sql.Int, value: idZona },
-    { name: 'fechaInicio', type: sql.DateTime, value: fechaInicio },
-    { name: 'fechaFin', type: sql.DateTime, value: fechaFin }
-  ]);
-  
-  
+  return await connection.runQuery(selectQuery, {
+    idZona,
+    fechaInicio,
+    fechaFin
+  });
 };
 
 HhModel.eliminarFoliosCliente = async (cliente, fechaInicio, fechaFin, folio) => {
