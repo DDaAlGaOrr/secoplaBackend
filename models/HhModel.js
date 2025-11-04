@@ -149,11 +149,11 @@ HhModel.eliminarFoliosCliente = async (cliente, fechaInicio, fechaFin, folio) =>
   // Construcción dinámica del WHERE
   let conditions = `WHERE Id_Cliente = @idCliente`;
 
-  if (fechaInicio !== "sin fecha" && fechaFin !== "sin fecha") {
+  if (fechaInicio !== "sinfecha" && fechaFin !== "sinfecha") {
     conditions += ` AND Fecha BETWEEN @fechaInicio AND @fechaFin`;
   }
 
-  if (folio !== "sin folio") {
+  if (folio !== "sinfolio") {
     conditions += ` AND Folio = @folio`;
   }
 
@@ -193,11 +193,11 @@ HhModel.consultarFoliosCliente = async (cliente, fechaInicio, fechaFin, folio) =
 
   let conditions = `WHERE Id_Cliente = @idCliente`;
 
-  if (fechaInicio !== "sin fecha" && fechaFin !== "sin fecha") {
+  if (fechaInicio !== "sinfecha" && fechaFin !== "sinfecha") {
     conditions += ` AND Fecha BETWEEN @fechaInicio AND @fechaFin`;
   }
 
-  if (folio !== "sin folio") {
+  if (folio != "sinfolio") {
     conditions += ` AND Folio = @folio`;
   }
 
