@@ -9,14 +9,29 @@ HhModel.getCatRodenticida = async () => {
   return await connection.runQuery("select * from Cat_Rodenticida");
 };
 
-HhModel.getCodeFolio = async (folio) => {
+HhModel.getCodeFolio = async (cliente) => {
+  // Primero obtenemos el Id_Cliente a partir del Num_Cliente
+  const resultCliente = await connection.runQuery(
+    `SELECT TOP 1 Id_Cliente 
+     FROM Cat_Clientes 
+     WHERE Num_Cliente = '${cliente}'`
+  );
+
+  if (!resultCliente || resultCliente.length === 0) {
+    return { error: true, message: "Cliente no encontrado" };
+  }
+
+  const idCliente = resultCliente[0].Id_Cliente;
+
+  // Ahora buscamos en TELEGRAM_CODIGOS usando el Id_Cliente como Folio
   return await connection.runQuery(
     `SELECT TOP 1 * 
      FROM TELEGRAM_CODIGOS 
-     WHERE FechaCreacion > '2025-10-30' AND Folio = '${folio}'
+     WHERE FechaCreacion > '2025-10-30' AND Folio = '${idCliente}'
      ORDER BY IdAutorizacion DESC`
-  ); 
+  );
 };
+
 
 HhModel.getlistaUsuarios = async () => {
   return await connection.runQuery(`
