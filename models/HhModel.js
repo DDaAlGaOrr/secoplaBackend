@@ -292,9 +292,56 @@ HhModel.eliminarFoliosCliente = async (cliente, fechaInicio, fechaFin, folio) =>
 
 
 
+// HhModel.consultarFoliosCliente = async (cliente, fechaInicio, fechaFin, folio) => {
+//   const clienteQuery = `
+//     SELECT TOP 1 Id_Cliente 
+//     FROM Cat_Clientes
+//     WHERE Num_Cliente = @cliente;
+//   `;
+//   const clienteResult = await connection.runQuery(clienteQuery, { cliente });
+
+//   if (!clienteResult || clienteResult.length === 0) {
+//     throw new Error(`Cliente no encontrado: ${cliente}`);
+//   }
+
+//   const idCliente = clienteResult[0].Id_Cliente;
+
+//   const tablas = ["EDC", "EDCM", "LLN", "RNP"];
+
+//   let conditions = `WHERE Id_Cliente = @idCliente`;
+
+//   if (fechaInicio != "sinfecha" && fechaFin != "sinfecha") {
+//     conditions += ` AND Fecha BETWEEN @fechaInicio AND @fechaFin`;
+//   }
+
+//   if (folio != "sinfolio") {
+//     conditions += ` AND Folio = @folio`;
+//   }
+
+//   let resultados = {};
+
+//   for (const tabla of tablas) {
+//     const selectQuery = `
+//       SELECT * FROM ${tabla}
+//       ${conditions};
+//     `;
+
+//     const rows = await connection.runQuery(selectQuery, {
+//       idCliente,
+//       fechaInicio,
+//       fechaFin,
+//       folio
+//     });
+
+//     resultados[tabla] = rows;
+//   }
+
+//   return resultados;
+// };
+
 HhModel.consultarFoliosCliente = async (cliente, fechaInicio, fechaFin, folio) => {
   const clienteQuery = `
-    SELECT TOP 1 Id_Cliente 
+    SELECT TOP 1 Id_Cliente
     FROM Cat_Clientes
     WHERE Num_Cliente = @cliente;
   `;
@@ -322,7 +369,8 @@ HhModel.consultarFoliosCliente = async (cliente, fechaInicio, fechaFin, folio) =
 
   for (const tabla of tablas) {
     const selectQuery = `
-      SELECT * FROM ${tabla}
+      SELECT COUNT(*) AS total
+      FROM ${tabla}
       ${conditions};
     `;
 
@@ -333,11 +381,12 @@ HhModel.consultarFoliosCliente = async (cliente, fechaInicio, fechaFin, folio) =
       folio
     });
 
-    resultados[tabla] = rows;
+    resultados[tabla] = rows[0]?.total ?? 0;
   }
 
   return resultados;
 };
+
 
 
 
