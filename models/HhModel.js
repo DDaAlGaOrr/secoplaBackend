@@ -245,7 +245,7 @@ HhModel.eliminarFoliosCliente = async (cliente, fechaInicio, fechaFin, folio) =>
 
   const idCliente = clienteResult[0].Id_Cliente;
 
-  const tablas = ["EDCM", "LLN", "RNP"];
+  const tablas = ["EDC", "EDCM", "LLN", "RNP"];
 
   let conditions = `WHERE Id_Cliente = @idCliente`;
 
@@ -306,7 +306,7 @@ HhModel.consultarFoliosCliente = async (cliente, fechaInicio, fechaFin, folio) =
 
   const idCliente = clienteResult[0].Id_Cliente;
 
-  const tablas = ["EDCM", "LLN", "RNP"];
+  const tablas = ["EDC", "EDCM", "LLN", "RNP"];
 
   let conditions = `WHERE Id_Cliente = @idCliente`;
 
