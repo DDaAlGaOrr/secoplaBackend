@@ -251,7 +251,7 @@ HhModel.eliminarFoliosCliente = async (cliente, fechaInicio, fechaFin, folio) =>
 
   if (fechaInicio != "sinfecha" && fechaFin != "sinfecha") {
     conditions += ` AND Fecha BETWEEN @fechaInicio AND @fechaFin`;
-  }
+  } 
 
   if (folio != "sinfolio") {
     conditions += ` AND Folio = @folio`;
