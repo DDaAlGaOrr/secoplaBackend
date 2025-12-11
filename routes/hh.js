@@ -6,6 +6,7 @@ router.get("/getCatPlaguicida", hhController.getCatPlaguicida);
 router.get("/getCatRodenticida", hhController.getCatRodenticida);
 router.get("/getCodeFolio/:folio", hhController.getCodeFolio);
 router.get("/getlistaUsuarios", hhController.getlistaUsuarios);
+router.get("/getUsuarioById/:Id_Usuario", hhController.getUsuarioById);
 router.get("/getlistaZonas", hhController.getlistaZonas);
 router.get("/getlistaClientes", hhController.getlistaClientes);
 router.get("/getProblemasEnvio/:cliente", hhController.getProblemasEnvio);

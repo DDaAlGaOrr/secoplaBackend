@@ -40,6 +40,16 @@ HhController.getlistaUsuarios = async (req, res) => {
   return res.status(200).json(response);
 };
 
+HhController.getUsuarioById = async (req, res) => {
+  let Id_Usuario = req.params.Id_Usuario;
+  const data = await HhModel.getUsuarioById(Id_Usuario);
+  const response = {
+    status: "success",
+    data: data,
+  };
+  return res.status(200).json(response);
+};
+
 HhController.getlistaZonas = async (req, res) => {
   
   const data = await HhModel.getlistaZonas();

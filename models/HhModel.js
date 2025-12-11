@@ -47,6 +47,22 @@ HhModel.getlistaUsuarios = async () => {
   `);
 };
 
+HhModel.getUsuarioById = async (Id_Usuario) => {
+  return await connection.runQuery(`
+    SELECT 
+      U.Usuario,
+      U.Nombre,
+      U.Apellido,
+      U.Correo,
+      U.Departamento,
+      Z.zona
+    FROM Usuarios U
+    INNER JOIN Cat_Zona Z ON U.Id_zona = Z.Id_zona
+    WHERE Id_Usuario = '${Id_Usuario}'
+  `);
+};
+
+
 HhModel.getlistaZonas = async () => {
   return await connection.runQuery("select * from Cat_Zona");
 };
