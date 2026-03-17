@@ -149,6 +149,15 @@ KeplerController.saveChecklist = async (req, res) => {
   }
 };
 
+KeplerController.insert_kds_matriz = async (req, res) => {
+  const result = await KeplerModel.insert_kds_matriz(req.body);
+  if (result.status) {
+    return res.status(200).json(true);
+  } else {
+    return res.status(400).json(result.message);
+  }
+};
+
 KeplerController.getFolio = async (req, res) => {
   const result = await KeplerModel.getFolio();
   if (result.success) {
