@@ -231,6 +231,63 @@ KeplerModel.saveChecklist = async (data) => {
   }
 };
 
+KeplerModel.insert_kds_matriz = async (data) => {
+  console.log("data para kds_matriz");
+  console.log(data);
+  
+  let params = [
+    data.c1?.trim() || "",
+    data.c2?.trim() || "",
+    data.c3?.trim() || "",
+    data.c4?.trim() || "",
+    data.c5?.trim() || "",
+    data.c6?.trim() || "",
+    data.c7?.trim() || "",
+    data.c8?.trim() || "",
+    data.c9?.trim() || "",
+    data.c10?.trim() || "",
+    data.c11?.trim() || "",
+    data.c12?.trim() || "",
+    data.c13?.trim() || "",
+    data.c14?.trim() || "",
+    data.c15?.trim() || "",
+    data.c16?.trim() || "",
+    data.c17?.trim() || "",
+    data.c18?.trim() || "",
+    data.c19?.trim() || "",
+    data.c20?.trim() || "",
+    data.c21?.trim() || "",
+    data.c22?.trim() || ""
+  ];
+
+  console.log("params para kds_matriz");
+  console.log(params);
+
+  try {
+    if (params.includes(undefined) || params.includes(null)) {
+      console.error("Array contiene valores undefined o null");
+    }
+    
+    params = params.map((val) =>
+      val !== undefined && val !== null ? val : ""
+    );
+
+    const query = `INSERT INTO kds_matriz (c1, c2, c3, c4, c5, c6, c7, c8, c9, c10, 
+            c11, c12, c13, c14, c15, c16, c17, c18, c19, c20, c21, c22
+        ) VALUES (${params.map(() => "?").join(", ")})
+        `;
+    
+    await sequelize.query(query, {
+      replacements: params,
+    });
+    
+    return { status: true };
+  } catch (error) {
+    console.error("Error al insertar datos en kds_matriz:", error);
+    return { status: false, message: error };
+  }
+};
+
 KeplerModel.getFolio = async (data) => {
   return await connection.executeQuery(
     "SELECT TOP 1 c1 FROM KDS_CHECKLIST ORDER BY c1 DESC"

@@ -35,6 +35,7 @@ router.get("/getKdil/", Kepler.getKdil);
 
 router.post("/auth", Kepler.auth);
 router.post("/saveChecklist", upload.none(), Kepler.saveChecklist);
+router.post("/saveChecklist", Kepler.insert_kds_matriz);
 router.post(
   "/updateGastosVehicular",
   upload.none(),
