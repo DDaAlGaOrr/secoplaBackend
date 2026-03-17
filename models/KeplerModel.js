@@ -272,16 +272,41 @@ KeplerModel.insert_kds_matriz = async (data) => {
       val !== undefined && val !== null ? val : ""
     );
 
-    const query = `INSERT INTO kds_matriz (c1, c2, c3, c4, c5, c6, c7, c8, c9, c10, 
+    // VERIFICAR SI YA EXISTE LA COMBINACIÓN DE c1, c2, c3
+    const checkQuery = `
+      SELECT COUNT(*) as count 
+      FROM kds_matriz 
+      WHERE c1 = ? AND c2 = ? AND c3 = ?
+    `;
+    
+    const checkResult = await sequelize.query(checkQuery, {
+      replacements: [params[0], params[1], params[2]], // c1, c2, c3
+      type: sequelize.QueryTypes.SELECT
+    });
+
+    const existe = checkResult[0].count > 0;
+
+    if (existe) {
+      console.log("Ya existe un registro con esa combinación de c1, c2, c3");
+      return { 
+        status: false, 
+        message: "Ya existe un registro con esa combinación de c1, c2, c3",
+        exists: true 
+      };
+    }
+
+    // SI NO EXISTE, PROCEDER CON LA INSERCIÓN
+    const insertQuery = `INSERT INTO kds_matriz (c1, c2, c3, c4, c5, c6, c7, c8, c9, c10, 
             c11, c12, c13, c14, c15, c16, c17, c18, c19, c20, c21, c22
         ) VALUES (${params.map(() => "?").join(", ")})
         `;
     
-    await sequelize.query(query, {
+    await sequelize.query(insertQuery, {
       replacements: params,
     });
     
-    return { status: true };
+    return { status: true, message: "Registro insertado correctamente" };
+    
   } catch (error) {
     console.error("Error al insertar datos en kds_matriz:", error);
     return { status: false, message: error };
