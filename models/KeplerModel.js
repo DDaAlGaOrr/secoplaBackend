@@ -257,7 +257,12 @@ KeplerModel.insert_kds_matriz = async (data) => {
     data.c19?.trim() || "",
     data.c20?.trim() || "",
     data.c21?.trim() || "",
-    data.c22?.trim() || ""
+    data.c22?.trim() || "",
+    data.c23?.trim() || "",
+    data.c24?.trim() || "",
+    data.c25?.trim() || "",
+    data.c26?.trim() || "",
+    data.c27?.trim() || ""
   ];
 
   console.log("params para kds_matriz");
@@ -297,7 +302,8 @@ KeplerModel.insert_kds_matriz = async (data) => {
 
     // SI NO EXISTE, PROCEDER CON LA INSERCIÓN
     const insertQuery = `INSERT INTO kds_matriz (c1, c2, c3, c4, c5, c6, c7, c8, c9, c10, 
-            c11, c12, c13, c14, c15, c16, c17, c18, c19, c20, c21, c22
+            c11, c12, c13, c14, c15, c16, c17, c18, c19, c20, c21, c22, c23, c24, 
+            c25, c26, c27 
         ) VALUES (${params.map(() => "?").join(", ")})
         `;
     
