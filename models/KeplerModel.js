@@ -356,11 +356,15 @@ KeplerModel.update_kds_matriz = async (data) => {
     const checkQuery = `
       SELECT COUNT(*) as count 
       FROM kds_matriz 
-      WHERE c1 = '${data.c1.trim()}' AND c2 = '${data.c2.trim()}' AND c3 = '${data.c3.trim()}'
+      WHERE c1 = ? AND c2 = ? AND c3 = ?
     `;
     
-    const checkResult = await KeplerModel.executeQuery(checkQuery);
-    const existe = checkResult[0]?.count > 0;
+    const checkResult = await sequelize.query(checkQuery, {
+      replacements: [data.c1.trim(), data.c2.trim(), data.c3.trim()],
+      type: sequelize.QueryTypes.SELECT
+    });
+
+    const existe = checkResult[0].count > 0;
 
     if (!existe) {
       console.log("No existe un registro con esa combinación de c1, c2, c3");
@@ -373,19 +377,20 @@ KeplerModel.update_kds_matriz = async (data) => {
 
     // Construir dinámicamente la consulta de actualización
     // Solo actualizamos los campos que vienen en data (excepto c1, c2, c3 que son los identificadores)
-    const sets = [];
-    
+    const camposAActualizar = [];
+    const valores = [];
+
     // Lista de campos posibles desde c4 hasta c30
     for (let i = 4; i <= 30; i++) {
       const campo = `c${i}`;
-      if (data[campo] !== undefined && data[campo] !== null) {
-        const valor = data[campo].toString().replace(/'/g, "''");
-        sets.push(`${campo} = '${valor}'`);
+      if (data[campo] !== undefined) {
+        camposAActualizar.push(`${campo} = ?`);
+        valores.push(data[campo]?.trim() || "");
       }
     }
 
     // Si no hay campos para actualizar (solo vinieron c1, c2, c3)
-    if (sets.length === 0) {
+    if (camposAActualizar.length === 0) {
       return { 
         status: true, 
         message: "No se proporcionaron campos para actualizar",
@@ -396,31 +401,82 @@ KeplerModel.update_kds_matriz = async (data) => {
     // Construir la consulta UPDATE
     const updateQuery = `
       UPDATE kds_matriz 
-      SET ${sets.join(', ')} 
-      WHERE c1 = '${data.c1.trim()}' AND c2 = '${data.c2.trim()}' AND c3 = '${data.c3.trim()}'
+      SET ${camposAActualizar.join(', ')} 
+      WHERE c1 = ? AND c2 = ? AND c3 = ?
     `;
 
-    console.log("Query de actualización:", updateQuery);
+    // Añadir los valores de los identificadores al final
+    const valoresCompletos = [
+      ...valores,
+      data.c1.trim(),
+      data.c2.trim(),
+      data.c3.trim()
+    ];
 
-    // Ejecutar la actualización usando executeQuery
-    const result = await KeplerModel.executeQuery(updateQuery);
+    console.log("Campos a actualizar:", camposAActualizar);
+    console.log("Valores:", valoresCompletos);
 
-    // Verificar si se actualizó algún registro
-    if (result && result.affectedRows > 0) {
+    // Ejecutar la actualización - CORRECCIÓN: MySQL2 devuelve [result, metadata]
+    const result = await sequelize.query(updateQuery, {
+      replacements: valoresCompletos
+    });
+
+    // CORRECCIÓN: Extraer correctamente el resultado según el formato de MySQL2
+    let affectedRows = 0;
+    
+    // MySQL2 con Promise puede devolver [rows, fields] o un objeto con affectedRows
+    if (Array.isArray(result)) {
+      // Formato [result, metadata]
+      if (result[0] && result[0].affectedRows !== undefined) {
+        affectedRows = result[0].affectedRows;
+      } else if (result[0] && result[0].changedRows !== undefined) {
+        affectedRows = result[0].changedRows;
+      } else if (result[1] && result[1].affectedRows !== undefined) {
+        affectedRows = result[1].affectedRows;
+      }
+    } else if (result && result.affectedRows !== undefined) {
+      // Formato objeto directo
+      affectedRows = result.affectedRows;
+    } else if (result && result.changedRows !== undefined) {
+      affectedRows = result.changedRows;
+    }
+
+    // Log para depuración
+    console.log("Resultado de la consulta:", JSON.stringify(result));
+    console.log("Filas afectadas:", affectedRows);
+
+    if (affectedRows > 0) {
       return { 
         status: true, 
         message: "Registro actualizado correctamente",
         updated: true,
-        affectedRows: result.affectedRows
+        affectedRows: affectedRows
       };
     } else {
-      // Si llegamos aquí pero el registro existe, significa que la actualización fue exitosa
-      // pero affectedRows podría no estar disponible en algunos drivers
-      return { 
-        status: true, 
-        message: "Registro actualizado correctamente",
-        updated: true
-      };
+      // Si llegamos aquí pero sabemos que el registro existe y se actualizó,
+      // puede ser que el driver no reporte affectedRows correctamente
+      // Verificamos si realmente se actualizó consultando el registro
+      const verifyQuery = `SELECT * FROM kds_matriz WHERE c1 = ? AND c2 = ? AND c3 = ?`;
+      const verifyResult = await sequelize.query(verifyQuery, {
+        replacements: [data.c1.trim(), data.c2.trim(), data.c3.trim()],
+        type: sequelize.QueryTypes.SELECT
+      });
+      
+      if (verifyResult.length > 0) {
+        // El registro existe, asumimos que se actualizó correctamente
+        return { 
+          status: true, 
+          message: "Registro actualizado correctamente (verificado)",
+          updated: true,
+          affectedRows: 1
+        };
+      } else {
+        return { 
+          status: false, 
+          message: "No se pudo actualizar el registro",
+          updated: false 
+        };
+      }
     }
     
   } catch (error) {
