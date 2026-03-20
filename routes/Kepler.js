@@ -32,10 +32,12 @@ router.get("/getKdii/", Kepler.getKdii);
 router.get("/getKdiiTotal/", Kepler.getKdiiTotal);
 router.get("/getKdsKdiiC/", Kepler.getKdsKdiiC);
 router.get("/getKdil/", Kepler.getKdil);
+router.get("/getAll_kds_matriz/", Kepler.getAll_kds_matriz);
 
 router.post("/auth", Kepler.auth);
 router.post("/saveChecklist", upload.none(), Kepler.saveChecklist);
 router.post("/insert_kds_matriz", upload.none(), Kepler.insert_kds_matriz);
+router.post("/update_kds_matriz", upload.none(), Kepler.update_kds_matriz);
 router.post(
   "/updateGastosVehicular",
   upload.none(),

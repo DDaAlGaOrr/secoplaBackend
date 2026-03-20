@@ -313,6 +313,141 @@ KeplerModel.insert_kds_matriz = async (data) => {
   }
 };
 
+KeplerModel.getAll_kds_matriz = async () => {
+  try {
+    const query = `SELECT * FROM kds_matriz ORDER BY c1, c2, c3`;
+    
+    const results = await sequelize.query(query, {
+      type: sequelize.QueryTypes.SELECT
+    });
+    
+    console.log(`Se encontraron ${results.length} registros en kds_matriz`);
+    
+    return { 
+      status: true, 
+      data: results,
+      count: results.length
+    };
+    
+  } catch (error) {
+    console.error("Error al obtener datos de kds_matriz:", error);
+    return { 
+      status: false, 
+      message: error.message || error,
+      data: [] 
+    };
+  }
+};
+
+KeplerModel.update_kds_matriz = async (data) => {
+  console.log("data para actualizar kds_matriz");
+  console.log(data);
+  
+  try {
+    // Verificar que tenemos los campos clave para identificar el registro
+    if (!data.c1 || !data.c2 || !data.c3) {
+      return { 
+        status: false, 
+        message: "Se requieren c1, c2 y c3 para identificar el registro a actualizar"
+      };
+    }
+
+    // VERIFICAR SI EXISTE LA COMBINACIÓN DE c1, c2, c3
+    const checkQuery = `
+      SELECT COUNT(*) as count 
+      FROM kds_matriz 
+      WHERE c1 = ? AND c2 = ? AND c3 = ?
+    `;
+    
+    const checkResult = await sequelize.query(checkQuery, {
+      replacements: [data.c1.trim(), data.c2.trim(), data.c3.trim()],
+      type: sequelize.QueryTypes.SELECT
+    });
+
+    const existe = checkResult[0].count > 0;
+
+    if (!existe) {
+      console.log("No existe un registro con esa combinación de c1, c2, c3");
+      return { 
+        status: false, 
+        message: "No existe un registro con esa combinación de c1, c2, c3",
+        exists: false 
+      };
+    }
+
+    // Construir dinámicamente la consulta de actualización
+    // Solo actualizamos los campos que vienen en data (excepto c1, c2, c3 que son los identificadores)
+    const camposAActualizar = [];
+    const valores = [];
+
+    // Lista de campos posibles desde c4 hasta c22
+    for (let i = 4; i <= 22; i++) {
+      const campo = `c${i}`;
+      if (data[campo] !== undefined) {
+        camposAActualizar.push(`${campo} = ?`);
+        valores.push(data[campo]?.trim() || "");
+      }
+    }
+
+    // Si no hay campos para actualizar (solo vinieron c1, c2, c3)
+    if (camposAActualizar.length === 0) {
+      return { 
+        status: true, 
+        message: "No se proporcionaron campos para actualizar",
+        updated: false 
+      };
+    }
+
+    // Construir la consulta UPDATE
+    const updateQuery = `
+      UPDATE kds_matriz 
+      SET ${camposAActualizar.join(', ')} 
+      WHERE c1 = ? AND c2 = ? AND c3 = ?
+    `;
+
+    // Añadir los valores de los identificadores al final
+    const valoresCompletos = [
+      ...valores,
+      data.c1.trim(),
+      data.c2.trim(),
+      data.c3.trim()
+    ];
+
+    console.log("Campos a actualizar:", camposAActualizar);
+    console.log("Valores:", valoresCompletos);
+
+    // Ejecutar la actualización
+    const [result] = await sequelize.query(updateQuery, {
+      replacements: valoresCompletos
+    });
+
+    // Verificar si se actualizó algún registro
+    const affectedRows = result?.affectedRows || 0;
+
+    if (affectedRows > 0) {
+      return { 
+        status: true, 
+        message: "Registro actualizado correctamente",
+        updated: true,
+        affectedRows: affectedRows
+      };
+    } else {
+      return { 
+        status: false, 
+        message: "No se pudo actualizar el registro",
+        updated: false 
+      };
+    }
+    
+  } catch (error) {
+    console.error("Error al actualizar datos en kds_matriz:", error);
+    return { 
+      status: false, 
+      message: error.message || error 
+    };
+  }
+};
+
 KeplerModel.getFolio = async (data) => {
   return await connection.executeQuery(
     "SELECT TOP 1 c1 FROM KDS_CHECKLIST ORDER BY c1 DESC"
