@@ -161,7 +161,7 @@ KeplerController.insert_kds_matriz = async (req, res) => {
 KeplerController.getAll_kds_matriz = async (req, res) => {
   const result = await KeplerModel.getAll_kds_matriz();
   if (result.status) {
-    return res.status(200).json(true);
+    return res.status(200).json(result.data);
   } else {
     return res.status(400).json(result.message);
   }
