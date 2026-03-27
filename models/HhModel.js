@@ -36,6 +36,7 @@ HhModel.getCodeFolio = async (cliente) => {
 HhModel.getlistaUsuarios = async () => {
   return await connection.runQuery(`
     SELECT 
+      U.Id_Usuario AS Id,
       U.Usuario,
       U.Nombre,
       U.Apellido,
