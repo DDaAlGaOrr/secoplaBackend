@@ -10,6 +10,15 @@ SipocController.getlln = async(req,res)=>{
     return res.status(200).json(response);
 }
 
+SipocController.getAllSupervisors = async(req,res)=>{
+    const data = await SipocModel.getlln()
+    const response = {
+        status:'success',
+        data: data
+    }
+    return res.status(200).json(response);
+}
+
 SipocController.getClientservices = async(req,res)=>{
     let id_client = req.params.client
     const subsidiaryClient = await SipocModel.getSubsidiaryClient(id_client)

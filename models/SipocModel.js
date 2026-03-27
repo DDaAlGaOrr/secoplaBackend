@@ -6,6 +6,9 @@ SipocModel.getlln = async()=>{
     return await connection.executeQuery('select top 100 * from LLN')
 }
 
+SipocModel.getAllSupervisors = async()=>{
+    return await connection.executeQuery('select * from tblstaff where active = 1')
+}
 
 SipocModel.getSubsidiaryClient = async(id_client)=>{
     const client = await connectionkepler.executeQuery(`select kdud.c2 as id_cliente, kdud.c3 as nombre_cliente,kdud.c10 as rfc ,kdudent.c2 as id_planta,kdudent.c12 as nombre_planta from kdud inner join kdudent on kdud.c2 = kdudent.c1 where kdud.c2 =${id_client}`)
