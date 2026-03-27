@@ -4,7 +4,6 @@ const app = express();
 const port = process.env.PORT || 3908;
 const kepler = require("./routes/Kepler");
 const hh = require("./routes/hh");
-const sipoc = require("./routes/sipoc");
 
 app.use(cors());
 app.use(express.urlencoded({ extended: true }));
@@ -12,7 +11,6 @@ app.use(express.json());
 app.use(express.static("public"));
 app.use(kepler);
 app.use(hh);
-app.use(sipoc);
 
 
 app.listen(port, () => {
