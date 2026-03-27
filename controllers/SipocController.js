@@ -11,7 +11,7 @@ SipocController.getlln = async(req,res)=>{
 }
 
 SipocController.getAllSupervisors = async(req,res)=>{
-    const data = await SipocModel.getlln()
+    const data = await SipocModel.getAllSupervisors()
     const response = {
         status:'success',
         data: data
