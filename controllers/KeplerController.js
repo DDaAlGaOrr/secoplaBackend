@@ -600,4 +600,29 @@ KeplerController.getKdil = async (req, res) => {
   }
 };
 
+KeplerController.updateKdsKdiiC = async (req, res) => {
+  try {
+    const clave = req.params.clave;
+    const { c9, c25, c32, c33 } = req.body;
+
+    const result = await KeplerModel.updateKdsKdiiC(clave, {
+      c9,
+      c25,
+      c32,
+      c33,
+    });
+
+    if (result.success) {
+      return res.status(200).json(result);
+    } else {
+      return res.status(404).json(result);
+    }
+  } catch (error) {
+    return res.status(500).json({
+      success: false,
+      message: error.message,
+    });
+  }
+};
+
 module.exports = KeplerController;

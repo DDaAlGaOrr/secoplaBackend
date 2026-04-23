@@ -988,7 +988,7 @@ KeplerModel.getKdsKdiiC = async (id = null) => {
   } else {
     return await connection.executeQuery(`SELECT * FROM kds_kdiiC`);
   }
-};
+}; 
 
 KeplerModel.getKdsControllUnidades = async (id) => {
   // return await connection.executeQuery(
@@ -1449,6 +1449,31 @@ KeplerModel.insertKdsXmlGastosAprobadoDescuen = async (data) => {
     console.error("Error al insertar datos:", error);
     return { status: false, message: error };
   }
+};
+
+
+KeplerModel.updateKdsKdiiC = async (id, data = {}) => {
+  // Campos permitidos para actualizar
+  const allowedFields = ["c9", "c25", "c32", "c33"];
+
+  let updates = [];
+
+  allowedFields.forEach((field) => {
+    if (data[field] !== undefined) {
+      updates.push(`${field} = '${data[field]}'`);
+    }
+  });
+
+  // Si no mandaron ningún campo válido
+  if (updates.length === 0) {
+    throw new Error("No se enviaron campos para actualizar");
+  }
+
+  return await connection.executeQuery(`
+    UPDATE kds_kdiiC
+    SET ${updates.join(", ")}
+    WHERE c1 = '${id}'
+  `);
 };
 
 // KeplerModel.getKdsKdiiC = async (id) => {
