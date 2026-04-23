@@ -602,10 +602,10 @@ KeplerController.getKdil = async (req, res) => {
 
 KeplerController.updateKdsKdiiC = async (req, res) => {
   try {
-    const clave = req.params.clave;
-    const { c9, c25, c32, c33 } = req.body;
+    const { c1, c9, c25, c32, c33 } = req.body;
 
-    const result = await KeplerModel.updateKdsKdiiC(clave, {
+    const result = await KeplerModel.updateKdsKdiiC({
+      c1,
       c9,
       c25,
       c32,

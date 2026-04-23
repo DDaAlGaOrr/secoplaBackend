@@ -1452,10 +1452,14 @@ KeplerModel.insertKdsXmlGastosAprobadoDescuen = async (data) => {
 };
 
 
-KeplerModel.updateKdsKdiiC = async (id, data = {}) => {
-  // Campos permitidos para actualizar
-  const allowedFields = ["c9", "c25", "c32", "c33"];
+KeplerModel.updateKdsKdiiC = async (data = {}) => {
+  const { c1 } = data;
 
+  if (!c1) {
+    throw new Error("El campo c1 es obligatorio");
+  }
+
+  const allowedFields = ["c9", "c25", "c32", "c33"];
   let updates = [];
 
   allowedFields.forEach((field) => {
@@ -1464,7 +1468,6 @@ KeplerModel.updateKdsKdiiC = async (id, data = {}) => {
     }
   });
 
-  // Si no mandaron ningún campo válido
   if (updates.length === 0) {
     throw new Error("No se enviaron campos para actualizar");
   }
@@ -1472,7 +1475,7 @@ KeplerModel.updateKdsKdiiC = async (id, data = {}) => {
   return await connection.executeQuery(`
     UPDATE kds_kdiiC
     SET ${updates.join(", ")}
-    WHERE c1 = '${id}'
+    WHERE c1 = '${c1}'
   `);
 };
 
