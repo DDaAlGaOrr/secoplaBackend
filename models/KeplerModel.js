@@ -1485,6 +1485,10 @@ KeplerModel.getEppsEnAlmacen = async (zona) => {
   );
 };
 
+KeplerModel.getKds_asignacion_EPP = async () => {
+  return await connection.executeQuery(`SELECT * FROM kds_asignacion_EPP`);
+};
+
 // KeplerModel.getKdsKdiiC = async (id) => {
 //   return await connection.executeQuery(`SELECT * FROM kds_kdiiC`);
 // };
