@@ -611,7 +611,7 @@ KeplerController.getEppsEnAlmacen = async (req, res) => {
 };
 
 KeplerController.getKds_asignacion_EPP = async (req, res) => {
-  const result = await KeplerModel.getKds_asignacion_EPP(req.body.zona);
+  const result = await KeplerModel.getKds_asignacion_EPP();
 
   if (result.status) {
     return res.status(200).json(result);
