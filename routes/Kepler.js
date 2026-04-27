@@ -35,6 +35,7 @@ router.get("/getKdil/", Kepler.getKdil);
 router.get("/getAll_kds_matriz/", Kepler.getAll_kds_matriz);
 
 router.post("/auth", Kepler.auth);
+router.post("/getEppsEnAlmacen", Kepler.getEppsEnAlmacen);
 router.post("/saveChecklist", upload.none(), Kepler.saveChecklist);
 router.post("/updateKdsKdiiC", upload.none(), Kepler.updateKdsKdiiC);
 router.post("/insert_kds_matriz", upload.none(), Kepler.insert_kds_matriz);

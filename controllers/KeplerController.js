@@ -600,6 +600,16 @@ KeplerController.getKdil = async (req, res) => {
   }
 };
 
+KeplerController.getEppsEnAlmacen = async (req, res) => {
+  const result = await KeplerModel.getEppsEnAlmacen(req.body.zona);
+
+  if (result.status) {
+    return res.status(200).json(result);
+  } else {
+    return res.status(404).json(result);
+  }
+};
+
 KeplerController.updateKdsKdiiC = async (req, res) => {
   try {
     const { c1, c9, c25, c32, c33 } = req.body;
