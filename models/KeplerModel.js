@@ -1481,7 +1481,7 @@ KeplerModel.updateKdsKdiiC = async (data = {}) => {
 
 KeplerModel.getEppsEnAlmacen = async (zona) => {
   return await connection.executeQuery(
-    `SELECT * FROM kdil WHERE c1 = '${zona}'`
+    `SELECT * FROM kdil WHERE c1 = '${zona}' AND c2 = '3'`
   );
 };
 
