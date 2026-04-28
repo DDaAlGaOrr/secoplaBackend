@@ -1505,7 +1505,7 @@ KeplerModel.saveAsignacionEPP = async (data = {}) => {
       AND c3 = '${c3}'
   `);
 
-  if (exist.status && exist.data && exist.data.length > 0) {
+if (exist.success && exist.data && exist.data[0] && exist.data[0].length > 0){
     // Actualizar si existe
     return await connection.executeQuery(`
       UPDATE kds_asignacion_EPP
