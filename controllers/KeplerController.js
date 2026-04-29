@@ -631,6 +631,16 @@ KeplerController.getKds_asignacion_EPP = async (req, res) => {
   }
 };
 
+KeplerController.getKds_asignacion_Herramienta = async (req, res) => {
+  const result = await KeplerModel.getKds_asignacion_Herramienta();
+
+  if (result.status) {
+    return res.status(200).json(result);
+  } else {
+    return res.status(404).json(result);
+  }
+};
+
 KeplerController.updateKdsKdiiC = async (req, res) => {
   try {
     const { c1, c9, c25, c32, c33 } = req.body;
