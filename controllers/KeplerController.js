@@ -668,7 +668,7 @@ KeplerController.updateKdsKdiiC = async (req, res) => {
 
 KeplerController.saveAsignacionEPP = async (req, res) => {
   try {
-    const { c1, c2, c3, c4, c5, c6, c7, c8 } = req.body;
+    const { c1, c2, c3, c4, c5, c6, c7, c8, c9, c10 } = req.body;
 
     const result = await KeplerModel.saveAsignacionEPP({
       c1,
@@ -679,6 +679,8 @@ KeplerController.saveAsignacionEPP = async (req, res) => {
       c6,
       c7,
       c8,
+      c9,
+      c10,
     });
 
     if (result.success) {
