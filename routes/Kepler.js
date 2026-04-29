@@ -37,6 +37,7 @@ router.get("/getKds_asignacion_EPP/", Kepler.getKds_asignacion_EPP);
 
 router.post("/auth", Kepler.auth);
 router.post("/getEppsEnAlmacen", upload.none(), Kepler.getEppsEnAlmacen);
+router.post("/getHerramientasEnAlmacen", upload.none(), Kepler.getHerramientasEnAlmacen);
 router.post("/saveChecklist", upload.none(), Kepler.saveChecklist);
 router.post("/updateKdsKdiiC", upload.none(), Kepler.updateKdsKdiiC);
 router.post("/saveAsignacionEPP", upload.none(), Kepler.saveAsignacionEPP);

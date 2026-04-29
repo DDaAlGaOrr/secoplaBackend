@@ -1485,6 +1485,12 @@ KeplerModel.getEppsEnAlmacen = async (zona) => {
   );
 };
 
+KeplerModel.getHerramientasEnAlmacen = async (zona) => {
+  return await connection.executeQuery(
+    `SELECT * FROM kdil WHERE c1 = '${zona}' AND c2 = '2'`
+  );
+};
+
 KeplerModel.getKds_asignacion_EPP = async () => {
   return await connection.executeQuery(`SELECT * FROM kds_asignacion_EPP`);
 };
