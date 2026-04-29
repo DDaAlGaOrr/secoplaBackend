@@ -41,6 +41,7 @@ router.post("/getHerramientasEnAlmacen", upload.none(), Kepler.getHerramientasEn
 router.post("/saveChecklist", upload.none(), Kepler.saveChecklist);
 router.post("/updateKdsKdiiC", upload.none(), Kepler.updateKdsKdiiC);
 router.post("/saveAsignacionEPP", upload.none(), Kepler.saveAsignacionEPP);
+router.post("/saveAsignacionHerramienta", upload.none(), Kepler.saveAsignacionHerramienta);
 router.post("/insert_kds_matriz", upload.none(), Kepler.insert_kds_matriz);
 router.post("/update_kds_matriz", upload.none(), Kepler.update_kds_matriz);
 router.post(

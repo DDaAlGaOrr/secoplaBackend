@@ -684,4 +684,34 @@ KeplerController.saveAsignacionEPP = async (req, res) => {
   }
 };
 
+KeplerController.saveAsignacionHerramienta = async (req, res) => {
+  try {
+    const { c1, c2, c3, c4, c5, c6, c7, c8, c9, c10 } = req.body;
+
+    const result = await KeplerModel.saveAsignacionHerramienta({
+      c1,
+      c2,
+      c3,
+      c4,
+      c5,
+      c6,
+      c7,
+      c8,
+      c9,
+      c10,
+    });
+
+    if (result.success) {
+      return res.status(200).json(result);
+    } else {
+      return res.status(404).json(result);
+    }
+  } catch (error) {
+    return res.status(500).json({
+      success: false,
+      message: error.message,
+    });
+  }
+};
+
 module.exports = KeplerController;

@@ -1545,6 +1545,60 @@ if (exist.success && exist.data && exist.data[0] && exist.data[0].length > 0){
   }
 };
 
+KeplerModel.saveAsignacionHerramienta = async (data = {}) => {
+  const { c1, c2, c3, c4, c5, c6, c7, c8, c9, c10 } = data;
+
+  if (!c1 || !c2 || !c3) {
+    throw new Error("Los campos c1, c2 y c3 son obligatorios");
+  }
+
+  // Buscar si existe registro
+  const exist = await connection.executeQuery(`
+    SELECT *
+    FROM kds_asignacion_Herramienta
+    WHERE c1 = '${c1}'
+      AND c2 = '${c2}'
+      AND c3 = '${c3}'
+  `);
+
+  if (exist.success && exist.data && exist.data[0] && exist.data[0].length > 0) {
+    // Actualizar si existe
+    return await connection.executeQuery(`
+      UPDATE kds_asignacion_Herramienta
+      SET
+        c4 = '${c4}',
+        c5 = '${c5}',
+        c6 = '${c6}',
+        c7 = '${c7}',
+        c8 = '${c8}',
+        c9 = '${c9}',
+        c10 = '${c10}'
+      WHERE c1 = '${c1}'
+        AND c2 = '${c2}'
+        AND c3 = '${c3}'
+    `);
+  } else {
+    // Insertar si no existe
+    return await connection.executeQuery(`
+      INSERT INTO kds_asignacion_Herramienta
+      (c1, c2, c3, c4, c5, c6, c7, c8, c9, c10)
+      VALUES
+      (
+        '${c1}',
+        '${c2}',
+        '${c3}',
+        '${c4}',
+        '${c5}',
+        '${c6}',
+        '${c7}',
+        '${c8}',
+        '${c9}',
+        '${c10}'
+      )
+    `);
+  }
+};
+
 // KeplerModel.getKdsKdiiC = async (id) => {
 //   return await connection.executeQuery(`SELECT * FROM kds_kdiiC`);
 // };
