@@ -1613,4 +1613,8 @@ KeplerModel.saveAsignacionHerramienta = async (data = {}) => {
 KeplerModel.getKdil = async (id) => {
   return await connection.executeQuery(`SELECT * FROM kdil`);
 };
+
+KeplerModel.getkds_equipoepp = async () => {
+  return await connection.executeQuery(`SELECT * FROM kds_equipoepp`);
+};
 module.exports = KeplerModel;

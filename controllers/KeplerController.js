@@ -726,4 +726,14 @@ KeplerController.saveAsignacionHerramienta = async (req, res) => {
   }
 };
 
+KeplerController.getkds_equipoepp = async (req, res) => {
+  const result = await KeplerModel.getkds_equipoepp();
+
+  if (result.status) {
+    return res.status(200).json(result);
+  } else {
+    return res.status(200).json(result);
+  }
+};
+
 module.exports = KeplerController;
