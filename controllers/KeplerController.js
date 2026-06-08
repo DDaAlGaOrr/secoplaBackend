@@ -736,10 +736,38 @@ KeplerController.getkds_equipoepp = async (req, res) => {
   }
 };
 
+// KeplerController.saveEquipoEPP = async (req, res) => {
+//   try {
+//     const { c1, c2, c3, c9, c13, c14 } = req.body;
+
+//     const result = await KeplerModel.saveEquipoEPP({
+//       c1,
+//       c2,
+//       c3,
+//       c9,
+//       c13,
+//       c14,
+//     });
+
+//     if (result.success) {
+//       return res.status(200).json(result);
+//     } else {
+//       return res.status(404).json(result);
+//     }
+//   } catch (error) {
+//     return res.status(500).json({
+//       success: false,
+//       message: error.message,
+//     });
+//   }
+// };
+
 KeplerController.saveEquipoEPP = async (req, res) => {
   try {
-    const { c1, c2, c3, c9, c13, c14 } = req.body;
+    
+    const { c1, c2, c3, c9, c13, c14, c16 } = req.body;
 
+    
     const result = await KeplerModel.saveEquipoEPP({
       c1,
       c2,
@@ -747,6 +775,7 @@ KeplerController.saveEquipoEPP = async (req, res) => {
       c9,
       c13,
       c14,
+      c16, 
     });
 
     if (result.success) {

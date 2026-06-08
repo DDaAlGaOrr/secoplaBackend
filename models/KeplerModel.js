@@ -1618,13 +1618,45 @@ KeplerModel.getkds_equipoepp = async () => {
   return await connection.executeQuery(`SELECT * FROM kds_equipoepp`);
 };
 
+// KeplerModel.saveEquipoEPP = async (data = {}) => {
+//   const { c1, c2, c3, c9, c13, c14 } = data;
+
+//   if (!c1 || !c2 || !c3) {
+//     throw new Error("Los campos c1, c2 y c3 son obligatorios");
+//   }
+
+//   const exist = await connection.executeQuery(`
+//     SELECT 1
+//     FROM kds_equipoepp
+//     WHERE c1 = '${c1}'
+//       AND c2 = '${c2}'
+//       AND c3 = '${c3}'
+//   `);
+
+//   if (!exist.success || !exist.data?.[0]?.length) {
+//     throw new Error("No se encontró el registro a actualizar");
+//   }
+
+//   return await connection.executeQuery(`
+//     UPDATE kds_equipoepp
+//     SET
+//       c9 = '${c9}',
+//       c13 = '${c13}',
+//       c14 = '${c14}'
+//     WHERE c1 = '${c1}'
+//       AND c2 = '${c2}'
+//       AND c3 = '${c3}'
+//   `);
+// };
+
 KeplerModel.saveEquipoEPP = async (data = {}) => {
-  const { c1, c2, c3, c9, c13, c14 } = data;
+  const { c1, c2, c3, c9, c13, c14, c16 } = data;
 
   if (!c1 || !c2 || !c3) {
     throw new Error("Los campos c1, c2 y c3 son obligatorios");
   }
 
+  // 1. Validar si el registro existe
   const exist = await connection.executeQuery(`
     SELECT 1
     FROM kds_equipoepp
@@ -1637,12 +1669,26 @@ KeplerModel.saveEquipoEPP = async (data = {}) => {
     throw new Error("No se encontró el registro a actualizar");
   }
 
+  // 2. Mapear los campos que podrían actualizarse
+  const fieldsToUpdate = { c9, c13, c14, c16 };
+  const setClauses = [];
+
+  // 3. Filtrar y construir las cláusulas SET solo para los que tienen valor
+  for (const [key, value] of Object.entries(fieldsToUpdate)) {
+    if (value !== undefined && value !== null && value !== '') {
+      setClauses.push(`${key} = '${value}'`);
+    }
+  }
+
+  // 4. Si no viene ningún campo para actualizar, respondemos con éxito sin hacer query
+  if (setClauses.length === 0) {
+    return { success: true, message: "No se enviaron campos para actualizar." };
+  }
+
+  // 5. Ejecutar el UPDATE dinámico
   return await connection.executeQuery(`
     UPDATE kds_equipoepp
-    SET
-      c9 = '${c9}',
-      c13 = '${c13}',
-      c14 = '${c14}'
+    SET ${setClauses.join(', ')}
     WHERE c1 = '${c1}'
       AND c2 = '${c2}'
       AND c3 = '${c3}'
