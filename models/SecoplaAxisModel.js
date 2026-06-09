@@ -7,6 +7,7 @@ SecoplaAxisModel.getListaStaff = async () => {
   const query = `
     SELECT
       CONCAT(firstname, ' ', lastname) AS nombreCompleto,
+      curp,
       password 
     FROM tblstaff
     where active = 1
@@ -18,6 +19,7 @@ SecoplaAxisModel.getStaffById = async (staffId) => {
   const query = `
     SELECT 
       CONCAT(firstname, ' ', lastname) AS nombreCompleto,
+      curp,
       password 
     FROM tblstaff 
     WHERE staffid = :staffId
