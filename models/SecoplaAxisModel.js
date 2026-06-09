@@ -5,8 +5,7 @@ const SecoplaAxisModel = () => {};
 // Corregido: cambiados a SecoplaAxisModel
 SecoplaAxisModel.getListaStaff = async () => {
   const query = `
-    SELECT 
-      *, 
+    SELECT
       CONCAT(firstname, ' ', lastname) AS nombreCompleto 
     FROM tblstaff
   `;
@@ -16,7 +15,6 @@ SecoplaAxisModel.getListaStaff = async () => {
 SecoplaAxisModel.getStaffById = async (staffId) => {
   const query = `
     SELECT 
-      *, 
       CONCAT(firstname, ' ', lastname) AS nombreCompleto 
     FROM tblstaff 
     WHERE staffid = :staffId
