@@ -9,6 +9,7 @@ SecoplaAxisModel.getListaStaff = async () => {
       CONCAT(firstname, ' ', lastname) AS nombreCompleto,
       password 
     FROM tblstaff
+    where active = 1
   `;
   return await connection.runQuery(query);
 };
