@@ -1618,33 +1618,96 @@ KeplerModel.getkds_equipoepp = async () => {
   return await connection.executeQuery(`SELECT * FROM kds_equipoepp`);
 };
 
-KeplerModel.update_kdsCardexVehicular = async (datos) => {
-  // 1. Validar que el identificador c1 esté presente
-  if (!datos || !datos.c1) {
-    throw new Error("El identificador 'c1' es obligatorio para realizar la actualización.");
+KeplerModel.update_kdsCardexVehicular = async (data) => {
+  console.log("data para actualizar kds_cardex_vehiculos");
+  console.log(data);
+
+  try {
+    // 1. Verificar que tenemos el identificador obligatorio c1
+    if (!data || !data.c1) {
+      return { 
+        status: false, 
+        message: "El identificador 'c1' es obligatorio para realizar la actualización." 
+      };
+    }
+
+    const camposAActualizar = [];
+    const valores = [];
+
+    // 2. Recorrer dinámicamente desde c2 hasta c81
+    for (let i = 2; i <= 81; i++) {
+      const campo = `c${i}`;
+      if (data[campo] !== undefined) {
+        camposAActualizar.push(`${campo} = ?`);
+        // Si el valor viene como string le hace trim, si no, evita romper si es número o null
+        valores.push(typeof data[campo] === 'string' ? data[campo].trim() : data[campo]);
+      }
+    }
+
+    // 3. Si no mandaron ningún campo del c2 al c81, terminamos temprano
+    if (camposAActualizar.length === 0) {
+      return { 
+        status: true, 
+        message: "No se proporcionaron campos para actualizar",
+        updated: false 
+      };
+    }
+
+    // 4. Construir la consulta UPDATE apuntando a kds_cardex_vehiculos
+    const updateQuery = `
+      UPDATE kds_cardex_vehiculos 
+      SET ${camposAActualizar.join(', ')} 
+      WHERE c1 = ?
+    `;
+
+    // 5. Agregar el valor del identificador c1 al final del arreglo de reemplazos
+    const valoresCompletos = [
+      ...valores,
+      typeof data.c1 === 'string' ? data.c1.trim() : data.c1
+    ];
+
+    console.log("Campos a actualizar:", camposAActualizar);
+    console.log("Valores:", valoresCompletos);
+
+    // 6. EJECUTAR LA CONSULTA USANDO REPLACEMENTS (Esto evita el error de "undefined")
+    // Nota: Usamos sequelize.query tal cual tu ejemplo exitoso
+    const result = await sequelize.query(updateQuery, {
+      replacements: valoresCompletos
+    });
+
+    // 7. Procesar filas afectadas en base al formato devuelto por MySQL2
+    let affectedRows = 0;
+    if (Array.isArray(result)) {
+      if (result[0] && result[0].affectedRows !== undefined) {
+        affectedRows = result[0].affectedRows;
+      } else if (result[0] && result[0].changedRows !== undefined) {
+        affectedRows = result[0].changedRows;
+      } else if (result[1] && result[1].affectedRows !== undefined) {
+        affectedRows = result[1].affectedRows;
+      }
+    } else if (result && result.affectedRows !== undefined) {
+      affectedRows = result.affectedRows;
+    } else if (result && result.changedRows !== undefined) {
+      affectedRows = result.changedRows;
+    }
+
+    console.log("Filas afectadas en cardex:", affectedRows);
+
+    // Retornamos el status: true para que tu controlador responda con el res.status(200).json(true)
+    return { 
+      status: true, 
+      message: "Registro actualizado correctamente",
+      updated: true,
+      affectedRows: affectedRows
+    };
+
+  } catch (error) {
+    console.error("Error al actualizar datos en kds_cardex_vehiculos:", error);
+    return { 
+      status: false, 
+      message: error.message || error 
+    };
   }
-
-  const { c1, ...camposAActualizar } = datos;
-  const keys = Object.keys(camposAActualizar);
-
-  // 2. Si solo mandaron 'c1' y ningún campo a modificar, no hacemos nada
-  if (keys.length === 0) {
-    return { success: true, message: "No se proporcionaron campos para actualizar." };
-  }
-
-  // 3. Construir dinámicamente la sección SET de la consulta (ej: "c2 = ?, c3 = ?")
-  // Nota: Si tu librería usa un formato diferente a '?', cámbialo por el que corresponda (ej: $1, $2)
-  const setString = keys.map(key => `${key} = ?`).join(", ");
-
-  // 4. Armar la query final apuntando a tu tabla kds_cardex_vehiculos
-  const query = `UPDATE kds_cardex_vehiculos SET ${setString} WHERE c1 = ?`;
-
-  // 5. Mapear los valores en el mismo orden que las llaves, y al final agregar el valor de c1
-  const values = keys.map(key => camposAActualizar[key]);
-  values.push(c1);
-
-  // 6. Ejecutar la consulta pasando la query y los valores parametrizados
-  return await connection.executeQuery(query, values);
 };
 
 // KeplerModel.saveEquipoEPP = async (data = {}) => {
