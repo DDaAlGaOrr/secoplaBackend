@@ -736,6 +736,23 @@ KeplerController.getkds_equipoepp = async (req, res) => {
   }
 };
 
+KeplerController.update_kdsGastosVehicular = async (req, res) => {
+  try {
+    // Se le envía todo el req.body (que debe contener c1 y los campos a actualizar)
+    const result = await KeplerModel.update_kdsGastosVehicular(req.body);
+
+    // Si tu método executeQuery o la respuesta del modelo retorna un status de éxito
+    if (result.status || result.success) {
+      return res.status(200).json(true);
+    } else {
+      return res.status(400).json(result.message || "No se pudo actualizar el registro.");
+    }
+  } catch (error) {
+    // Captura el error si no mandaron el campo 'c1' o si hubo un fallo en la base de datos
+    return res.status(400).json(error.message);
+  }
+};
+
 // KeplerController.saveEquipoEPP = async (req, res) => {
 //   try {
 //     const { c1, c2, c3, c9, c13, c14 } = req.body;

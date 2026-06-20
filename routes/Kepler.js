@@ -47,6 +47,7 @@ router.post("/saveAsignacionHerramienta", upload.none(), Kepler.saveAsignacionHe
 router.post("/saveEquipoEPP", upload.none(), Kepler.saveEquipoEPP);
 router.post("/insert_kds_matriz", upload.none(), Kepler.insert_kds_matriz);
 router.post("/update_kds_matriz", upload.none(), Kepler.update_kds_matriz);
+router.post("/update_kdsGastosVehicular", upload.none(), Kepler.update_kdsGastosVehicular);
 router.post(
   "/updateGastosVehicular",
   upload.none(),

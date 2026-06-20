@@ -1618,6 +1618,35 @@ KeplerModel.getkds_equipoepp = async () => {
   return await connection.executeQuery(`SELECT * FROM kds_equipoepp`);
 };
 
+KeplerModel.update_kdsGastosVehicular = async (datos) => {
+  // 1. Validar que el identificador c1 esté presente
+  if (!datos || !datos.c1) {
+    throw new Error("El identificador 'c1' es obligatorio para realizar la actualización.");
+  }
+
+  const { c1, ...camposAActualizar } = datos;
+  const keys = Object.keys(camposAActualizar);
+
+  // 2. Si solo mandaron 'c1' y ningún campo a modificar, no hacemos nada
+  if (keys.length === 0) {
+    return { success: true, message: "No se proporcionaron campos para actualizar." };
+  }
+
+  // 3. Construir dinámicamente la sección SET de la consulta (ej: "c2 = ?, c3 = ?")
+  // Nota: Si tu librería usa un formato diferente a '?', cámbialo por el que corresponda (ej: $1, $2)
+  const setString = keys.map(key => `${key} = ?`).join(", ");
+
+  // 4. Armar la query final apuntando a tu tabla kds_cardex_vehiculos
+  const query = `UPDATE kds_cardex_vehiculos SET ${setString} WHERE c1 = ?`;
+
+  // 5. Mapear los valores en el mismo orden que las llaves, y al final agregar el valor de c1
+  const values = keys.map(key => camposAActualizar[key]);
+  values.push(c1);
+
+  // 6. Ejecutar la consulta pasando la query y los valores parametrizados
+  return await connection.executeQuery(query, values);
+};
+
 // KeplerModel.saveEquipoEPP = async (data = {}) => {
 //   const { c1, c2, c3, c9, c13, c14 } = data;
 
