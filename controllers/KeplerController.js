@@ -736,10 +736,10 @@ KeplerController.getkds_equipoepp = async (req, res) => {
   }
 };
 
-KeplerController.update_kdsGastosVehicular = async (req, res) => {
+KeplerController.update_kdsCardexVehicular = async (req, res) => {
   try {
     // Se le envía todo el req.body (que debe contener c1 y los campos a actualizar)
-    const result = await KeplerModel.update_kdsGastosVehicular(req.body);
+    const result = await KeplerModel.update_kdsCardexVehicular(req.body);
 
     // Si tu método executeQuery o la respuesta del modelo retorna un status de éxito
     if (result.status || result.success) {

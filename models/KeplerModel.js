@@ -1618,7 +1618,7 @@ KeplerModel.getkds_equipoepp = async () => {
   return await connection.executeQuery(`SELECT * FROM kds_equipoepp`);
 };
 
-KeplerModel.update_kdsGastosVehicular = async (datos) => {
+KeplerModel.update_kdsCardexVehicular = async (datos) => {
   // 1. Validar que el identificador c1 esté presente
   if (!datos || !datos.c1) {
     throw new Error("El identificador 'c1' es obligatorio para realizar la actualización.");
