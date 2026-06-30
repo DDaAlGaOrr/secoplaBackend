@@ -1791,4 +1791,72 @@ KeplerModel.getkdlogmov_Vehicular = async () => {
   return await connection.executeQuery(`SELECT * FROM kdlogmov_Vehicular`);
 };
 
+KeplerModel.insertkdlogmov_Vehicular = async (data) => {
+  console.log("data para kdlogmov_Vehicular");
+  console.log(data);
+  
+  let params = [
+    data.c1?.trim() || "",
+    data.c2?.trim() || "",
+    data.c3?.trim() || "",
+    data.c4?.trim() || "",
+    data.c5?.trim() || "",
+    data.c6?.trim() || "",
+    data.c7?.trim() || "",
+    data.c8?.trim() || "",
+    data.c9?.trim() || ""
+  ];
+
+  console.log("params para kdlogmov_Vehicular");
+  console.log(params);
+
+  try {
+    if (params.includes(undefined) || params.includes(null)) {
+      console.error("Array contiene valores undefined o null");
+    }
+    
+    params = params.map((val) =>
+      val !== undefined && val !== null ? val : ""
+    );
+
+    // VERIFICAR SI YA EXISTE LA COMBINACIÓN DE c1, c2, c3, c4
+    const checkQuery = `
+      SELECT COUNT(*) as count 
+      FROM kdlogmov_Vehicular 
+      WHERE c1 = ? AND c2 = ? AND c3 = ? AND c4 = ?
+    `;
+    
+    const checkResult = await sequelize.query(checkQuery, {
+      replacements: [params[0], params[1], params[2], params[3]], // c1, c2, c3, c4
+      type: sequelize.QueryTypes.SELECT
+    });
+
+    const existe = checkResult[0].count > 0;
+
+    if (existe) {
+      console.log("Ya existe un registro con esa combinación de c1, c2, c3, c4");
+      return { 
+        status: false, 
+        message: "Ya existe un registro con esa combinación de c1, c2, c3, c4",
+        exists: true 
+      };
+    }
+
+    // SI NO EXISTE, PROCEDER CON LA INSERCIÓN
+    const insertQuery = `INSERT INTO kdlogmov_Vehicular (c1, c2, c3, c4, c5, c6, c7, c8, c9) 
+        VALUES (${params.map(() => "?").join(", ")})
+    `;
+    
+    await sequelize.query(insertQuery, {
+      replacements: params,
+    });
+    
+    return { status: true, message: "Registro insertado correctamente" };
+    
+  } catch (error) {
+    console.error("Error al insertar datos en kdlogmov_Vehicular:", error);
+    return { status: false, message: error };
+  }
+};
+
 module.exports = KeplerModel;

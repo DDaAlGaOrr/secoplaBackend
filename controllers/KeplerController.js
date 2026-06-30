@@ -818,4 +818,35 @@ KeplerController.getkdlogmov_Vehicular = async (req, res) => {
   }
 };
 
+KeplerController.insertkdlogmov_Vehicular = async (req, res) => {
+  try {
+    
+    const { c1, c2, c3, c4, c5, c6, c7, c8, c9 } = req.body;
+
+    
+    const result = await KeplerModel.insertkdlogmov_Vehicular({
+      c1,
+      c2,
+      c3,
+      c4,
+      c5,
+      c6,
+      c7, 
+      c8,
+      c9
+    });
+
+    if (result.success) {
+      return res.status(200).json(result);
+    } else {
+      return res.status(404).json(result);
+    }
+  } catch (error) {
+    return res.status(500).json({
+      success: false,
+      message: error.message,
+    });
+  }
+};
+
 module.exports = KeplerController;
