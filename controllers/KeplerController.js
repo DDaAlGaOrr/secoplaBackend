@@ -808,4 +808,14 @@ KeplerController.saveEquipoEPP = async (req, res) => {
   }
 };
 
+KeplerController.getkdlogmov_Vehicular = async (req, res) => {
+  const result = await KeplerModel.getkdlogmov_Vehicular();
+
+  if (result.status) {
+    return res.status(200).json(result);
+  } else {
+    return res.status(200).json(result);
+  }
+};
+
 module.exports = KeplerController;

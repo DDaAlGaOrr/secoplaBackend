@@ -1787,4 +1787,8 @@ KeplerModel.saveEquipoEPP = async (data = {}) => {
   `);
 };
 
+KeplerModel.getkdlogmov_Vehicular = async () => {
+  return await connection.executeQuery(`SELECT * FROM kdlogmov_Vehicular`);
+};
+
 module.exports = KeplerModel;

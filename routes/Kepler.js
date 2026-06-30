@@ -36,6 +36,7 @@ router.get("/getAll_kds_matriz/", Kepler.getAll_kds_matriz);
 router.get("/getKds_asignacion_EPP/", Kepler.getKds_asignacion_EPP);
 router.get("/getKds_asignacion_Herramienta/", Kepler.getKds_asignacion_Herramienta);
 router.get("/getkds_equipoepp/", Kepler.getkds_equipoepp );
+router.get("/getkdlogmov_Vehicular/", Kepler.getkdlogmov_Vehicular );
 
 router.post("/auth", Kepler.auth);
 router.post("/getEppsEnAlmacen", upload.none(), Kepler.getEppsEnAlmacen);
