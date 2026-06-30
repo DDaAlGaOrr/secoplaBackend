@@ -836,10 +836,8 @@ KeplerController.insertkdlogmov_Vehicular = async (req, res) => {
       c9
     });
 
-    if (result.success) {
+    if (result) {
       return res.status(200).json(result);
-    } else {
-      return res.status(404).json(result);
     }
   } catch (error) {
     return res.status(500).json({
