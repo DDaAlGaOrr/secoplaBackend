@@ -1485,10 +1485,23 @@ KeplerModel.getEppsEnAlmacen = async (zona) => {
   );
 };
 
+// KeplerModel.getHerramientasEnAlmacen = async (zona) => {
+//   return await connection.executeQuery(
+//     `SELECT * FROM kdil WHERE c1 = '${zona}' AND c2 = '2'`
+//   );
+// };
+
 KeplerModel.getHerramientasEnAlmacen = async (zona) => {
-  return await connection.executeQuery(
-    `SELECT * FROM kdil WHERE c1 = '${zona}' AND c2 = '2'`
-  );
+  // 1. Defines la consulta base que siempre se ejecuta
+  let query = `SELECT * FROM kdil WHERE c2 = '2'`;
+
+  // 2. Si "zona" tiene un valor válido, agregas el filtro extra
+  if (zona) {
+    query += ` AND c1 = '${zona}'`;
+  }
+
+  // 3. Ejecutas la consulta final
+  return await connection.executeQuery(query);
 };
 
 KeplerModel.getKds_asignacion_EPP = async () => {
