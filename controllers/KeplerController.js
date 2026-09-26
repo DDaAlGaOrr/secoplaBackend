@@ -847,4 +847,25 @@ KeplerController.insertkdlogmov_Vehicular = async (req, res) => {
   }
 };
 
+KeplerController.getKDM1_ENCABEZADOS = async (req, res) => {
+  const result = await KeplerModel.getKDM1_ENCABEZADOS();
+
+  if (result.status) {
+    return res.status(200).json(result);
+  } else {
+    return res.status(200).json(result);
+  }
+};
+
+KeplerController.getKDM2_PARTIDAS = async (req, res) => {
+  const id = req.body.id;
+  const result = await KeplerModel.getKDM2_PARTIDAS(id);
+
+  if (result.status) {
+    return res.status(200).json(result);
+  } else {
+    return res.status(500).json(result);
+  }
+};
+
 module.exports = KeplerController;

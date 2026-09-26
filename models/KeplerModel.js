@@ -1872,4 +1872,13 @@ KeplerModel.insertkdlogmov_Vehicular = async (data) => {
   }
 };
 
+
+KeplerModel.getKDM1_ENCABEZADOS = async () => {
+  return await connection.executeQuery(`SELECT * FROM KDM1 WHERE c1=CORPO AND c2=N AND c3=D AND c4=3 AND c5=2 AND c43=N`);
+};
+
+KeplerModel.getKDM2_PARTIDAS = async (id) => {
+  return await connection.executeQuery(`SELECT * FROM KDM2 WHERE c1=CORPO AND c2=N AND c3=D AND c4=3 AND c5=2 AND c6 = '${id}'`);
+};
+
 module.exports = KeplerModel;

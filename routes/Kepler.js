@@ -37,10 +37,12 @@ router.get("/getKds_asignacion_EPP/", Kepler.getKds_asignacion_EPP);
 router.get("/getKds_asignacion_Herramienta/", Kepler.getKds_asignacion_Herramienta);
 router.get("/getkds_equipoepp/", Kepler.getkds_equipoepp );
 router.get("/getkdlogmov_Vehicular/", Kepler.getkdlogmov_Vehicular );
+router.get("/getKDM1_ENCABEZADOS/", Kepler.getKDM1_ENCABEZADOS );
 
 router.post("/auth", Kepler.auth);
 router.post("/getEppsEnAlmacen", upload.none(), Kepler.getEppsEnAlmacen);
 router.post("/getHerramientasEnAlmacen", upload.none(), Kepler.getHerramientasEnAlmacen);
+router.post("/getKDM2_PARTIDAS", upload.none(), Kepler.getgetKDM2_PARTIDAS);
 router.post("/saveChecklist", upload.none(), Kepler.saveChecklist);
 router.post("/updateKdsKdiiC", upload.none(), Kepler.updateKdsKdiiC);
 router.post("/saveAsignacionEPP", upload.none(), Kepler.saveAsignacionEPP);
