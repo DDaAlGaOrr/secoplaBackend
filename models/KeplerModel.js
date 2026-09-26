@@ -1874,9 +1874,29 @@ KeplerModel.insertkdlogmov_Vehicular = async (data) => {
 
 
 KeplerModel.getKDM1_ENCABEZADOS = async () => {
-  return await connection.executeQuery(
-    `SELECT * FROM KDM1 WHERE c1 = 'CORPO' AND c2 = 'N' AND c3 = 'D' AND c4 = 3 AND c5 = 2 AND c43 = 'N'`
-  );
+  return await connection.executeQuery(`
+    SELECT 
+      KDM1.*, 
+      KDUDENT.c13 AS c13_kdudent,
+      KDM1_SEC.c6 AS monto_pedido
+    FROM KDM1
+    LEFT JOIN KDUDENT 
+      ON KDM1.c10 = KDUDENT.c1 
+      AND KDM1.c82 = KDUDENT.c2
+    LEFT JOIN KDM1 AS KDM1_SEC
+      ON KDM1_SEC.c6 = KDM1.c88
+      AND KDM1_SEC.c1 = 'CORPO'
+      AND KDM1_SEC.c2 = 'U'
+      AND KDM1_SEC.c3 = 'D'
+      AND KDM1_SEC.c4 = 40
+      AND KDM1_SEC.c5 = 1
+    WHERE KDM1.c1 = 'CORPO' 
+      AND KDM1.c2 = 'N' 
+      AND KDM1.c3 = 'D' 
+      AND KDM1.c4 = 3 
+      AND KDM1.c5 = 2 
+      AND KDM1.c43 = 'N'
+  `);
 };
 
 KeplerModel.getKDM2_PARTIDAS = async (id) => {
