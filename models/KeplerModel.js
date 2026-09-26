@@ -1877,7 +1877,8 @@ KeplerModel.getKDM1_ENCABEZADOS = async () => {
   return await connection.executeQuery(`
     SELECT 
       KDM1.*, 
-      KDUDENT.c13 AS c13_kdudent,
+      KDUDENT.c13 AS c13_zone,
+      KDUDENT.c12 AS c12_planta,
       KDM1_SEC.c6 AS monto_pedido
     FROM KDM1
     LEFT JOIN KDUDENT 
