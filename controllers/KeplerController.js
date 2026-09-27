@@ -864,7 +864,7 @@ KeplerController.getKDM2_PARTIDAS = async (req, res) => {
   if (result.status) {
     return res.status(200).json(result);
   } else {
-    return res.status(500).json(result);
+    return res.status(200).json(result);
   }
 };
 
