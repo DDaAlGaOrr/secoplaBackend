@@ -1901,7 +1901,7 @@ KeplerModel.getKDM1_ENCABEZADOS = async () => {
 };
 
 KeplerModel.getKDM2_PARTIDAS = async (id) => {
-  return await connection.executeQuery(`SELECT * FROM KDM2 WHERE c1=CORPO AND c2=N AND c3=D AND c4=3 AND c5=2 AND c6 = '${id}'`);
+  return await connection.executeQuery(`SELECT * FROM KDM2 WHERE c1='CORPO' AND c2='N' AND c3='D' AND c4=3 AND c5=2 AND c6 = '${id}'`);
 };
 
 module.exports = KeplerModel;
