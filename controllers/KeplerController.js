@@ -868,4 +868,15 @@ KeplerController.getKDM2_PARTIDAS = async (req, res) => {
   }
 };
 
+KeplerController.update_KDM1 = async (req, res) => {
+  const id = req.body.id;
+  const result = await KeplerModel.update_KDM1(id);
+
+  if (result.status) {
+    return res.status(200).json(result);
+  } else {
+    return res.status(500).json(result);
+  }
+};
+
 module.exports = KeplerController;

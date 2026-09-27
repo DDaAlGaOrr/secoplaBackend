@@ -50,6 +50,7 @@ router.post("/saveAsignacionHerramienta", upload.none(), Kepler.saveAsignacionHe
 router.post("/saveEquipoEPP", upload.none(), Kepler.saveEquipoEPP);
 router.post("/insert_kds_matriz", upload.none(), Kepler.insert_kds_matriz);
 router.post("/update_kds_matriz", upload.none(), Kepler.update_kds_matriz);
+router.post("/update_KDM1", upload.none(), Kepler.update_KDM1);
 router.post("/update_kdsCardexVehicular", upload.none(), Kepler.update_kdsCardexVehicular);
 router.post(
   "/updateGastosVehicular",

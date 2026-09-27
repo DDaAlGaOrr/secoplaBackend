@@ -1904,4 +1904,80 @@ KeplerModel.getKDM2_PARTIDAS = async (id) => {
   return await connection.executeQuery(`SELECT * FROM KDM2 WHERE c1='CORPO' AND c2='N' AND c3='D' AND c4=3 AND c5=2 AND c6 = '${id}'`);
 };
 
+KeplerModel.update_KDM1 = async (id) => {
+  console.log("id recibido: ");
+  console.log(id);
+
+
+  const fecha =  new Date().toLocaleString("es-MX", {timeZone: "America/Mexico_City", year: "numeric",
+  month: "2-digit",
+  day: "2-digit"});
+
+
+  try {
+    // 1. Verificar que tenemos el identificador obligatorio id
+    if (!id || !fecha) {
+      return { 
+        status: false, 
+        message: "El identificador o la fecha fallo al proporcionarse" 
+      };
+    }
+
+    const camposAActualizar = [
+      "c43 = 'A'",
+      `c95 = '${fecha}'`
+    ];
+    
+
+
+    // 4. Construir la consulta UPDATE apuntando a kds_cardex_vehiculos
+    const updateQuery = `
+      UPDATE KDM1
+      SET ${camposAActualizar.join(', ')} 
+      WHERE c1 = ?
+    `;
+
+
+    // 6. EJECUTAR LA CONSULTA USANDO REPLACEMENTS (Esto evita el error de "undefined")
+    // Nota: Usamos sequelize.query tal cual tu ejemplo exitoso
+    const result = await sequelize.query(updateQuery, {
+      replacements: [id],
+      type: sequelize.QueryTypes.UPDATE
+    });
+
+    // 7. Procesar filas afectadas en base al formato devuelto por MySQL2
+    let affectedRows = 0;
+    if (Array.isArray(result)) {
+      if (result[0] && result[0].affectedRows !== undefined) {
+        affectedRows = result[0].affectedRows;
+      } else if (result[0] && result[0].changedRows !== undefined) {
+        affectedRows = result[0].changedRows;
+      } else if (result[1] && result[1].affectedRows !== undefined) {
+        affectedRows = result[1].affectedRows;
+      }
+    } else if (result && result.affectedRows !== undefined) {
+      affectedRows = result.affectedRows;
+    } else if (result && result.changedRows !== undefined) {
+      affectedRows = result.changedRows;
+    }
+
+    console.log("Filas afectadas en cardex:", affectedRows);
+
+    // Retornamos el status: true para que tu controlador responda con el res.status(200).json(true)
+    return { 
+      status: true, 
+      message: "Registro actualizado correctamente",
+      updated: true,
+      affectedRows: affectedRows
+    };
+
+  } catch (error) {
+    console.error("Error al actualizar datos en kds_cardex_vehiculos:", error);
+    return { 
+      status: false, 
+      message: error.message || error 
+    };
+  }
+};
+
 module.exports = KeplerModel;
