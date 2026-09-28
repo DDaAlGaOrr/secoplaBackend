@@ -1905,17 +1905,17 @@ KeplerModel.getKDM2_PARTIDAS = async (id) => {
 };
 
 KeplerModel.update_KDM1 = async (id, type) => {
-  console.log("id recibido: ");
-  console.log(id);
+  console.log("id recibido: ", id);
 
-
-  const fecha =  new Date().toLocaleString("es-MX", {timeZone: "America/Mexico_City", year: "numeric",
-  month: "2-digit",
-  day: "2-digit"});
-
+  const fecha = new Date().toLocaleString("es-MX", {
+    timeZone: "America/Mexico_City",
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit"
+  });
 
   try {
-    // 1. Verificar que tenemos el identificador obligatorio id
+    // 1. Validaciones de parámetros obligatorios
     if (!id) {
       return { 
         status: false, 
@@ -1930,40 +1930,45 @@ KeplerModel.update_KDM1 = async (id, type) => {
       };
     }
 
-    if(type && type == "aprobado"){
-      const camposAActualizar = [
+    // 2. Definir campos según el tipo (declarado con let para evitar ReferenceError)
+    let camposAActualizar = [];
+
+    if (type === "aprobado") {
+      camposAActualizar = [
         "c43 = 'A'",
         `c95 = '${fecha}'`
       ];
-    }else{
-      const camposAActualizar = [
-        "c43 = 'A'",
+    } else {
+      camposAActualizar = [
+        "c43 = 'A'", 
         `c95 = '${fecha}'`
       ];
     }
-    
-    
 
-
-    // 4. Construir la consulta UPDATE apuntando a kds_cardex_vehiculos
+    // 3. Consulta UPDATE con filtros fijos y c6 dinámico
     const updateQuery = `
       UPDATE KDM1
       SET ${camposAActualizar.join(', ')} 
-      WHERE c1 = ?
+      WHERE c1 = 'CORPO'
+        AND c2 = 'N'
+        AND c3 = 'D'
+        AND c4 = 3
+        AND c5 = 2
+        AND c6 = ?
     `;
 
-
-    // 6. EJECUTAR LA CONSULTA USANDO REPLACEMENTS (Esto evita el error de "undefined")
-    // Nota: Usamos sequelize.query tal cual tu ejemplo exitoso
+    // 4. Ejecutar consulta vinculando c6 al id
     const result = await sequelize.query(updateQuery, {
       replacements: [id],
       type: sequelize.QueryTypes.UPDATE
     });
 
-    // 7. Procesar filas afectadas en base al formato devuelto por MySQL2
+    // 5. Procesar filas afectadas
     let affectedRows = 0;
     if (Array.isArray(result)) {
-      if (result[0] && result[0].affectedRows !== undefined) {
+      if (typeof result[1] === "number") {
+        affectedRows = result[1];
+      } else if (result[0] && result[0].affectedRows !== undefined) {
         affectedRows = result[0].affectedRows;
       } else if (result[0] && result[0].changedRows !== undefined) {
         affectedRows = result[0].changedRows;
@@ -1976,9 +1981,8 @@ KeplerModel.update_KDM1 = async (id, type) => {
       affectedRows = result.changedRows;
     }
 
-    console.log("Filas afectadas en cardex:", affectedRows);
+    console.log("Filas afectadas en KDM1:", affectedRows);
 
-    // Retornamos el status: true para que tu controlador responda con el res.status(200).json(true)
     return { 
       status: true, 
       message: "Registro actualizado correctamente",
@@ -1987,7 +1991,7 @@ KeplerModel.update_KDM1 = async (id, type) => {
     };
 
   } catch (error) {
-    console.error("Error al actualizar datos en kds_cardex_vehiculos:", error);
+    console.error("Error al actualizar datos en KDM1:", error);
     return { 
       status: false, 
       message: error.message || error 
