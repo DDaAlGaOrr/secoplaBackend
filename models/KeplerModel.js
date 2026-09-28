@@ -1904,7 +1904,7 @@ KeplerModel.getKDM2_PARTIDAS = async (id) => {
   return await connection.executeQuery(`SELECT * FROM KDM2 WHERE c1='CORPO' AND c2='N' AND c3='D' AND c4=3 AND c5=2 AND c6 = '${id}'`);
 };
 
-KeplerModel.update_KDM1 = async (id) => {
+KeplerModel.update_KDM1 = async (id, type) => {
   console.log("id recibido: ");
   console.log(id);
 
@@ -1916,17 +1916,32 @@ KeplerModel.update_KDM1 = async (id) => {
 
   try {
     // 1. Verificar que tenemos el identificador obligatorio id
-    if (!id || !fecha) {
+    if (!id) {
       return { 
         status: false, 
-        message: "El identificador o la fecha fallo al proporcionarse" 
+        message: "El identificador no se proporciono" 
       };
     }
 
-    const camposAActualizar = [
-      "c43 = 'A'",
-      `c95 = '${fecha}'`
-    ];
+    if (!type) {
+      return { 
+        status: false, 
+        message: "El tipo no se proporciono" 
+      };
+    }
+
+    if(type && type == "aprobado"){
+      const camposAActualizar = [
+        "c43 = 'A'",
+        `c95 = '${fecha}'`
+      ];
+    }else{
+      const camposAActualizar = [
+        "c43 = 'A'",
+        `c95 = '${fecha}'`
+      ];
+    }
+    
     
 
 
