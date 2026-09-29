@@ -1904,6 +1904,10 @@ KeplerModel.getKDM2_PARTIDAS = async (id) => {
   return await connection.executeQuery(`SELECT * FROM KDM2 WHERE c1='CORPO' AND c2='N' AND c3='D' AND c4=3 AND c5=2 AND c6 = '${id}'`);
 };
 
+KeplerModel.getKDM2_PEDIDO = async (id) => {
+  return await connection.executeQuery(`SELECT * FROM KDM2 WHERE c1='CORPO' AND c2='U' AND c3='D' AND c4=4 AND c5=1 AND c6 = '${id}'`);
+};
+
 KeplerModel.update_KDM1 = async (id, type) => {
   console.log("id recibido: ", id);
 
@@ -1940,7 +1944,7 @@ KeplerModel.update_KDM1 = async (id, type) => {
       ];
     } else {
       camposAActualizar = [
-        "c43 = 'A'", 
+        "c43 = 'C'", 
         `c95 = '${fecha}'`
       ];
     }
