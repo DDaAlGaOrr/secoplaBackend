@@ -1915,7 +1915,11 @@ KeplerModel.update_KDM1 = async (id, type) => {
     timeZone: "America/Mexico_City",
     year: "numeric",
     month: "2-digit",
-    day: "2-digit"
+    day: "2-digit",
+    hour: '2-digit',     
+    minute: '2-digit',    
+    second: '2-digit',    
+    hour12: false
   });
 
   try {
