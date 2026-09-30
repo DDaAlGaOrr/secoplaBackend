@@ -1897,6 +1897,7 @@ KeplerModel.getKDM1_ENCABEZADOS = async () => {
       AND KDM1.c4 = 3 
       AND KDM1.c5 = 2 
       AND KDM1.c43 = 'N'
+      AND KDM1.c88 <> ''
   `);
 };
 
