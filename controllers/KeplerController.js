@@ -898,7 +898,7 @@ KeplerController.insertKds_ValesTAIA = async (req, res) => {
       c11, c12, c13, c14, c15, c16, c17, c18, c19, c20
     } = req.body;
 
-    const result = await KeplerModel.insertkdlogmov_Vehicular({
+    const result = await KeplerModel.insertKds_ValesTAIA({
       c1, c2, c3, c4, c5, c6, c7, c8, c9, c10,
       c11, c12, c13, c14, c15, c16, c17, c18, c19, c20
     });
@@ -916,7 +916,7 @@ KeplerController.insertKds_ValesTAIA = async (req, res) => {
 
 KeplerController.getKds_ValesTAIA = async (req, res) => {
  
-  const result = await KeplerModel.getKds_ValesTAIA();
+  const [result] = await KeplerModel.getKds_ValesTAIA();
 
 
   if (result) {
