@@ -915,10 +915,11 @@ KeplerController.insertKds_ValesTAIA = async (req, res) => {
 };
 
 KeplerController.getKds_ValesTAIA = async (req, res) => {
-  const id = req.body.c1;
-  const result = await KeplerModel.getKds_ValesTAIA(id);
+ 
+  const [result] = await KeplerModel.getKds_ValesTAIA();
 
-  if (result.status) {
+
+  if (result) {
     return res.status(200).json(result);
   } else {
     return res.status(200).json(result);

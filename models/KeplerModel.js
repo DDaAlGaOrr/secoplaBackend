@@ -2088,12 +2088,9 @@ KeplerModel.insertKds_ValesTAIA = async (data) => {
   }
 };
 
-KeplerModel.getKds_ValesTAIA = async (id) => {
+KeplerModel.getKds_ValesTAIA = async () => {
     return await sequelize.query(
-        'SELECT * FROM kds_ValesTAIA WHERE c1 = :id',
-        {
-            replacements: { id }
-        }
+        'SELECT * FROM kds_ValesTAIA'
     );
 };
 
