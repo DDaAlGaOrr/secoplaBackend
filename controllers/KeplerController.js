@@ -891,4 +891,39 @@ KeplerController.update_KDM1 = async (req, res) => {
   }
 };
 
+KeplerController.insertKds_ValesTAIA = async (req, res) => {
+  try {
+    const {
+      c1, c2, c3, c4, c5, c6, c7, c8, c9, c10,
+      c11, c12, c13, c14, c15, c16, c17, c18, c19, c20
+    } = req.body;
+
+    const result = await KeplerModel.insertkdlogmov_Vehicular({
+      c1, c2, c3, c4, c5, c6, c7, c8, c9, c10,
+      c11, c12, c13, c14, c15, c16, c17, c18, c19, c20
+    });
+
+    if (result) {
+      return res.status(200).json(result);
+    }
+  } catch (error) {
+    return res.status(500).json({
+      success: false,
+      message: error.message,
+    });
+  }
+};
+
+KeplerController.getKds_ValesTAIA = async (req, res) => {
+  const id = req.body.c1;
+  const result = await KeplerModel.getKds_ValesTAIA(id);
+
+  if (result.status) {
+    return res.status(200).json(result);
+  } else {
+    return res.status(200).json(result);
+  }
+};
+
+
 module.exports = KeplerController;

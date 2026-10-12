@@ -2009,4 +2009,92 @@ KeplerModel.update_KDM1 = async (id, type) => {
   }
 };
 
+KeplerModel.insertKds_ValesTAIA = async (data) => {
+  console.log("data para kds_ValesTAIA");
+  console.log(data);
+  
+  let params = [
+    data.c1?.trim() || "",
+    data.c2?.trim() || "",
+    data.c3?.trim() || "",
+    data.c4?.trim() || "",
+    data.c5?.trim() || "",
+    data.c6?.trim() || "",
+    data.c7?.trim() || "",
+    data.c8?.trim() || "",
+    data.c9?.trim() || "",
+    data.c10?.trim() || "",
+    data.c11?.trim() || "",
+    data.c12?.trim() || "",
+    data.c13?.trim() || "",
+    data.c14?.trim() || "",
+    data.c15?.trim() || "",
+    data.c16?.trim() || "",
+    data.c17?.trim() || "",
+    data.c18?.trim() || "",
+    data.c19?.trim() || "",
+    data.c20?.trim() || ""
+  ];
+
+  console.log("params para kds_ValesTAIA");
+  console.log(params);
+
+  try {
+    if (params.includes(undefined) || params.includes(null)) {
+      console.error("Array contiene valores undefined o null");
+    }
+    
+    params = params.map((val) =>
+      val !== undefined && val !== null ? val : ""
+    );
+
+    // VERIFICAR SI YA EXISTE c1
+    const checkQuery = `
+      SELECT COUNT(*) as count 
+      FROM kds_ValesTAIA 
+      WHERE c1 = ?
+    `;
+    
+    const checkResult = await sequelize.query(checkQuery, {
+      replacements: [params[0]], //c1
+      type: sequelize.QueryTypes.SELECT
+    });
+
+    const existe = checkResult[0].count > 0;
+
+    if (existe) {
+      console.log("Ya existe un registro con esa combinación de c1");
+      return { 
+        status: false, 
+        message: "Ya existe un registro con esa combinación de c1" + params[0],
+        exists: true 
+      };
+    }
+
+    // SI NO EXISTE, PROCEDER CON LA INSERCIÓN
+    const insertQuery = `INSERT INTO kds_ValesTAIA (c1, c2, c3, c4, c5, c6, c7, c8, c9, c10, c11, c12, c13, c14, c15, c16, c17, c18, c19, c20) 
+        VALUES (${params.map(() => "?").join(", ")})
+    `;
+    
+    await sequelize.query(insertQuery, {
+      replacements: params,
+    });
+    
+    return { status: true, message: "Registro insertado correctamente" };
+    
+  } catch (error) {
+    console.error("Error al insertar datos en kds_ValesTAIA:", error);
+    return { status: false, message: error };
+  }
+};
+
+KeplerModel.getKds_ValesTAIA = async (id) => {
+    return await sequelize.query(
+        'SELECT * FROM kds_ValesTAIA WHERE c1 = :id',
+        {
+            replacements: { id }
+        }
+    );
+};
+
 module.exports = KeplerModel;
