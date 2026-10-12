@@ -916,7 +916,7 @@ KeplerController.insertKds_ValesTAIA = async (req, res) => {
 
 KeplerController.getKds_ValesTAIA = async (req, res) => {
  
-  const [result] = await KeplerModel.getKds_ValesTAIA();
+  const result = await KeplerModel.getKds_ValesTAIA();
 
 
   if (result) {
