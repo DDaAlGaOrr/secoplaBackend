@@ -80,6 +80,7 @@ HhModel.getlistaClientes = async () => {
       C.FECHA_CREACION,
       C.FECHAACTUALIZA,
       C.Habilita_NFC,
+      C.Estatus,
       Z.zona
     FROM Cat_Clientes C
     INNER JOIN Cat_Zona Z ON C.id_zona = Z.Id_zona
