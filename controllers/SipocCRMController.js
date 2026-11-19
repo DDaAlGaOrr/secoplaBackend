@@ -5,7 +5,7 @@ const SipocCRMController = () => {};
 
 SipocCRMController.getListaClientesSipoc = async (req, res) => {
   try {
-    const data = await SipocCRMController.getListaClientesSipoc();
+    const data = await SipocCRMModel.getListaClientesSipoc();
     const response = {
       status: "success",
       data: data,
