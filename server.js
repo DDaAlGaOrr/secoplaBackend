@@ -5,6 +5,7 @@ const port = process.env.PORT || 3908;
 const kepler = require("./routes/Kepler");
 const hh = require("./routes/hh");
 const SecoplAxis = require("./routes/SecoplaAxis");
+const SipocCRM = require("./routes/SipocCRM");
 
 
 app.use(cors());
@@ -14,6 +15,7 @@ app.use(express.static("public"));
 app.use(kepler);
 app.use(hh);
 app.use(SecoplAxis);
+app.use(SipocCRM);
 
 
 app.listen(port, () => {
